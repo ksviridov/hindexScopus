@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "baseUrl": "./app/react",
+        "jsx": "react",
+        "esModuleInterop": true,
+        "paths": {
+            //"theme": ["./ui/theme/index.ts"],
+            "theme/types": ["./ui/theme/theme.d.ts"],
+            "utils": ["./utils.js"],
+            "ui": ["./ui/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
