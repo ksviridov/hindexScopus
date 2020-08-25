@@ -1,0 +1,17 @@
+head
+    if htmlWebpackPlugin.options.hot
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+
+        link(href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet")
+
+    style !{ htmlWebpackPlugin.options.resetCss }
+
+    style.
+        textarea, body {
+            font-family: 'Lato', sans-serif;
+        }
+
+#app
+
+if !htmlWebpackPlugin.options.hot
+    script(src=htmlWebpackPlugin.options.app)
