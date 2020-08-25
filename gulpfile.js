@@ -10,6 +10,7 @@ const styleLint = require('gulp-stylelint')
 const uglify = require('gulp-uglify-es').default
 const babel = require('gulp-babel')
 const imgmin = require('gulp-imagemin')
+const postcss = require('gulp-postcss')
 const path = require('path')
 const fs = require('fs')
 
@@ -42,11 +43,22 @@ gulp.task('html', () => {
         .pipe(gulp.dest(output))
 })
 
+gulp.task('images', () => {
+    return gulp.src(`${input}/images/**/*.*`)
+        .pipe(gulpif(!IsDevelopment, imgmin()))
+        .pipe(gulp.dest(!app_name ? output : `${output}/images`))
+})
+
 gulp.task('styles', () => {
+    const plugins = [
+        require('postcss-import')()
+    ]
+
     return gulp.src(`${input}/styles/**/[^_]*.less`)
         .pipe(plumber())
         .pipe(less())
         .pipe(autoprefixer())
+        .pipe(postcss(plugins))
         .pipe(gulp.dest(!app_name ? output : `${output}/styles`))
 })
 
@@ -72,12 +84,13 @@ gulp.task('js', () => {
 })
 
 gulp.task('watch', () => {
-    watch(`${input}/styles/**/*.less`, ['styles']);
-    watch(`${input}/*.html`, ['html']);
-    watch(`${input}/js/**/*.js`, ['js']);
+    watch(`${input}/images/**/*.*`, gulp.series('images'));
+    watch(`${input}/styles/**/*.less`, gulp.series('stylesLint', 'styles'));
+    watch(`${input}/*.html`, gulp.series('html'));
+    watch(`${input}/js/**/*.js`, gulp.series('js'));
 });
 
-const tasks = ['html', 'stylesLint', 'styles', 'js']
-app_name && IsDevelopment && tasks.push('livereload', 'watch')
+const tasks = ['html', 'stylesLint', 'images', 'styles', 'js']
+app_name && IsDevelopment && tasks.push(gulp.parallel('watch', 'livereload'))
 
 exports.default = gulp.series(...tasks)
