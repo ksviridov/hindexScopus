@@ -2,6 +2,7 @@
 @import '_media';
 
 @light_text: #999;
+@blue: #2889f1;
 
 body {
     background-color: #eef1f2;
@@ -9,6 +10,7 @@ body {
 
 .wrapper {
     display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
 
@@ -141,7 +143,7 @@ body {
     }
 
     &:hover::after {
-        background-color: #0183ce;
+        background-color: @blue;
     }
 
     &__title {
@@ -183,7 +185,7 @@ body {
     color: #222;
     text-transform: uppercase;
     border: none;
-    background-color: #0183ce;
+    background-color: @blue;
     color: #fff;
     line-height: 2rem;
     cursor: pointer;
@@ -191,5 +193,62 @@ body {
 
 .contact {
     text-decoration: none;
-    color: #2889f1;
+    color: @blue;
+}
+
+.error {
+    display: flex;
+    width: 100%;
+    max-width: 540px;
+    background-color: rgba(237, 51, 51, .8);
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3rem;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    @media @desktop {
+        max-width: 800px;
+    }
+
+    &__message {
+        color: #222;
+        font-weight: 400;
+    }
+
+    &__close {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        position: relative;
+        margin-right: 15px;
+
+        &:hover::before,
+        &:hover::after {
+            background-color: #fff;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            display: block;
+            width: 30px;
+            height: 2px;
+            background-color: #222;
+            transition: .5s;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
 }
