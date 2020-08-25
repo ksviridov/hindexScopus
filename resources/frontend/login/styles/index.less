@@ -3,6 +3,7 @@
 
 @light_text: #999;
 @blue: #2889f1;
+@text: #222;
 
 body {
     background-color: #eef1f2;
@@ -148,7 +149,7 @@ body {
 
     &__title {
         font-weight: bold;
-        color: #222;
+        color: @text;
         font-size: 1.1rem;
         transition: .5s;
         text-align: center;
@@ -182,13 +183,18 @@ body {
     outline: none;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #222;
+    color: @text;
     text-transform: uppercase;
     border: none;
     background-color: @blue;
     color: #fff;
     line-height: 2rem;
     cursor: pointer;
+    transition: .5s;
+
+    &:hover {
+        opacity: .8;
+    }
 }
 
 .contact {
@@ -215,16 +221,18 @@ body {
     }
 
     &__message {
-        color: #222;
+        color: @text;
         font-weight: 400;
     }
 
     &__close {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
         border: none;
         outline: none;
         background-color: transparent;
         position: relative;
-        margin-right: 15px;
 
         &:hover::before,
         &:hover::after {
@@ -235,7 +243,9 @@ body {
         &::after {
             content: '';
             position: absolute;
-            left: 0;
+            left: 50%;
+            top: 50%;
+            transform-origin: center;
             display: block;
             width: 30px;
             height: 2px;
@@ -244,11 +254,11 @@ body {
         }
 
         &::before {
-            transform: rotate(45deg);
+            transform: translate(-50%, -50%) rotate(45deg);
         }
 
         &::after {
-            transform: rotate(-45deg);
+            transform: translate(-50%, -50%) rotate(-45deg);
         }
     }
 }
