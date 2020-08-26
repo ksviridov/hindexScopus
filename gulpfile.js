@@ -43,6 +43,11 @@ gulp.task('html', () => {
         .pipe(gulp.dest(output))
 })
 
+gulp.task('libs', () => {
+    return gulp.src(`${input}/libs/**/*.*`)
+        .pipe(gulp.dest(!app_name ? output : `${output}/libs`))
+})
+
 gulp.task('images', () => {
     return gulp.src(`${input}/images/**/*.*`)
         .pipe(gulpif(!IsDevelopment, imgmin()))
@@ -90,7 +95,7 @@ gulp.task('watch', () => {
     watch(`${input}/js/**/*.js`, gulp.series('js'));
 });
 
-const tasks = ['html', 'stylesLint', 'images', 'styles', 'js']
+const tasks = ['html', 'stylesLint', 'images', 'libs', 'styles', 'js']
 app_name && IsDevelopment && tasks.push(gulp.parallel('watch', 'livereload'))
 
 exports.default = gulp.series(...tasks)
