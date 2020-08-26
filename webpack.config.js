@@ -45,7 +45,7 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
     {
         inject: false,
         template: `pug-loader!${react_path}/template.pug`,
-        resetCss: fs.readFileSync(path.resolve(__dirname, 'node_modules/reset-css/reset.css')),
+        normalizeCss: fs.readFileSync(path.resolve(__dirname, 'node_modules/normalize.css/normalize.css')),
         hot,
         app: `./${bundle_file}`,
         meta: {
