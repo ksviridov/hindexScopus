@@ -1,5 +1,5 @@
 ;(() => {
-    const fields = document.querySelectorAll('.js-form-item__field')
+    const fields = document.querySelectorAll('.js-login-form__item-field')
 
     const error = message => {
         new Noty({
@@ -10,7 +10,7 @@
         }).show();
     }
 
-    document.querySelector('.js-form__submit').addEventListener('click', () => {
+    document.querySelector('.js-login-form__submit').addEventListener('click', () => {
         let data = {}
 
         fields.forEach(item => data[item.name] = item.value)
