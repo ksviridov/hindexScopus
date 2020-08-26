@@ -128,7 +128,7 @@ module.exports = {
             ui: path.resolve(react_path, 'ui'),
             root: path.resolve(react_path),
             components: path.resolve(react_path, 'components'),
-            theme: path.resolve(react_path, 'ui/themes/index.ts')
+            theme: path.resolve(react_path, 'ui/theme/index.ts')
         }
     },
     externals: hot && {} || {
