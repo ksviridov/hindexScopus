@@ -1,4 +1,5 @@
 import axios, { AxiosPromise } from 'axios'
+import { max as _max } from 'lodash'
 
 export interface CRUD<T> {
     create(props: T): Promise<any>,
@@ -26,6 +27,14 @@ export type ApiProps = {
     actionType?: string,
     dispatch: DispatchFn
 }
+
+export type Import = () => Promise<any>
+
+export const DELAY = 1000
+
+export const debouncedImport = (action: Import, delay = DELAY) => new Promise(resolve =>
+	(start => action().then(response => setTimeout(() => resolve(response), _max([Date.now() - start, delay]))))(Date.now())
+)
 
 export class API implements CRUD<ApiProps> {
     create({ url, actionType, dispatch }) {
