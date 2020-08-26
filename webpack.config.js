@@ -124,7 +124,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
         alias: {
-            utils: path.resolve(react_path, './utils.js'),
+            utils: path.resolve(react_path, './utils.ts'),
             ui: path.resolve(react_path, 'ui'),
             root: path.resolve(react_path),
             components: path.resolve(react_path, 'components'),
