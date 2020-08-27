@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "sourceMap": true,
-        "baseUrl": "./app/react",
+        "baseUrl": "./resources/react/",
         "jsx": "react",
         "esModuleInterop": true,
         "paths": {
