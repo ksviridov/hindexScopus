@@ -25,6 +25,16 @@ export type Input = {
     input: Style
 }
 
+export type Text = {
+    label: Style,
+    accent: Style,
+    header: Style,
+    placeholder: Style,
+    p: Style,
+    required: Style,
+    box: Style
+}
+
 export type Colors = {
     fg: TextField,
     bg: TextField
@@ -38,6 +48,7 @@ export type Mixin = {
 export type Theme = {
     button: Button,
     input: Input,
+    text: Text,
     colors: Colors,
     mixin: Mixin
 }
