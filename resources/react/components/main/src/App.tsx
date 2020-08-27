@@ -1,11 +1,15 @@
+import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import { API } from 'utils'
 import theme from 'theme'
+import { Button, Input } from 'ui'
 
 export const App = () => {
     return (
-        <h1>Hello!</h1>
+        <>
+            <Button>text</Button>
+            <Input label="test" styles={theme.input.styles.accent} />
+        </>
     )
 }
 
