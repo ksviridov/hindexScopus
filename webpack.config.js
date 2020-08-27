@@ -63,9 +63,6 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
 const plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["chunks/*"] }),
-    new webpack.ProvidePlugin({
-      React: 'react'
-    }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
       failOnError: true,
@@ -132,8 +129,8 @@ module.exports = {
         }
     },
     externals: hot && {} || {
-      react: 'react',
-      'react-dom' : 'reactDOM'
+        'react': 'React',
+        'react-dom': 'ReactDOM',
     },
     devServer: {
         contentBase: './',
