@@ -10,7 +10,7 @@ interface Props extends StyledProps {
 
 export const label = css`
 	position: absolute;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	bottom: .5em;
 	color: #999;
     z-index: 2;
@@ -19,7 +19,7 @@ export const label = css`
     
 	${(props: Props) => props.risen && css`
 		bottom: 2.5em;
-		font-size: 1.25rem;
+		font-size: 1.2rem;
 	`}
 `
 
@@ -39,7 +39,7 @@ export const container = css`
 
 export const input = css`
 	width: 100%;
-	font-size: 1.3rem;
+	font-size: 1.1rem;
 	padding: .5em;
 	background: none;
 	border: none;

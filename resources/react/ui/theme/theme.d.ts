@@ -7,11 +7,16 @@ export interface StructTheme<T> {
     default: T
 }
 
+type ModuleStruct<T> = {
+    styles?: StructTheme<T>,
+    default: T | StructTheme<T>,
+}
+
 export type Style = string[]
 
 export type StyledProps = {
     theme: Theme,
-    disabled: boolean
+    disabled?: boolean
 }
 
 export type Button = {
@@ -35,6 +40,24 @@ export type Text = {
     box: Style
 }
 
+export type Skeleton = Style
+
+export type Container = {
+    header: Style,
+    content: Style,
+    footer: Style,
+    tile: Style
+}
+
+export type Dropdown = {
+    container: Style,
+    toggle: Style,
+    dropdown: Style,
+    button: Style
+}
+
+export type Icon = Style
+
 export type Colors = {
     fg: TextField,
     bg: TextField
@@ -46,9 +69,13 @@ export type Mixin = {
 }
 
 export type Theme = {
-    button: Button,
-    input: Input,
-    text: Text,
+    button: ModuleStruct<Button>,
+    input: ModuleStruct<Input>,
+    text: ModuleStruct<Text>,
+    skeleton: ModuleStruct<Skeleton>,
+    container: ModuleStruct<Container>,
+    dropdown: ModuleStruct<Dropdown>,
+    icon: ModuleStruct<Icon>,
     colors: Colors,
     mixin: Mixin
 }

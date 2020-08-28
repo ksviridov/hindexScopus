@@ -5,14 +5,14 @@ interface Props extends StyledProps {}
 
 export const container = css`
     position: relative;
-    font-size: 13px;
+    font-size: 1.1rem;
     font-weight: 400;
     text-transform: uppercase;
     width: max-content;
 `
 
 export const button = css`
-    font-size: 13px;
+    font-size: 1.1rem;
     font-weight: 400;
     position: relative;
     width: 100%;

@@ -5,7 +5,7 @@ import { Flex } from 'reflexbox'
 
 import { input as inputStyles } from 'theme'
 import { Input as InputType, Theme } from 'theme/types'
-import { Props, Context } from './types'
+import { Props, Context, UIElement } from './types'
 
 type Value = string | number | undefined
 
@@ -29,7 +29,7 @@ interface InputProps extends Props<InputType, Theme> {
 
 const context: Context<InputType> = { styles: undefined }
 
-export const Component = (props: InputProps) => {
+export const Component: UIElement<InputProps> = props => {
     context.styles = props.styles || inputStyles.styles.default
 
     const [value, setValue] = useState(props.value)

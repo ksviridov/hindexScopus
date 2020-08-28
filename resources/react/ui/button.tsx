@@ -4,7 +4,7 @@ import { Flex } from 'reflexbox'
 
 import { button as buttonStyles } from 'theme'
 import { Button as ButtonType, Theme } from 'theme/types'
-import { Props, Context } from './types'
+import { Props, Context, UIElement } from './types'
 
 interface ButtonProps extends Props<ButtonType, Theme> {
     onClick?: (e?: React.MouseEvent) => void,
@@ -13,7 +13,7 @@ interface ButtonProps extends Props<ButtonType, Theme> {
 
 const context: Context<ButtonType> = { styles: undefined }
 
-export const Component = (props: ButtonProps) => {
+export const Component: UIElement<ButtonProps> = props => {
     context.styles = props.styles || buttonStyles.styles.default
 
     return (

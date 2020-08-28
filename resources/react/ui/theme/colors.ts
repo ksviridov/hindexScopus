@@ -10,6 +10,7 @@ export const colors: Colors = {
         common: '#2889f1',
         important: '#ea6062',
         accent: '#4aaf77',
+        caution: '#f5b544'
     }
 }
 

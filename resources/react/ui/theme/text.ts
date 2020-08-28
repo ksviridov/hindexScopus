@@ -9,7 +9,7 @@ interface Props extends StyledProps {
 }
 
 export const common = css`
-    font-size: ${(props: Props) => props.fontSize || '1.25rem'};
+    font-size: ${(props: Props) => props.fontSize || '1.1rem'};
     color: ${(props: Props) => props.color || props.theme.colors.fg.main};
 
     ${(props: Props) => props.overflow && css`
@@ -32,7 +32,7 @@ export const styles: Text = {
     accent: css`
         ${common}
 
-        font-size: ${(props: Props) => props.fontSize || '1.75rem'};
+        font-size: ${(props: Props) => props.fontSize || '1.3rem'};
         font-weight: 600;
         white-space: nowrap;
         max-width: 100%;
@@ -40,7 +40,7 @@ export const styles: Text = {
     `,
     header: css`
         color: ${(props: Props) => props.theme.colors.fg.main};
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         letter-spacing: .05rem;
         font-weight: 400;
         max-width: 100%;
@@ -48,12 +48,12 @@ export const styles: Text = {
         text-overflow: ellipsis;
     `,
     placeholder: css`
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         color: ${(props: Props) => props.color || props.theme.colors.fg.light};
     `,
     p: css`
         color: ${(props: Props) => props.theme.colors.fg.main};
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 400;
         letter-spacing: .03rem;
     `,
@@ -74,7 +74,7 @@ export const styles: Text = {
         border: 1px solid #ccc;
         color: ${(props: Props) => props.theme.colors.fg.light};
         border-radius: 3px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         line-height: 2.2rem;
         padding: .5em;
         width: 100%;

@@ -4,7 +4,7 @@ import { Flex } from 'reflexbox'
 
 import { text as textStyles } from 'theme'
 import { Text as TextType, Theme } from 'theme/types'
-import { Props, Context } from './types'
+import { Props, Context, UIElement } from './types'
 
 interface TextProps extends Props<TextType, Theme> {
     as?: 'label' | 'accent' | 'header' | 'placeholder' | 'p' | 'required' | 'box',
@@ -12,7 +12,7 @@ interface TextProps extends Props<TextType, Theme> {
 
 const context: Context<TextType> = { styles: undefined }
 
-export const Component = (props: TextProps) => {
+export const Component: UIElement<TextProps> = props => {
     context.styles = props.styles || textStyles.styles[props.as]
 
     return (
