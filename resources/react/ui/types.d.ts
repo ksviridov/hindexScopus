@@ -1,5 +1,9 @@
 import React from 'react'
 
+export interface Style {
+    [propName: string]: string
+}
+
 export interface SxProps {
     [propName: string]: string
 }
@@ -9,6 +13,7 @@ export interface Context<T> {
 }
 
 export interface Props<T, U> extends React.HTMLAttributes<HTMLDivElement> {
+    style?: Style,
     styles?: T,
     theme?: U,
     sx?: SxProps,

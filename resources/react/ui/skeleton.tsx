@@ -7,9 +7,16 @@ import { Props, UIElement } from './types'
 
 interface SkeletonProps extends Props<SkeletonType, Theme> {
     height?: string,
-    width?: string
+    width?: string,
+    mr?: string,
+    ml?: string,
+    m?: string,
+    mx?: string,
+    my?: string
 }
 
-export const Component: UIElement<SkeletonProps> = Flex
+export const Component: UIElement<SkeletonProps> = props => <Skeleton {...props} />
 
-export default styled(Component)`${(props: SkeletonProps) => props.theme.skeleton.default}`
+export const Skeleton = styled(Flex)`${(props: SkeletonProps) => props.theme.skeleton.default}`
+
+export default Component
