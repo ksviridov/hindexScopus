@@ -97,10 +97,18 @@ class Scopus
     public function articleRetrieval($article_id)
     {
         $article_id = implode(array_slice(str_split($article_id), 10));
+//        $options = [
+////            'scopus_id' => $article_id,
+//            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
+//            'apiKey' => $this->apiKey,
+//            'httpAccept' => 'application/json',
+//
+//        ];
         $options = [
 //            'scopus_id' => $article_id,
-            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
+//            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
             'apiKey' => $this->apiKey,
+            'view' => 'full',
             'httpAccept' => 'application/json',
 
         ];
@@ -116,10 +124,16 @@ class Scopus
 
         $data = json_decode($response, true);
 
+        $keyWords = [];
+        foreach ($data['abstracts-retrieval-response']['authkeywords']['author-keyword'] as $keyWord){
+            array_push($keyWords, $keyWord['$']);
+        }
 
         $arrData = [
             'title' => $data['abstracts-retrieval-response']['coredata']['dc:title'],
             'publicationName' => $data['abstracts-retrieval-response']['coredata']['prism:publicationName'],
+            'description' => $data['abstracts-retrieval-response']['coredata']['dc:description'],
+            'keyWords' => $keyWords,
             'citedByCount' => $data['abstracts-retrieval-response']['coredata']['citedby-count'],
             'articleID' => $article_id,
         ];
@@ -128,6 +142,8 @@ class Scopus
 
         return $arrData;
 
+//        return $data;
+
     }
 
     public function getAuthorArticles($authorID){
@@ -135,7 +151,7 @@ class Scopus
 //        pretty_print($articlesIds);
 //        print_r(')))))))))))))');
 
-        dd($articlesIds);
+//        dd($articlesIds);
 
 //        $articleRetrieval = $this->articleRetrieval();
 

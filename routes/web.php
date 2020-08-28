@@ -25,4 +25,4 @@ Route::get('/', 'ArticleController@main');
 //Route::get('author/article/{id}', 'ArticleController@authorsArticle');
 //
 //
-//Route::get('article/test/{authorId}', 'ArticleController@test');
+Route::get('article/test/{authorId}', 'ArticleController@test');
