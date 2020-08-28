@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Author;
 use App\functions\Scopus;
+use Illuminate\Http\Request;
 
 class Article extends Model
 {
@@ -64,5 +65,13 @@ class Article extends Model
 
 
         return $data;
+    }
+
+    public static function search($search){
+//        $articles = Article::query();
+
+        //$lots = Article::where('name', 'like', '%' . $search . '%')->orderBy('id','desc')->paginate(6); return $lots;
+
+//        $articles->where('')
     }
 }

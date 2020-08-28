@@ -13,9 +13,12 @@ class ArticleController extends Controller
 //    public function addAllAuthorArticles(){}
 
     public function test($authorID){
-//        $scopus = new Scopus();
+        $scopus = new Scopus();
 //        dd($scopus->getAuthorArticles($authorID));
 
+        $article_id = 'SCOPUS_ID:85069438729';
+
+        dd($scopus->articleRetrieval($article_id));
 //        $article = Article::create([
 //            'article_id' => 34,
 //            'title' => 'title',
@@ -47,6 +50,12 @@ class ArticleController extends Controller
         }
 
 //        dd($authors);
+
+//        return view('', compact());
+    }
+
+    public function search(Request $request){
+
     }
 
 //    public function authorsArticle($id){
