@@ -1,0 +1,2 @@
+export const GET_STATE = 'GET_STATE'
+export const GET_HOT_PUBLICATIONS = 'GET_HOT_PUBLICATIONS'

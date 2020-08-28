@@ -25,7 +25,7 @@ export type ApiProps = {
     searchCriteria?: SearchCriteria,
     payload?: any,
     actionType?: string,
-    dispatch: DispatchFn
+    dispatch?: DispatchFn
 }
 
 export type Import = () => Promise<any>
@@ -37,25 +37,25 @@ export const debouncedImport = (action: Import, delay = DELAY) => new Promise(re
 )
 
 export class API implements CRUD<ApiProps> {
-    create({ url, actionType, dispatch }) {
+    create({ url, actionType, dispatch }: ApiProps) {
         return this.handleResponse(axios.post(
             url
         ), actionType, dispatch)
     }
 
-    read({ url, searchCriteria, actionType, dispatch, payload }) {
+    read({ url, searchCriteria, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.get(
             searchCriteria ? this.applySearchCriteria(url, searchCriteria) : url
         ), actionType, dispatch, payload)
     }
 
-    update({ url, actionType, dispatch, payload }) {
+    update({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.put(
             url
         ), actionType, dispatch, payload)
     }
 
-    delete({ url, actionType, dispatch, payload }) {
+    delete({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.delete(
             url
         ), actionType, dispatch, payload)
