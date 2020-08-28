@@ -64,7 +64,7 @@ const plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["chunks/*"] }),
     new webpack.ProvidePlugin({
-      React: 'react'
+        React: 'react'
     }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
@@ -124,16 +124,16 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
         alias: {
-            utils: path.resolve(react_path, './utils.js'),
+            utils: path.resolve(react_path, './utils.ts'),
             ui: path.resolve(react_path, 'ui'),
             root: path.resolve(react_path),
             components: path.resolve(react_path, 'components'),
-            theme: path.resolve(react_path, 'ui/themes/index.ts')
+            theme: path.resolve(react_path, 'ui/theme/index.ts')
         }
     },
     externals: hot && {} || {
-      react: 'react',
-      'react-dom' : 'reactDOM'
+        'react': 'React',
+        'react-dom': 'ReactDOM',
     },
     devServer: {
         contentBase: './',

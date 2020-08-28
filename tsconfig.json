@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
         "sourceMap": true,
-        "baseUrl": "./app/react",
+        "baseUrl": "./resources/react/",
         "jsx": "react",
         "esModuleInterop": true,
         "paths": {
-            //"theme": ["./ui/theme/index.ts"],
+            "theme": ["./ui/theme/index.ts"],
             "theme/types": ["./ui/theme/theme.d.ts"],
-            "utils": ["./utils.js"],
+            "utils": ["./utils.ts"],
             "ui": ["./ui/index.ts"]
         }
     },
