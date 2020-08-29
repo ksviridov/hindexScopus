@@ -22,9 +22,8 @@ export const item = css`
 export const itemCount = css`
     display: flex;
     border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    border-radius: 5px;
+    width: 3rem;
     justify-content: center;
     align-items: center;
 

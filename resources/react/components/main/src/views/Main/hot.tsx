@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { getHotPublications } from '../../actions'
 
 import { Flex } from 'reflexbox'
-import { Container, Text, Skeleton as UISkeleton } from 'ui'
+import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
 
@@ -16,10 +16,18 @@ export const Component: ComponentInterface<any> = () => {
     const hotList = useSelector(state => state.hot)
 
     const [isInitialized, setIsInitialized] = useState(false)
+    const [pageCount] = useState(3)
+    const [currentPage, setCurrentPage] = useState(0)
 
     const sortingHotList = useMemo(() =>
         (!hotList || !hotList.length) && [] || hotList.sort((item1, item2) => item1.citesNeeded - item2.citesNeeded)
     , [hotList])
+
+    const HotListForCurrentPage=  useMemo(() =>
+        sortingHotList.slice(currentPage * pageCount, (currentPage + 1) * pageCount)
+    , [sortingHotList, currentPage])
+
+    const maxPages = useMemo(() => (!hotList || !hotList.length) ? 0 : Math.ceil(hotList.length / pageCount), [hotList, pageCount])
 
     useEffect(() => {
         dispatch(getHotPublications())
@@ -31,13 +39,17 @@ export const Component: ComponentInterface<any> = () => {
         <Flex width="100%">
             {!isInitialized &&  <Skeleton /> || 
             <Container sx={{ width: '100%' }}>
-                <Container.Header>
+                <Container.Header justifyContent="space-between">
                     <Text styles={theme.text.styles.header}>Горячий список</Text>
+                    <Flex>
+                        <Button background={theme.mixin.icons.dark.back} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0} sx={{ mr: '1rem' }} />
+                        <Button background={theme.mixin.icons.dark.next} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1} />
+                    </Flex>
                 </Container.Header>
                 <Container.Content>
-                    {!sortingHotList.length &&
+                    {!hotList?.length &&
                         <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text> ||
-                        hotList.map(item =>
+                        HotListForCurrentPage.map(item =>
                             <Item key={item.articleID}>
                                 <Flex justifyContent="space-between" width="100%" mb=".5rem">
                                     <Text styles={theme.text.styles.label}>{ item.name }</Text>
@@ -45,7 +57,7 @@ export const Component: ComponentInterface<any> = () => {
                                         { item.citesNeeded }
                                     </ItemCount>
                                 </Flex>
-                                <Text styles={theme.text.styles.placeholder} >{ item.title }</Text>
+                                <Text styles={theme.text.styles.placeholder}>{ item.title }</Text>
                             </Item>    
                         )
                     }

@@ -27,7 +27,7 @@ export const App = () => {
             .catch(console.error)
     }, [])
     return (
-        isInitialized && <Flex width="100%" justifyContent="center" sx={{ background: '#f5f5f5', minHeight: '100%' }}>
+        isInitialized && <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
             <BrowserRouter basename={window.BASE_URL ? new URL(window.BASE_URL).pathname : '/'}>
                 <Route path="" render={({ location }) =>
 					<Box width="100%">

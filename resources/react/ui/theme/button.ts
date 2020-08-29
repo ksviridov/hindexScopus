@@ -29,7 +29,6 @@ export const button = css`
 
     &:hover, &:focus {
         opacity: .8;
-        background-color: ${(props: Props) => props.theme.colors.bg.common};
     }
 
     ${(props: Props) => props.disabled && css`
@@ -40,6 +39,12 @@ export const button = css`
             opacity: .3;
         }
     `}
+
+    ${props => props.background && css`
+		padding: .75rem .75rem;
+		border-radius: 0;
+		background: url(${props.background}) 0 0 / 100% no-repeat;
+	`}
 `
 
 export const styles: StructTheme<Button> = {

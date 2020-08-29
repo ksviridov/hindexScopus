@@ -63,9 +63,16 @@ export type Colors = {
     bg: TextField
 }
 
+export interface MixinIcons {
+    [propName: string]: {
+        [propName: string]: string
+    }
+}
+
 export type Mixin = {
     transition: Style,
-    fade: Style
+    fade: Style,
+    icons: MixinIcons
 }
 
 export type Theme = {

@@ -8,12 +8,14 @@ import { Props, Context, UIElement } from './types'
 
 interface ButtonProps extends Props<ButtonType, HTMLDivElement> {
     onClick?: (e?: React.MouseEvent) => void,
-    disabled?: boolean
+    disabled?: boolean,
+    background?: string
 }
 
 interface Btn extends Props<ButtonType, HTMLButtonElement> {
     onClick?: (e?: React.MouseEvent) => void,
-    disabled?: boolean
+    disabled?: boolean,
+    background?: string
 }
 
 const context: Context<ButtonType> = { styles: undefined }
