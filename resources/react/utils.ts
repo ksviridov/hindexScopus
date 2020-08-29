@@ -1,6 +1,6 @@
 import React from 'react'
 import axios, { AxiosPromise } from 'axios'
-import { max as _max } from 'lodash'
+import _max from 'lodash/max'
 import { withRouter } from 'react-router-dom'
 
 import { Theme } from 'theme/types'

@@ -75,6 +75,7 @@
     "pug-loader": "2.4.0",
     "stylelint": "13.6.1",
     "ts-loader": "8.0.3",
+    "webpack-bundle-analyzer": "^3.8.0",
     "webpack-dev-server": "3.11.0",
     "webpack-require-from": "1.8.1",
     "yargs": "15.4.1"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import styled from 'styled-components'
-import { clamp as _clamp } from 'lodash'
+import _clamp from 'lodash/clamp'
 import { Flex } from 'reflexbox'
 
 import { input as inputStyles } from 'theme'
