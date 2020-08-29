@@ -6,7 +6,7 @@ import { container as containerStyles } from 'theme'
 import { Container as ContainerType, Theme } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
-interface ContainerProps extends Props<ContainerType, Theme> {}
+interface ContainerProps extends Props<ContainerType, HTMLButtonElement> {}
 
 const context: Context<ContainerType> = { styles: undefined }
 

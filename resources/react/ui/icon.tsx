@@ -5,7 +5,7 @@ import { Flex } from 'reflexbox'
 import { Icon as IconType, Theme } from 'theme/types'
 import { Props, UIElement } from './types'
 
-interface IconProps extends Props<IconType, Theme> {
+interface IconProps extends Props<IconType, HTMLButtonElement> {
     background: string
 }
 

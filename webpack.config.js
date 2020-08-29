@@ -146,7 +146,7 @@ module.exports = {
   
             mock && Object.entries(mock).map(
                 ([method, paths]) => Object.entries(paths).map(([path, mock]) =>
-                    app[method](path, bodyParser.json(), (req, res) => setTimeout(() => res.json(mock(req)), 10 /* artificial delay */))
+                    app[method](path, bodyParser.json(), (req, res) => setTimeout(() => res.json(mock(req)), 1000 /* artificial delay */))
                 )
             )
         }

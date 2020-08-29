@@ -10,7 +10,7 @@ import { dropdown as dropdownStyles } from 'theme'
 import { Dropdown as DropdownType, Theme } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
-interface DropdownProps extends Props<DropdownType, Theme> {
+interface DropdownProps extends Props<DropdownType, HTMLButtonElement> {
     children?: React.ReactNode | Element | string,
     toggle?: React.ReactNode | Element,
     label?: string,

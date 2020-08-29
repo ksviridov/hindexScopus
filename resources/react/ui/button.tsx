@@ -6,7 +6,12 @@ import { button as buttonStyles } from 'theme'
 import { Button as ButtonType, Theme } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
-interface ButtonProps extends Props<ButtonType, Theme> {
+interface ButtonProps extends Props<ButtonType, HTMLDivElement> {
+    onClick?: (e?: React.MouseEvent) => void,
+    disabled?: boolean
+}
+
+interface Btn extends Props<ButtonType, HTMLButtonElement> {
     onClick?: (e?: React.MouseEvent) => void,
     disabled?: boolean
 }
@@ -23,7 +28,7 @@ export const Component: UIElement<ButtonProps> = props => {
     )
 }
 
-export const Button = styled((props: ButtonProps) => <button {...props} />)`${() => context.styles.button}`
+export const Button = styled((props: Btn) => <button {...props} />)`${() => context.styles.button}`
 export const Container = styled(Flex)`${() => context.styles.container}`
 
 export default Component

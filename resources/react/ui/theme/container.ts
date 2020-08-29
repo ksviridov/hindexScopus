@@ -16,6 +16,7 @@ export const header = css`
 
 export const content = css`
     position: relative;
+    flex-direction: column;
     padding: 4rem;
     background: #fff;
     box-shadow: 0 0 10px #ddd;

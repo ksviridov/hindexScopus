@@ -5,11 +5,13 @@ import styled from 'styled-components'
 import { Skeleton as SkeletonType, Theme } from 'theme/types'
 import { Props, UIElement } from './types'
 
-interface SkeletonProps extends Props<SkeletonType, Theme> {
+interface SkeletonProps extends Props<SkeletonType, HTMLButtonElement> {
     height?: string,
     width?: string,
     mr?: string,
     ml?: string,
+    mb?: string,
+    mt?: string,
     m?: string,
     mx?: string,
     my?: string

@@ -1,5 +1,19 @@
+import React from 'react'
 import axios, { AxiosPromise } from 'axios'
 import { max as _max } from 'lodash'
+import { withRouter } from 'react-router-dom'
+
+import { Theme } from 'theme/types'
+
+export interface HistoryProps {
+    history: Array<any>,
+    location: { pathname: string, search: string, hash: string, state: any }
+}
+
+export interface ComponentInterface<T> {
+    (props: T): React.FC,
+    Skeleton?: React.FC
+}
 
 export interface CRUD<T> {
     create(props: T): Promise<any>,

@@ -1,4 +1,4 @@
-import update from 'immutable-helpers'
+import update from 'immutability-helper'
 
 import {
     GET_STATE,
@@ -13,7 +13,14 @@ export type Action = {
     requestPayload?: Payload
 }
 
-export const initialState = {
+export interface Store {
+    api: {
+        [propName: string]: string
+    },
+    hot: Array<any>
+}
+
+export const initialState: Store = {
     api: {
         hot: undefined,
         promise: undefined,

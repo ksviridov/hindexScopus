@@ -28,6 +28,7 @@ export const styles: Text = {
         letter-spacing: .05rem;
         text-transform: uppercase;
         color: ${(props: Props) => props.color || props.theme.colors.fg.main};
+        margin: 0;
     `,
     accent: css`
         ${common}
@@ -37,6 +38,7 @@ export const styles: Text = {
         white-space: nowrap;
         max-width: 100%;
         letter-spacing: .05rem;
+        margin: 0;
     `,
     header: css`
         color: ${(props: Props) => props.theme.colors.fg.main};
@@ -46,19 +48,23 @@ export const styles: Text = {
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
+        margin: 0;
     `,
     placeholder: css`
         font-size: 1.1rem;
         color: ${(props: Props) => props.color || props.theme.colors.fg.light};
+        margin: 0;
     `,
     p: css`
         color: ${(props: Props) => props.theme.colors.fg.main};
         font-size: 1.1rem;
         font-weight: 400;
         letter-spacing: .03rem;
+        margin: 0;
     `,
     required: css`
         position: relative;
+        margin: 0;
     
         &:after {
             content: '*';
@@ -78,6 +84,7 @@ export const styles: Text = {
         line-height: 2.2rem;
         padding: .5em;
         width: 100%;
+        margin: 0;
     `
 }
 
