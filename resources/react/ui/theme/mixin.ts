@@ -1,5 +1,6 @@
 import { css } from 'styled-components'
 import base64 from 'base-64'
+import format from 'string-template'
 
 export const transition = css`
     transition: .2s;
@@ -39,20 +40,24 @@ export const rotateZ = css`
     }
 `
 
+const loadIcon = (icon: string, formats) => {
+    return `data:image/svg+xml;utf8;base64,${base64.encode(format(icon, formats))}`
+}
+
 export const icons = {
     dark: {
-        back: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/back.svg'))}`,
-        next: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/next.svg'))}`,
-        spinner: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/spinner.svg'))}`,
+        back: loadIcon(require('./icons/back.svg'), { color: '#000' }),
+        next: loadIcon(require('./icons/next.svg'), { color: '#000' }),
+        spinner: loadIcon(require('./icons/spinner.svg'), { color: '#000' }),
     },
     light: {
-        search: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/search.svg'))}`,
-        arrow_down: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/down-arrow.svg'))}`,
+        search: loadIcon(require('./icons/search.svg'), { color: '#999' }),
+        arrow_down: loadIcon(require('./icons/down-arrow.svg'), { color: '#999' }),
     },
     red: {
-        close: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/close.svg'))}`,
+        close: loadIcon(require('./icons/close.svg'), { color: '#eb340a' }),
     },
     white: {
-        spinner: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/spinner_white.svg'))}`,
+        spinner: loadIcon(require('./icons/spinner.svg'), { color: '#fff' }),
     }
 }
