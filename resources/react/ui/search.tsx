@@ -9,7 +9,7 @@ import Button from './button'
 import Text from './text'
 import Transition from './transition'
 
-import { search as searchStyles } from 'theme'
+import theme, { search as searchStyles } from 'theme'
 import { Search as SearchType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
@@ -65,15 +65,18 @@ export const Component: UIElement<SearchProps> = props => {
                 <Container sx={{ mt: "0.5rem" }} width={props.width} query={searchQuery}>
                     {props.label && <Label risen={!searchQuery}>{props.label}</Label>}
                     <Input ref={inputRef} value={searchQuery} onChange={triggerSearch} disabled={isInputDisabled} />
-                    <Transition in={Boolean(isExpanded)} delayed={!isExpanded} classNames="fade">
+                    <Transition in={Boolean(isExpanded)} delayed={Boolean(!isExpanded)} classNames="fade">
                         <Dropdown>
                             {props.children}
                         </Dropdown>
                     </Transition>
-                    <Transition in={props.isProcessing} delayed={!props.isProcessing} classNames="fade">
+                    <Transition in={Boolean(searchQuery && !props.isProcessing)} delayed={Boolean(searchQuery && !props.isProcessing)} classNames="fade">
+                        <Button background={theme.mixin.icons.red.close} style={{ padding: '.5rem .5rem' }} onClick={() => search('')} />
+                    </Transition>
+                    <Transition in={Boolean(props.isProcessing)} delayed={Boolean(!props.isProcessing)} classNames="fade">
                         <ProcessingIcon data-testid="ui-search-icon-processing" />
                     </Transition>
-                    <Transition in={!searchQuery} delayed={searchQuery} classNames="fade">
+                    <Transition in={Boolean(!searchQuery)} delayed={Boolean(searchQuery)} classNames="fade">
                         <SearchIcon positionSign={props.positionSign} data-testid="ui-search-icon-search" />
                     </Transition>
                 </Container>

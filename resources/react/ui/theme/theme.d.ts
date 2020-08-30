@@ -21,7 +21,8 @@ export type StyledProps = {
 
 export type Button = {
     container: Style,
-    button: Style
+    button: Style,
+    processingIcon: Style
 }
 
 export type Input = {

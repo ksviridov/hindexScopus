@@ -3,7 +3,8 @@ import update from 'immutability-helper'
 import {
     GET_STATE,
     GET_HOT_PUBLICATIONS,
-    SET_ACTIVE_ARTICLE
+    SET_ACTIVE_ARTICLE,
+    QUOTE_ARTICLE
 } from '../actions/types'
 
 export type Payload = any
@@ -19,7 +20,8 @@ export interface Store {
         [propName: string]: string
     },
     hot: Array<any>,
-    active: any
+    active: any,
+    quotes: number[]
 }
 
 export const initialState: Store = {
@@ -29,13 +31,15 @@ export const initialState: Store = {
         search: undefined
     },
     hot: [],
-    active: undefined
+    active: undefined,
+    quotes: []
 }
 
 export const reducers = {
     [GET_STATE]: (payload: Payload) => ({ $merge: payload }),
     [GET_HOT_PUBLICATIONS]: (payload: Payload) => ({ hot: { $set: payload } }),
     [SET_ACTIVE_ARTICLE]: (payload: Payload) => ({ active: { $set: payload } }),
+    [QUOTE_ARTICLE]: (payload: Payload) => ({ quotes: { $push: [payload] } }),
 }
 
 export default (state = initialState, action: Action) =>

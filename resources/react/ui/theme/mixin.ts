@@ -48,5 +48,11 @@ export const icons = {
     light: {
         search: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/search.svg'))}`,
         arrow_down: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/down-arrow.svg'))}`,
+    },
+    red: {
+        close: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/close.svg'))}`,
+    },
+    white: {
+        spinner: `data:image/svg+xml;utf8;base64,${base64.encode(require('./icons/spinner_white.svg'))}`,
     }
 }

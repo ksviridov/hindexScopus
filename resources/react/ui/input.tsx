@@ -4,7 +4,7 @@ import _clamp from 'lodash/clamp'
 import { Flex } from 'reflexbox'
 
 import { input as inputStyles } from 'theme'
-import { Input as InputType, Theme } from 'theme/types'
+import { Input as InputType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
 type Value = string | number

@@ -1,15 +1,18 @@
 const uuid = require('uuid')
 
+const api = {
+    hot: '/api/hot',
+    search: '/api/search',
+    promise: '/api/promise',
+    quote: '/api/quote'
+}
+
 module.exports = {
     get: {
         '/api': req => ({
-            api: {
-                hot: '/api/hot',
-                search: '/api/search',
-                promise: '/api/promise'
-            }
+            api
         }),
-        '/api/hot': req => ([
+        [api.hot]: req => ([
             {
                 name: "Pljonkin A.P.",
                 title: "The review of the commercial quantum key distribution system",
@@ -39,7 +42,7 @@ module.exports = {
                 articleID: 84991594367
             }
         ]),
-        '/api/search': req => ([
+        [api.search]: req => ([
             {
                 name: "Pljonkin A.P.",
                 title: "The review of the commercial quantum key distribution system",
@@ -57,6 +60,8 @@ module.exports = {
         ])
     },
     post: {},
-    put: {},
+    put: {
+        [api.quote]: req => req.body.articleID
+    },
     delete: {}
 }

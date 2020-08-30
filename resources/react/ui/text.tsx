@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Flex } from 'reflexbox'
 
 import { text as textStyles } from 'theme'
-import { Text as TextType, Theme } from 'theme/types'
+import { Text as TextType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
 export type As = 'label' | 'p' | 'span'

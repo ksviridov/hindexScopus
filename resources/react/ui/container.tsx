@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Flex } from 'reflexbox'
 
 import { container as containerStyles } from 'theme'
-import { Container as ContainerType, Theme } from 'theme/types'
+import { Container as ContainerType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
 interface ContainerProps extends Props<ContainerType, HTMLButtonElement> {}

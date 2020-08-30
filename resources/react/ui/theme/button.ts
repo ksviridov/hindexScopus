@@ -22,7 +22,7 @@ export const button = css`
     cursor: pointer;
     background: ${(props: Props) => props.theme.colors.bg.common};
     text-transform: uppercase;
-    padding: 10px 15px;
+    padding: .8rem 2.2rem;
 
     ${(props: Props) => props.theme.mixin.transition}
 
@@ -34,6 +34,7 @@ export const button = css`
         cursor: not-allowed;
         opacity: .3;
         color: ${(props: Props) => props.theme.colors.fg.light};
+
         &:hover, &:focus {
             opacity: .3;
         }
@@ -46,10 +47,28 @@ export const button = css`
 	`}
 `
 
+export const processingIcon = css`
+    position: absolute;
+    right: 0.5em;
+    top: .75rem;
+    bottom: 0.6em;
+    width: 1.1rem;
+    height: 1.1rem;
+    opacity: .7;
+
+    ${(props: Props) => props.theme.mixin.rotateZ}
+    ${(props: Props) => props.theme.mixin.fade}
+`
+
 export const styles: StructTheme<Button> = {
     default: {
         container,
-        button
+        button,
+        processingIcon: css`
+            ${processingIcon}
+
+            background: url(${(props: Props) => props.theme.mixin.icons.white.spinner}) 0 0 / 100% no-repeat;
+        `
     },
     accent: {
         container,
@@ -57,10 +76,11 @@ export const styles: StructTheme<Button> = {
             ${button}
 
             background: ${(props: Props) => props.theme.colors.bg.accent};
+        `,
+        processingIcon: css`
+            ${processingIcon}
 
-            &:hover, &:focus {
-                
-            }
+            background: url(${(props: Props) => props.theme.mixin.icons.white.spinner}) 0 0 / 100% no-repeat;
         `
     },
     unaccent: {
@@ -75,6 +95,17 @@ export const styles: StructTheme<Button> = {
             &:hover, &:focus {
                 border-color: ${(props: Props) => props.theme.colors.bg.common};
             }
+
+            ${(props: Props) => props.disabled && css`
+                &:hover, &:focus {
+                    border-color: #999;
+                }
+            `}
+        `,
+        processingIcon: css`
+            ${processingIcon}
+
+            background: url(${(props: Props) => props.theme.mixin.icons.dark.spinner}) 0 0 / 100% no-repeat;
         `
     }
 }

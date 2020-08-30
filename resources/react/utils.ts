@@ -45,34 +45,34 @@ export type ApiProps = {
 
 export type Import = () => Promise<any>
 
-export const DELAY = 1000
+export const DELAY = 500
 
 export const debouncedImport = (action: Import, delay = DELAY) => new Promise(resolve =>
 	(start => action().then(response => setTimeout(() => resolve(response), _max([Date.now() - start, delay]))))(Date.now())
 )
 
 export class API implements CRUD<ApiProps> {
-    create({ url, actionType, dispatch }: ApiProps) {
+    create({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.post(
-            url
+            url, payload
         ), actionType, dispatch)
     }
 
-    read({ url, searchCriteria, actionType, dispatch, payload }: ApiProps) {
+    read({ url, searchCriteria, actionType, dispatch }: ApiProps) {
         return this.handleResponse(axios.get(
             searchCriteria ? this.applySearchCriteria(url, searchCriteria) : url
-        ), actionType, dispatch, payload)
+        ), actionType, dispatch)
     }
 
     update({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.put(
-            url
+            url, payload
         ), actionType, dispatch, payload)
     }
 
     delete({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.delete(
-            url
+            url, payload
         ), actionType, dispatch, payload)
     }
 

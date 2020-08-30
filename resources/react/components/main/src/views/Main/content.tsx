@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Flex,Box } from 'reflexbox'
@@ -8,17 +8,19 @@ import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 
 import { ComponentInterface, useDebounce } from 'utils'
 import theme from 'theme'
 
-import { searchArticled } from '../../actions'
+import { searchArticled, quoteArticle } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
     const article = useSelector(state => state.active)
+    const quotes = useSelector(state => state.quotes)
 
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')
     const [searchResult, setSearchResult] = useState()
     const [searchProgress, setSearchProgress] = useState(false)
+    const [progressQuoteArticle, setProgressQuoteArticle] = useState(false)
 
     const debounceSearching = useDebounce(searchQuery, 300)
 
@@ -35,12 +37,27 @@ export const Component: ComponentInterface<any> = () => {
         )
     }, [debounceSearching, searchField])
 
+    useEffect(() => {
+        !searchQuery && setSearchResult(null)
+    }, [searchQuery])
+
     const activeArticle = article => (
         setSearchResult(null),
         dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
     )
 
     const clearSelectArticle = () => dispatch({ type: SET_ACTIVE_ARTICLE, payload: undefined })
+
+    const activeArticleIsQuote = useMemo(() =>
+        article && quotes.length && quotes.some(item => item == article.articleID)
+    , [article, quotes])
+
+    const quote = articleId => (
+        setProgressQuoteArticle(true),
+        dispatch(quoteArticle({ articleID: articleId }))
+            .catch(console.error)
+            .finally(() => setProgressQuoteArticle(false))
+    )
 
     return (
         <Flex width="100%">
@@ -73,7 +90,10 @@ export const Component: ComponentInterface<any> = () => {
                                 <Button styles={theme.button.styles.unaccent} onClick={clearSelectArticle}>Назад</Button>
                                 <Flex flexDirection="column" sx={{ placeItems: 'flex-end' }}>
                                     <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>Необходимо цитирований: { article.citesNeeded }</Text>
-                                    <Button>Цитировать</Button>
+                                    {!activeArticleIsQuote &&
+                                        <Button isProcessing={progressQuoteArticle} disabled={progressQuoteArticle} onClick={() => quote(article.articleID)}>Цитировать</Button> ||
+                                        <Button styles={theme.button.styles.accent}>Процитировано</Button>
+                                    }
                                 </Flex>
                             </Flex>
                             <Box mb=".5rem">

@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex } from 'reflexbox'
 import styled from 'styled-components'
 
-import { Skeleton as SkeletonType, Theme } from 'theme/types'
+import { Skeleton as SkeletonType } from 'theme/types'
 import { Props, UIElement } from './types'
 
 interface SkeletonProps extends Props<SkeletonType, HTMLButtonElement> {
