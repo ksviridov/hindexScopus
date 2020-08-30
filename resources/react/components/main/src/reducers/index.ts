@@ -2,7 +2,8 @@ import update from 'immutability-helper'
 
 import {
     GET_STATE,
-    GET_HOT_PUBLICATIONS
+    GET_HOT_PUBLICATIONS,
+    SET_ACTIVE_ARTICLE
 } from '../actions/types'
 
 export type Payload = any
@@ -17,7 +18,8 @@ export interface Store {
     api: {
         [propName: string]: string
     },
-    hot: Array<any>
+    hot: Array<any>,
+    active: any
 }
 
 export const initialState: Store = {
@@ -26,12 +28,14 @@ export const initialState: Store = {
         promise: undefined,
         search: undefined
     },
-    hot: []
+    hot: [],
+    active: undefined
 }
 
 export const reducers = {
     [GET_STATE]: (payload: Payload) => ({ $merge: payload }),
     [GET_HOT_PUBLICATIONS]: (payload: Payload) => ({ hot: { $set: payload } }),
+    [SET_ACTIVE_ARTICLE]: (payload: Payload) => ({ active: { $set: payload } }),
 }
 
 export default (state = initialState, action: Action) =>

@@ -59,7 +59,21 @@ export const styles: StructTheme<Button> = {
             background: ${(props: Props) => props.theme.colors.bg.accent};
 
             &:hover, &:focus {
-                background-color: ${(props: Props) => props.theme.colors.bg.accent};
+                
+            }
+        `
+    },
+    unaccent: {
+        container,
+        button: css`
+            ${button}
+
+            background: #fff;
+            border: 1px solid #999;
+            color: #222;
+
+            &:hover, &:focus {
+                border-color: ${(props: Props) => props.theme.colors.bg.common};
             }
         `
     }

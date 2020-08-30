@@ -2,12 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { getHotPublications } from '../../actions'
-
 import { Flex } from 'reflexbox'
 import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
+
+import { getHotPublications } from '../../actions'
+import { SET_ACTIVE_ARTICLE } from '../../actions/types'
 
 import { item as itemStyles, itemCount as itemCountStyle } from './styles/hot'
 
@@ -35,6 +36,8 @@ export const Component: ComponentInterface<any> = () => {
             .catch(console.error)
     })
 
+    const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
+
     return (
         <Flex width="100%">
             {!isInitialized &&  <Skeleton /> || 
@@ -50,7 +53,7 @@ export const Component: ComponentInterface<any> = () => {
                     {!hotList?.length &&
                         <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text> ||
                         HotListForCurrentPage.map(item =>
-                            <Item key={item.articleID}>
+                            <Item key={item.articleID} onClick={() => selectActiveArticle(item)}>
                                 <Flex justifyContent="space-between" width="100%" mb=".5rem">
                                     <Text styles={theme.text.styles.label}>{ item.name }</Text>
                                     <ItemCount className="hot-item__cites-needed">
