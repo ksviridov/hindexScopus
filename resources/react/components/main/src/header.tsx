@@ -13,8 +13,6 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
         //TODO: load user information
     }, [])
 
-    console.log(props)
-
     return (
         <Container sx={{ mb: '5rem' }}>
             <Container.Header>
@@ -28,7 +26,7 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
 })
 
 Component.Skeleton = () => (
-    <Container sx={{ mb: '3rem' }}>
+    <Container sx={{ mb: '3rem', width: '100%' }}>
         <Container.Header>
             <UISkeleton height="3rem" width="3rem" mr="5rem" style={{ borderRadius: '50%' }} />
             <UISkeleton height="3rem" width="8rem" mr="5rem" />

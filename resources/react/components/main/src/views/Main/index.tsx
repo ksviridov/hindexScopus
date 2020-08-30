@@ -1,30 +1,30 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
 import { Flex } from 'reflexbox'
 
-import Header from './header'
-import HotList from './hot'
+import { debouncedImport } from 'utils'
+
+const HotList = lazy(() => debouncedImport(() => import('./hot')))
+const Content = lazy(() => debouncedImport(() => import('./content')))
+
+import { Skeleton as HotListSkeleton } from './hot'
+import { Skeleton as ContentSkeleton } from './content'
 
 export const Component = () => {
     return (
-        <Flex flexDirection="column" >
-            <Header />
-            <Flex justifyContent="space-around">
-                <Flex width="40%">
+        <Flex justifyContent="space-around">
+            <Flex width="40%">
+                <Suspense fallback={<HotListSkeleton />}>
                     <HotList />
-                </Flex>
-                <Flex width="50%">
-                    Test
-                </Flex>
+                </Suspense>
+            </Flex>
+            <Flex width="50%">
+                <Suspense fallback={<ContentSkeleton />}>
+                    <Content />
+                </Suspense>
             </Flex>
         </Flex>
     )
 }
-
-export const Skeleton = () => (
-    <Flex flexDirection="column" >
-        <Header.Skeleton />
-    </Flex>
-)
 
 export default Component

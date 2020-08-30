@@ -10,7 +10,7 @@ import { getState } from './actions'
 import theme from 'theme'
 import { debouncedImport } from 'utils'
 
-import { Skeleton as MainSkeleton } from './views/Main'
+import Header from './header'
 
 const Main = lazy(() => debouncedImport(() => import('./views/Main')))
 
@@ -27,14 +27,15 @@ export const App = () => {
             .catch(console.error)
     }, [])
     return (
-        isInitialized && <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
+        !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
             <BrowserRouter basename={window.BASE_URL ? new URL(window.BASE_URL).pathname : '/'}>
                 <Route path="" render={({ location }) =>
 					<Box width="100%">
+                        <Header />
 						<Switch location={location}>
 							<Route path="/">
 								<Box>
-									<Suspense fallback={<MainSkeleton />}>
+									<Suspense fallback={<></>}>
 										<Main />
 									</Suspense>
 								</Box>
@@ -46,6 +47,12 @@ export const App = () => {
         </Flex>
     )
 }
+
+export const Skeleton = () => (
+    <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
+        <Header.Skeleton />
+    </Flex>
+)
 
 export const Component = () => <ThemeProvider theme={theme}><App /></ThemeProvider>
 

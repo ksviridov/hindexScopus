@@ -2,7 +2,8 @@ import { API, DispatchFn } from 'utils'
 import { Store } from '../reducers/index'
 import {
     GET_STATE,
-    GET_HOT_PUBLICATIONS
+    GET_HOT_PUBLICATIONS,
+    SEARCH_ARTICLES
 } from './types'
 
 export type State = () => Store
@@ -12,3 +13,6 @@ export const getState = (actionType = GET_STATE) =>
 
 export const getHotPublications = (actionType = GET_HOT_PUBLICATIONS) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().api.hot, actionType, dispatch })
+
+export const searchArticled = (payload, actionType = SEARCH_ARTICLES) =>
+    (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().api.search, actionType, payload })

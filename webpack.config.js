@@ -17,8 +17,6 @@ const outpug_path = path.resolve('./public/view')
 const app_name = yargs.app
 const is_analyzer = yargs.analyzer
 
-console.log(is_analyzer)
-
 if (app_name && !fs.existsSync(`${apps_path}/${app_name}`))
     throw new Error(`No such app as ${app_name}`)
 

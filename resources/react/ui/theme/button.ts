@@ -8,7 +8,6 @@ export const container = css`
     font-size: 1.1rem;
     font-weight: 400;
     text-transform: uppercase;
-    width: max-content;
 `
 
 export const button = css`

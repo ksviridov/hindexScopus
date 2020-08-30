@@ -6,7 +6,7 @@ import { Props } from './types'
 interface TransitionProps extends Props<any, HTMLDivElement> {
     in: boolean,
     classNames?: string,
-    delayed?: number,
+    delayed?: number | boolean,
 }
 
 export const Transition = (props: TransitionProps) => <CSSTransition timeout={props.delayed ? 200 : 0} unmountOnExit {...props} />

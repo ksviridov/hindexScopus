@@ -83,6 +83,4 @@ export const Skeleton = () => (
 export const Item = styled(Flex)`${() => itemStyles}`
 export const ItemCount = styled(Text)`${() => itemCountStyle}`
 
-Component.Skeleton = Skeleton
-
 export default Component

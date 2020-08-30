@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import axios, { AxiosPromise } from 'axios'
 import _max from 'lodash/max'
 import { withRouter } from 'react-router-dom'
@@ -12,7 +12,8 @@ export interface HistoryProps {
 
 export interface ComponentInterface<T> {
     (props: T): React.FC,
-    Skeleton?: React.FC
+    Skeleton?: React.FC,
+    [propName: string]: Function | React.FC
 }
 
 export interface CRUD<T> {
@@ -106,4 +107,24 @@ export class API implements CRUD<ApiProps> {
             )
         )
     }
+}
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+
+    [value]
+  );
+
+  return debouncedValue;
 }

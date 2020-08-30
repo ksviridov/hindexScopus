@@ -38,6 +38,22 @@ module.exports = {
                 citesNeeded: 2,
                 articleID: 84991594367
             }
+        ]),
+        '/api/search': req => ([
+            {
+                name: "Pljonkin A.P.",
+                title: "The review of the commercial quantum key distribution system",
+                publicationName: "PDGC 2018 - 2018 5th International Conference on Parallel, Distributed and Grid Computing",
+                citesNeeded: 3,
+                articleID: 85069438729
+            },
+            {
+                name: "Rumyantsev K.E.",
+                title: "Robust algorithm for detection of image features",
+                publicationName: "Proceedings of 2016 IEEE East-West Design and Test Symposium, EWDTS 2016",
+                citesNeeded: 4,
+                articleID: 85015188757
+            },
         ])
     },
     post: {},
