@@ -9,12 +9,13 @@ import theme from 'theme'
 
 import { getHotPublications } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
+import { Store } from '../../reducers'
 
 import { item as itemStyles, itemCount as itemCountStyle } from './styles/hot'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
-    const hotList = useSelector(state => state.hot)
+    const hotList = useSelector((state: Store) => state.main.hot)
 
     const [isInitialized, setIsInitialized] = useState(false)
     const [pageCount] = useState(3)

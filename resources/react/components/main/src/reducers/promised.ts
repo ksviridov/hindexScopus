@@ -1,0 +1,23 @@
+import update from 'immutability-helper'
+import { Article, Payload, Action } from './types'
+
+import {
+    QUOTE_ARTICLE
+} from '../actions/types'
+
+export interface Store {
+    by_me: Article[],
+    for_me: Article[],
+}
+
+export const initialState: Store = {
+    by_me: [],
+    for_me: [],
+}
+
+export const reducers = {
+    [QUOTE_ARTICLE]: (payload: Payload) => ({ by_me: { $push: [payload] } }),
+}
+
+export default (state = initialState, action: Action) =>
+    reducers[action.type] ? update(state, reducers[action.type](action.payload, state, action.requestPayload)) : state

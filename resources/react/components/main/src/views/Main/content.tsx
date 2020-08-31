@@ -11,11 +11,13 @@ import theme from 'theme'
 
 import { searchArticled, quoteArticle } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
+import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
-    const article = useSelector(state => state.active)
-    const quotes = useSelector(state => state.quotes)
+    const article = useSelector((state: Store) => state.main.active)
+    const quotes = useSelector((state: Store) => state.quote.by_me)
+    const promises = useSelector((state: Store) => state.promised.by_me)
 
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')
@@ -50,8 +52,11 @@ export const Component: ComponentInterface<any> = () => {
     const clearSelectArticle = () => dispatch({ type: SET_ACTIVE_ARTICLE, payload: undefined })
 
     const activeArticleIsQuote = useMemo(() =>
-        article && quotes.length && quotes.some(item => item == article.articleID)
-    , [article, quotes])
+        article && (
+            quotes?.length && quotes.some(item => item == article.articleID) ||
+            promises?.length && promises.some(item => item == article.articleID)
+        )
+    , [article, quotes, promises])
 
     const quote = articleId => (
         setProgressQuoteArticle(true),
