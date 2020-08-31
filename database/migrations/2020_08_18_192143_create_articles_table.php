@@ -18,6 +18,8 @@ class CreateArticlesTable extends Migration
             $table->bigInteger('article_id');
             $table->string('title');
             $table->string('publication_name');
+            $table->text('description');
+            $table->string('key_words');
             $table->integer('cited_by_count');
             $table->integer('author_id');
             $table->timestamps();

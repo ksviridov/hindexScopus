@@ -10,4 +10,11 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function api(){
+        return [
+            'all' => 'api/all',
+            'hot' => 'api/hot',
+        ];
+    }
 }
