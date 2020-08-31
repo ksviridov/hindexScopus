@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Flex,Box } from 'reflexbox'
 import _debounce from 'lodash/debounce'
+import { toast } from 'react-toastify'
 
 import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface, useDebounce } from 'utils'
@@ -32,7 +33,7 @@ export const Component: ComponentInterface<any> = () => {
             setSearchProgress(true),
             dispatch(searchArticled({ field: searchField, value: debounceSearching }))
                 .then(({ data }) => setSearchResult(data))
-                .catch(console.error)
+                .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
                 .finally(() => setSearchProgress(false))
         )
     }, [debounceSearching, searchField])
@@ -55,7 +56,8 @@ export const Component: ComponentInterface<any> = () => {
     const quote = articleId => (
         setProgressQuoteArticle(true),
         dispatch(quoteArticle({ articleID: articleId }))
-            .catch(console.error)
+            .then(() => toast.success('Статья помечена как "Обещано к цитированию"'))
+            .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
             .finally(() => setProgressQuoteArticle(false))
     )
 

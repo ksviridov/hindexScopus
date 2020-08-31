@@ -1,6 +1,8 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import { useDispatch } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { ThemeProvider } from 'styled-components'
 import { Flex, Box } from 'reflexbox'
@@ -24,7 +26,7 @@ export const App = () => {
             .then(() => (
                 setIsInitialized(true)
             ))
-            .catch(console.error)
+            .catch(() => alert('Ошибка загрузки данных, попробуйте зайти позже'))
     }, [])
     return (
         !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
@@ -32,6 +34,11 @@ export const App = () => {
                 <Route path="" render={({ location }) =>
 					<Box width="100%">
                         <Header />
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={3500}
+                            limit={5}
+                        />
 						<Switch location={location}>
 							<Route path="/">
 								<Box>

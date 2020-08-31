@@ -33,7 +33,7 @@ export const Component: ComponentInterface<any> = () => {
     useEffect(() => {
         dispatch(getHotPublications())
             .then(() => setIsInitialized(true))
-            .catch(console.error)
+            .catch(() => alert('Ошибка загрузки горячего списка. Повторите попытку позже'))
     })
 
     const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
