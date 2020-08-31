@@ -2,22 +2,24 @@ import update from 'immutability-helper'
 import { Article, Payload, Action } from './types'
 
 import {
-    
+    GET_QUOTES_BY,
+    GET_QUOTES_FOR,
 } from '../actions/types'
 
 
 export interface Store {
-    by_me: Article[],
-    for_me: Article[],
+    by: Article[],
+    for: Article[],
 }
 
 export const initialState: Store = {
-    by_me: [],
-    for_me: [],
+    by: [],
+    for: [],
 }
 
 export const reducers = {
-    
+    [GET_QUOTES_BY]: (payload: Payload) => ({ by: { $set: payload } }),
+    [GET_QUOTES_FOR]: (payload: Payload) => ({ for: { $set: payload } }),
 }
 
 export default (state = initialState, action: Action) =>

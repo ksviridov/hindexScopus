@@ -18,6 +18,7 @@ export interface Props<T, U> extends React.HTMLAttributes<U> {
     styles?: T,
     theme?: Theme,
     sx?: SxProps,
+    key?: any,
     'data-testid'?: string
 }
 

@@ -16,8 +16,8 @@ import { Store } from '../../reducers'
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
     const article = useSelector((state: Store) => state.main.active)
-    const quotes = useSelector((state: Store) => state.quote.by_me)
-    const promises = useSelector((state: Store) => state.promised.by_me)
+    const quotes = useSelector((state: Store) => state.quote.by)
+    const promises = useSelector((state: Store) => state.promised.by)
 
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')

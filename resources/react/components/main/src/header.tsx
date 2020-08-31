@@ -7,7 +7,8 @@ import { Container, Skeleton as UISkeleton, Button } from 'ui'
 export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps) => {
     const [progress, setProgress] = useState([])
 
-    const navigateToMain = () => props.history.push({ pathname: '/' })
+    const navigateToMain = () => props.history.push({ pathname: '/home' })
+    const navigateToQuoted = () => props.history.push({ pathname: '/quote' })
 
     useEffect(() => {
         //TODO: load user information
@@ -18,7 +19,7 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
             <Container.Header>
                 <UISkeleton height="3rem" width="3rem" mr="5rem" style={{ borderRadius: '50%' }} />
                 <Button sx={{ mr: '5rem' }} onClick={navigateToMain}>Цитировать</Button>
-                <Button sx={{ mr: '5rem' }}>Процитировано</Button>
+                <Button sx={{ mr: '5rem' }} onClick={navigateToQuoted}>Процитировано</Button>
                 <Button>Обещано к цитированию</Button>
             </Container.Header>
         </Container>

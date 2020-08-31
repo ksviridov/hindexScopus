@@ -12,6 +12,7 @@ export interface HistoryProps {
 
 export interface ComponentInterface<T> {
     (props: T): React.FC,
+    key?: any,
     Skeleton?: React.FC,
     [propName: string]: Function | React.FC
 }
@@ -79,7 +80,9 @@ export class API implements CRUD<ApiProps> {
     applySearchCriteria(url: string, searchCriteria: SearchCriteria) {
 		return url.concat('?' +
 			Object.entries(searchCriteria)
-				.map(([criteria, value]) => `${criteria}=${value}&`))
+                .map(([criteria, value]) => `${criteria}=${value}`)
+                .join('&')
+        )
 	}
 
     handleResponse(request: AxiosPromise, actionType: string, dispatch: DispatchFn, payload?: any): Promise<any> {

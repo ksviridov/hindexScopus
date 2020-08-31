@@ -10,4 +10,5 @@ export type Article = {
     citesNeeded: number,
     name: string,
     articleID: number | string,
+    title?: string
 }

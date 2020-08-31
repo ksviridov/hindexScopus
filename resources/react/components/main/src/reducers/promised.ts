@@ -6,17 +6,17 @@ import {
 } from '../actions/types'
 
 export interface Store {
-    by_me: Article[],
-    for_me: Article[],
+    by: Article[],
+    for: Article[],
 }
 
 export const initialState: Store = {
-    by_me: [],
-    for_me: [],
+    by: [],
+    for: [],
 }
 
 export const reducers = {
-    [QUOTE_ARTICLE]: (payload: Payload) => ({ by_me: { $push: [payload] } }),
+    [QUOTE_ARTICLE]: (payload: Payload) => ({ by: { $push: [payload] } }),
 }
 
 export default (state = initialState, action: Action) =>
