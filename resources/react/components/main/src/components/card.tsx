@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import styled from 'styled-components'
 
 import { Flex } from 'reflexbox'
 import _castArray from 'lodash/castArray'
@@ -40,7 +41,7 @@ export const Component: ComponentInterface<CardInterface> = props => {
                 </Container.Header>
                 <Container.Content>
                         {itemsForCurrentPage && React.Children.map(itemsForCurrentPage, option =>
-                            <Flex flexDirection="column" {...option.props} />
+                            <CardItem {...option.props} />
                         )}
                 </Container.Content>
         </Container>
@@ -50,5 +51,24 @@ export const Component: ComponentInterface<CardInterface> = props => {
 Component.defaultProps = {
     max: 3
 }
+
+export const CardItem = styled(Flex)`
+    box-shadow: 0 0 10px #ddd;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    padding: 2rem;
+    cursor: pointer;
+    flex-direction: column;
+
+    ${props => props.theme.mixin.transition}
+
+    &:hover {
+        background-color: #f9f9f9;
+
+        .hot-item__cites-needed {
+            border: 1px solid ${props => props.theme.colors.bg.common};
+        }
+    }
+`
 
 export default Component

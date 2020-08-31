@@ -12,8 +12,6 @@ import { getHotPublications } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
 import { Store } from '../../reducers'
 
-import { item as itemStyles, itemCount as itemCountStyle } from './styles/hot'
-
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
     const hotList = useSelector((state: Store) => state.main.hot)
@@ -35,22 +33,20 @@ export const Component: ComponentInterface<any> = () => {
     return (
         <Flex width="100%">
             {!isInitialized &&  <Skeleton /> ||
-            <Card title="Горячий список" pagination={true}>
+            <Card title="Горячий список" pagination={hotList?.length && hotList.length > 3}>
                 {!hotList?.length &&
                     <Flex>
                         <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text>
                     </Flex> ||
                     sortingHotList.map(item =>
-                        <Flex key={item.articleID}>
-                            <Item onClick={() => selectActiveArticle(item)}>
-                                <Flex justifyContent="space-between" width="100%" mb=".5rem">
-                                    <Text styles={theme.text.styles.label}>{ item.name }</Text>
-                                    <ItemCount className="hot-item__cites-needed">
-                                        { item.citesNeeded }
-                                    </ItemCount>
-                                </Flex>
-                                <Text styles={theme.text.styles.placeholder}>{ item.title }</Text>
-                            </Item>  
+                        <Flex key={item.articleID} onClick={() => selectActiveArticle(item)}>
+                            <Flex justifyContent="space-between" width="100%" mb=".5rem">
+                                <Text styles={theme.text.styles.label}>{ item.name }</Text>
+                                <ItemCount className="hot-item__cites-needed">
+                                    { item.citesNeeded }
+                                </ItemCount>
+                            </Flex>
+                            <Text styles={theme.text.styles.placeholder}>{ item.title }</Text> 
                         </Flex>  
                     )}
             </Card>}
@@ -71,7 +67,15 @@ export const Skeleton = () => (
     </Container>
 )
 
-export const Item = styled(Flex)`${() => itemStyles}`
-export const ItemCount = styled(Text)`${() => itemCountStyle}`
+export const ItemCount = styled(Text)`
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 3rem;
+    justify-content: center;
+    align-items: center;
+
+    ${props => props.theme.mixin.transition}
+`
 
 export default Component

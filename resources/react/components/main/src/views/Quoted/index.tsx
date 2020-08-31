@@ -42,8 +42,10 @@ export const Component: ComponentInterface<any> = () => {
                                 <Text styles={theme.text.styles.placeholder} >Вы еще не процитировали ни одной статьи</Text>
                             </Flex> ||
                             quotesBy.map(item =>
-                                <Flex key={item.articleID}>
-                                    <Article article={item} />
+                                <Flex key={item.articleID} flexDirection="column">
+                                    <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { item.articleID }</Text>
+                                    <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
+                                    <Text styles={theme.text.styles.placeholder}>{ item.title }</Text>
                                 </Flex>
                             )
                         }
@@ -58,8 +60,10 @@ export const Component: ComponentInterface<any> = () => {
                                 <Text styles={theme.text.styles.placeholder} >Вам еще не процитировали ни одной статьи</Text>
                             </Flex> ||
                             quotesFor.map(item =>
-                                <Flex key={item.articleID}>
-                                    <Article article={item} />
+                                <Flex key={item.articleID} flexDirection="column">
+                                    <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { item.articleID }</Text>
+                                    <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
+                                    <Text styles={theme.text.styles.placeholder}>{ item.title }</Text>
                                 </Flex>
                             )
                         }
@@ -69,16 +73,6 @@ export const Component: ComponentInterface<any> = () => {
         </Flex>
     )
 }
-
-export const Article: ComponentInterface<{ article: ArticleInterface }> = ({ article }) => (
-        <Container sx={{ mb: '2rem' }}>
-            <Container.Content>
-                <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { article.articleID }</Text>
-                <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ article.name }</Text>
-                <Text styles={theme.text.styles.placeholder}>{ article.title }</Text>
-            </Container.Content>
-        </Container>
-)
 
 export const Skeleton: ComponentInterface<{ lines?: number }> = ({ lines = 1 }) => (
     <Flex flexDirection="column" width="80%">
