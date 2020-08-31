@@ -2,13 +2,14 @@
 
 namespace App\functions;
 
-// 	cbcfd908dde826afd1fe957f48b62733
+// 	cbcfd908dde826afd1fe957f48b62733//
+//62e5ec2acb6af16ecca00c71192edcb8
 // https://api.elsevier.com/content/search/author
 // params [ query, apiKey ]
 class Scopus
 {
     private $URL = 'https://api.elsevier.com/content/';
-    private $apiKey = '62e5ec2acb6af16ecca00c71192edcb8';
+    private $apiKey = '7593f60d85b11dca565ce826d31503f8';
     private $search = 'search/author';
     private $aRetrieval = 'author/author_id';
     private $scopusSearch = 'search/scopus?';
@@ -35,7 +36,7 @@ class Scopus
     public function getArticlesIds($id)
     {
         $options = [
-            'query' => 'AU-ID('.$id .')',
+            'query' => 'AU-ID(' . $id . ')',
             'field' => 'dc:identifier',
             'count' => '100',
             'apiKey' => $this->apiKey,
@@ -44,7 +45,7 @@ class Scopus
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $this->URL . $this->scopusSearch .  http_build_query($options));
+        curl_setopt($ch, CURLOPT_URL, $this->URL . $this->scopusSearch . http_build_query($options));
 
         $response = curl_exec($ch);
         curl_close($ch);
@@ -52,7 +53,7 @@ class Scopus
         $data = json_decode($response, true);
 
         $arrData = [];
-        foreach ($data['search-results']['entry'] as $entry){
+        foreach ($data['search-results']['entry'] as $entry) {
 //    print_r($entry);
             array_push($arrData, $entry['dc:identifier']);
         }
@@ -86,7 +87,8 @@ class Scopus
 
     }
 
-    public function getAuthorHIndexById($id){
+    public function getAuthorHIndexById($id)
+    {
         $data = $this->authorRetrieval($id);
 
         $hIndex = $data['author-retrieval-response']['0']['h-index'];
@@ -125,19 +127,30 @@ class Scopus
         $data = json_decode($response, true);
 
         $keyWords = [];
-        foreach ($data['abstracts-retrieval-response']['authkeywords']['author-keyword'] as $keyWord){
-            array_push($keyWords, $keyWord['$']);
-        }
-
         $arrData = [
-            'title' => $data['abstracts-retrieval-response']['coredata']['dc:title'],
-            'publicationName' => $data['abstracts-retrieval-response']['coredata']['prism:publicationName'],
-            'description' => $data['abstracts-retrieval-response']['coredata']['dc:description'],
-            'keyWords' => $keyWords,
-            'citedByCount' => $data['abstracts-retrieval-response']['coredata']['citedby-count'],
+            'title' => '',
+            'publicationName' => '',
+            'description' => '',
+            'keyWords' => '',
+            'citedByCount' => 0,
             'articleID' => $article_id,
         ];
+        if ($data['abstracts-retrieval-response']['authkeywords']['author-keyword']) {
 
+            foreach ($data['abstracts-retrieval-response']['authkeywords']['author-keyword'] as $keyWord) {
+                array_push($keyWords, $keyWord['$']);
+            }
+
+
+            $arrData = [
+                'title' => $data['abstracts-retrieval-response']['coredata']['dc:title'],
+                'publicationName' => $data['abstracts-retrieval-response']['coredata']['prism:publicationName'],
+                'description' => $data['abstracts-retrieval-response']['coredata']['dc:description'],
+                'keyWords' => $keyWords,
+                'citedByCount' => $data['abstracts-retrieval-response']['coredata']['citedby-count'],
+                'articleID' => $article_id,
+            ];
+        }
 //        print_r(')))))))))))))');
 
         return $arrData;
@@ -146,7 +159,8 @@ class Scopus
 
     }
 
-    public function getAuthorArticles($authorID){
+    public function getAuthorArticles($authorID)
+    {
         $articlesIds = $this->getArticlesIds($authorID);
 //        pretty_print($articlesIds);
 //        print_r(')))))))))))))');
@@ -155,7 +169,7 @@ class Scopus
 
 //        $articleRetrieval = $this->articleRetrieval();
 
-        $authorArticles = array_map(array('App\functions\Scopus','articleRetrieval'), $articlesIds);
+        $authorArticles = array_map(array('App\functions\Scopus', 'articleRetrieval'), $articlesIds);
 
         return $authorArticles;
     }
@@ -168,7 +182,6 @@ class Scopus
 //        return $articles;
 //
 //    }
-
 
 
 }

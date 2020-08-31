@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\TrustProxies;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,28 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/reload',)
 Route::get('/', 'ArticleController@main');
 
+Route::middleware('auth:api')->group(function (){
+    Route::get('/api', 'Controller@api');
+    Route::get('/api/all', 'ArticleController@all');
+    Route::get('/api/hot', 'ArticleController@hot');
+    Route::get('/api/search', 'ArticleController@search');
+});
+
+//Route::get('/api/hot', 'ArticleController@main');
+//Route::get('/api/hot', 'ArticleController@main');
+
 
 //Route::get('author/test/{authorId}', 'AuthorController@test');
 //
 //
-//Route::get('author/article/{id}', 'ArticleController@authorsArticle');
+Route::get('author/article/{id}', 'ArticleController@test');
 //
 //
 Route::get('article/test/{authorId}', 'ArticleController@test');
+
+
+//Route::view('/{path?}', '');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
