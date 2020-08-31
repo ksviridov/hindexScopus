@@ -7,6 +7,7 @@ const WebpackRequireFrom = require('webpack-require-from') // use to build dynam
 const CircularDependencyPlugin = require('circular-dependency-plugin')
 const bodyParser = require('body-parser')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const BundleAnalyzerPlugin  = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const glob = require('glob')
 const webpack = require('webpack')
 
@@ -14,6 +15,7 @@ const react_path = path.resolve('./resources/react')
 const apps_path = path.resolve(`${react_path}/components`)
 const outpug_path = path.resolve('./public/view')
 const app_name = yargs.app
+const is_analyzer = yargs.analyzer
 
 if (app_name && !fs.existsSync(`${apps_path}/${app_name}`))
     throw new Error(`No such app as ${app_name}`)
@@ -64,7 +66,8 @@ const plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ["chunks/*"] }),
     new webpack.ProvidePlugin({
-        React: 'react'
+        React: 'react',
+        ReactDOM: 'react-dom'
     }),
     new CircularDependencyPlugin({
       exclude: /node_modules/,
@@ -80,6 +83,8 @@ const plugins = [
       variableName: 'window.staticsURL' // Used to dynamically pull static files
     })
 )
+
+is_analyzer && plugins.push(new BundleAnalyzerPlugin())
 
 module.exports = {
     mode,
@@ -146,7 +151,7 @@ module.exports = {
   
             mock && Object.entries(mock).map(
                 ([method, paths]) => Object.entries(paths).map(([path, mock]) =>
-                    app[method](path, bodyParser.json(), (req, res) => setTimeout(() => res.json(mock(req)), 10 /* artificial delay */))
+                    app[method](path, bodyParser.json(), (req, res) => setTimeout(() => res.json(mock(req)), 1000 /* artificial delay */))
                 )
             )
         }

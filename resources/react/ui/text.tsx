@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import { Flex } from 'reflexbox'
 
 import { text as textStyles } from 'theme'
-import { Text as TextType, Theme } from 'theme/types'
+import { Text as TextType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
-interface TextProps extends Props<TextType, Theme> {
-    as?: 'label' | 'accent' | 'header' | 'placeholder' | 'p' | 'required' | 'box',
+export type As = 'label' | 'p' | 'span'
+interface TextProps extends Props<TextType, HTMLDivElement> {
+    as?: As,
 }
 
 const context: Context<TextType> = { styles: undefined }

@@ -1,5 +1,20 @@
+import React, { useState, useEffect } from 'react';
 import axios, { AxiosPromise } from 'axios'
-import { max as _max } from 'lodash'
+import _max from 'lodash/max'
+import { withRouter } from 'react-router-dom'
+
+import { Theme } from 'theme/types'
+
+export interface HistoryProps {
+    history: Array<any>,
+    location: { pathname: string, search: string, hash: string, state: any }
+}
+
+export interface ComponentInterface<T> {
+    (props: T): React.FC,
+    Skeleton?: React.FC,
+    [propName: string]: Function | React.FC
+}
 
 export interface CRUD<T> {
     create(props: T): Promise<any>,
@@ -25,39 +40,39 @@ export type ApiProps = {
     searchCriteria?: SearchCriteria,
     payload?: any,
     actionType?: string,
-    dispatch: DispatchFn
+    dispatch?: DispatchFn
 }
 
 export type Import = () => Promise<any>
 
-export const DELAY = 1000
+export const DELAY = 500
 
 export const debouncedImport = (action: Import, delay = DELAY) => new Promise(resolve =>
 	(start => action().then(response => setTimeout(() => resolve(response), _max([Date.now() - start, delay]))))(Date.now())
 )
 
 export class API implements CRUD<ApiProps> {
-    create({ url, actionType, dispatch }) {
+    create({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.post(
-            url
+            url, payload
         ), actionType, dispatch)
     }
 
-    read({ url, searchCriteria, actionType, dispatch, payload }) {
+    read({ url, searchCriteria, actionType, dispatch }: ApiProps) {
         return this.handleResponse(axios.get(
             searchCriteria ? this.applySearchCriteria(url, searchCriteria) : url
-        ), actionType, dispatch, payload)
+        ), actionType, dispatch)
     }
 
-    update({ url, actionType, dispatch, payload }) {
+    update({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.put(
-            url
+            url, payload
         ), actionType, dispatch, payload)
     }
 
-    delete({ url, actionType, dispatch, payload }) {
+    delete({ url, actionType, dispatch, payload }: ApiProps) {
         return this.handleResponse(axios.delete(
-            url
+            url, payload
         ), actionType, dispatch, payload)
     }
 
@@ -92,4 +107,24 @@ export class API implements CRUD<ApiProps> {
             )
         )
     }
+}
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+
+    [value]
+  );
+
+  return debouncedValue;
 }

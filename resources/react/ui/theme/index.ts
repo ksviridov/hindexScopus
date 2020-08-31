@@ -7,6 +7,8 @@ import {
     Container,
     Dropdown,
     Icon,
+    Search,
+    Select,
     Colors,
     Mixin,
     Theme
@@ -19,6 +21,8 @@ export const skeleton = require<ModuleStruct<Skeleton>>('./skeleton')
 export const container = require<ModuleStruct<Container>>('./container')
 export const dropdown = require<ModuleStruct<Dropdown>>('./dropdown')
 export const icon = require<ModuleStruct<Icon>>('./icon')
+export const search = require<ModuleStruct<Search>>('./search')
+export const select = require<ModuleStruct<Select>>('./select')
 
 export const mixin = require<Mixin>('./mixin')
 export const colors = require<{ default: Colors }>('./colors').default
@@ -31,6 +35,8 @@ export const theme: Theme = {
     container,
     dropdown,
     icon,
+    search,
+    select,
     mixin,
     colors
 }

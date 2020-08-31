@@ -21,7 +21,8 @@ export type StyledProps = {
 
 export type Button = {
     container: Style,
-    button: Style
+    button: Style,
+    processingIcon: Style
 }
 
 export type Input = {
@@ -58,14 +59,39 @@ export type Dropdown = {
 
 export type Icon = Style
 
+export type Search = {
+    container: Style,
+    input: Style,
+    dropdown: Style,
+    label: Style,
+    option: Style,
+    searchIcon: Style,
+    processingIcon: Style
+}
+
+export type Select = {
+    container: Style,
+    toggle: Style,
+    option: Style,
+    dropdown: Style
+}
+
 export type Colors = {
     fg: TextField,
     bg: TextField
 }
 
+export interface MixinIcons {
+    [propName: string]: {
+        [propName: string]: string
+    }
+}
+
 export type Mixin = {
     transition: Style,
-    fade: Style
+    fade: Style,
+    icons: MixinIcons,
+    rotateZ: Style
 }
 
 export type Theme = {
@@ -76,6 +102,8 @@ export type Theme = {
     container: ModuleStruct<Container>,
     dropdown: ModuleStruct<Dropdown>,
     icon: ModuleStruct<Icon>,
+    search: ModuleStruct<Search>,
+    select: ModuleStruct<Select>,
     colors: Colors,
     mixin: Mixin
 }

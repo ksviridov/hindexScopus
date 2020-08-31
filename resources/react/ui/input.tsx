@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import styled from 'styled-components'
-import { clamp as _clamp } from 'lodash'
+import _clamp from 'lodash/clamp'
 import { Flex } from 'reflexbox'
 
 import { input as inputStyles } from 'theme'
-import { Input as InputType, Theme } from 'theme/types'
+import { Input as InputType } from 'theme/types'
 import { Props, Context, UIElement } from './types'
 
-type Value = string | number | undefined
+type Value = string | number
 
-interface InputProps extends Props<InputType, Theme> {
+interface InputProps extends Props<InputType, HTMLButtonElement> {
     onChange?: (value: Value) => void,
     onBlur?: (value: Value) => void,
     onFocus?: (e: React.MouseEvent) => void,
@@ -69,16 +69,16 @@ export const Component: UIElement<InputProps> = props => {
 		inputRef.current.focus({ preventScroll: true })
     )
     
-    const onChange = (event: React.MouseEvent) => (
+    const onChange = (event: any) => (
 		event.persist(),
 		(value => (setValue(value), props.onChange && props.onChange(value)))(validate(event.target.value)('onchange'))
 	)
-	const onBlur = (event: React.MouseEvent) => (
+	const onBlur = (event) => (
 		event.persist(),
 		(value => (setValue(value), props.onBlur && props.onBlur(value)))(validate(event.target.value)('onblur'))
     )
     
-    const validate = (value: Value) => (event: React.MouseEvent) => (validator => validator ? validator() : value)(
+    const validate = (value: Value) => (event: 'onchange' | 'onblur') => (validator => validator ? validator() : value)(
 		({
 			onchange: {
 				number: () => (value && isFinite(+value)) ? _clamp(+value, props.min, props.max) : ''
