@@ -14,17 +14,17 @@ use App\Http\Middleware\TrustProxies;
 |
 */
 
-
+//Route::get('/{url?}', function () {
+//    return view('welcome');
+//})->where('', 'list');
 
 //Route::get('/reload',)
-Route::get('/', 'ArticleController@main');
+//Route::get('/', 'ArticleController@main');
 
-Route::middleware('auth:api')->group(function (){
-    Route::get('/api', 'Controller@api');
-    Route::get('/api/all', 'ArticleController@all');
-    Route::get('/api/hot', 'ArticleController@hot');
-    Route::get('/api/search', 'ArticleController@search');
-});
+Route::get('/api', 'Controller@api');
+Route::get('/api/all', 'ArticleController@all');
+Route::get('/api/hot', 'ArticleController@hot');
+Route::get('/api/search', 'ArticleController@search');
 
 //Route::get('/api/hot', 'ArticleController@main');
 //Route::get('/api/hot', 'ArticleController@main');
