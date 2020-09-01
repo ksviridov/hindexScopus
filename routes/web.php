@@ -41,6 +41,6 @@ Route::get('article/test/{authorId}', 'ArticleController@test');
 
 //Route::view('/{path?}', '');
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

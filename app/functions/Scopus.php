@@ -127,6 +127,8 @@ class Scopus
         $data = json_decode($response, true);
 
         $keyWords = [];
+        $description = '';
+
         $arrData = [
             'title' => '',
             'publicationName' => '',
@@ -135,22 +137,29 @@ class Scopus
             'citedByCount' => 0,
             'articleID' => $article_id,
         ];
-        if ($data['abstracts-retrieval-response']['authkeywords']['author-keyword']) {
+
+//        dd($data);
+
+        if ($data['abstracts-retrieval-response']['authkeywords']) {
 
             foreach ($data['abstracts-retrieval-response']['authkeywords']['author-keyword'] as $keyWord) {
                 array_push($keyWords, $keyWord['$']);
             }
+        }
 
+        if (array_key_exists('dc:description', $data['abstracts-retrieval-response']['coredata'])){
+            $description = $data['abstracts-retrieval-response']['coredata']['dc:description'];
+        }
 
             $arrData = [
                 'title' => $data['abstracts-retrieval-response']['coredata']['dc:title'],
                 'publicationName' => $data['abstracts-retrieval-response']['coredata']['prism:publicationName'],
-                'description' => $data['abstracts-retrieval-response']['coredata']['dc:description'],
+                'description' => $description,
                 'keyWords' => $keyWords,
                 'citedByCount' => $data['abstracts-retrieval-response']['coredata']['citedby-count'],
                 'articleID' => $article_id,
             ];
-        }
+
 //        print_r(')))))))))))))');
 
         return $arrData;

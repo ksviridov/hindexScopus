@@ -22,7 +22,7 @@ class ArticleController extends Controller
         $article_id = 'SCOPUS_ID:85084233956';
 
         dump($scopus->articleRetrieval($article_id));
-        dump($scopus->articleRetrieval('SCOPUS_ID:85084189966'));
+//        dump($scopus->articleRetrieval('SCOPUS_ID:85084189966'));
 //        dd($scopus->getAuthorArticles(57190492977));
 //        $article = Article::create([
 //            'article_id' => 34,
