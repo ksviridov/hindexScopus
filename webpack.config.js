@@ -13,7 +13,8 @@ const webpack = require('webpack')
 
 const react_path = path.resolve('./resources/react')
 const apps_path = path.resolve(`${react_path}/components`)
-const outpug_path = path.resolve('./public/view')
+const outpug_path_js = path.resolve('./public/js')
+const outpug_path_html = path.resolve('./public/view')
 const app_name = yargs.app
 const is_analyzer = yargs.analyzer
 
@@ -35,10 +36,9 @@ const entry = app_name ?
         .map(app => (fs.existsSync(`${apps_path}/${app}/src/index.js`) && { [app]: `${apps_path}/${app}/src/index.js`}))
 )
 
-const bundle_file = 'bundle.js'
 const output = {
-    path: `${outpug_path}`,
-    filename: `${app_name || '[name]'}/${bundle_file}`,
+    path: `${outpug_path_js}`,
+    filename: `${app_name || '[name]'}.js`,
     publicPath: '/',
     chunkFilename: 'chunks/[id].[chunkhash].js'
 }
@@ -48,7 +48,7 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
         inject: false,
         template: `pug-loader!${react_path}/template.pug`,
         hot,
-        app: `${bundle_file}`,
+        app: `${app_name || app}.js`,
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
         }
@@ -57,7 +57,7 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
         inject: true
     } :
     {
-        filename: `${outpug_path}/${app}/index.html`
+        filename: `${outpug_path_html}/${app}.html`
     }
 )
 
