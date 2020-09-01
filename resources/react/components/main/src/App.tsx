@@ -16,6 +16,7 @@ import Header from './header'
 
 const Main = lazy(() => debouncedImport(() => import('./views/Main')))
 const Quote = lazy(() => debouncedImport(() => import('./views/Quoted'), 700))
+const Promised = lazy(() => debouncedImport(() => import('./views/Promised'), 700))
 
 export const App = () => {
     const dispatch = useDispatch()
@@ -30,7 +31,7 @@ export const App = () => {
             .catch(() => alert('Ошибка загрузки данных, попробуйте зайти позже'))
     }, [])
     return (
-        !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
+        !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100vh' }}>
             <BrowserRouter basename={window.BASE_URL ? new URL(window.BASE_URL).pathname : '/'}>
                 <Route path="" render={({ location }) =>
                     location.pathname === '/' &&
@@ -57,6 +58,13 @@ export const App = () => {
 									</Suspense>
 								</Box>
 							</Route>
+                            <Route path="/promised">
+								<Box>
+									<Suspense fallback={<></>}>
+										<Promised />
+									</Suspense>
+								</Box>
+							</Route>
 						</Switch>
 					</Box>
 				}></Route>
@@ -66,7 +74,7 @@ export const App = () => {
 }
 
 export const Skeleton = () => (
-    <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100%' }}>
+    <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100vh' }}>
         <Header.Skeleton />
     </Flex>
 )

@@ -5,7 +5,8 @@ import {
     GET_HOT_PUBLICATIONS,
     SEARCH_ARTICLES,
     QUOTE_ARTICLE,
-    GET_QUOTES_BY
+    GET_QUOTES_BY,
+    GET_PROMISED_BY
 } from './types'
 
 export type State = () => Store
@@ -24,3 +25,6 @@ export const quoteArticle = (payload, actionType = QUOTE_ARTICLE) =>
 
 export const getQuotes = (searchCriteria, actionType = GET_QUOTES_BY) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.quote, searchCriteria, dispatch, actionType })
+
+export const getPromises = (searchCriteria, actionType = GET_PROMISED_BY) =>
+    (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.promise, searchCriteria, dispatch, actionType })

@@ -8,39 +8,39 @@ import Card from '../../components/card'
 import { Text, Skeleton as UISkeleton } from 'ui'
 import theme from 'theme'
 
-import { getQuotes } from '../../actions'
-import { GET_QUOTES_BY, GET_QUOTES_FOR } from '../../actions/types'
+import { getPromises } from '../../actions'
+import { GET_PROMISED_BY, GET_PROMISED_FOR } from '../../actions/types'
 import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
 
-    const quotesBy = useSelector((state: Store) => state.quote.by)
-    const quotesFor = useSelector((state: Store) => state.quote.for)
+    const promisedBy = useSelector((state: Store) => state.promised.by)
+    const promisedFor = useSelector((state: Store) => state.promised.for)
 
-    const [loadingQuotesBy, setLoadingQuotesBy] = useState(false)
-    const [loadingQuotesFor, setLoadingQuotesFor] = useState(false)
+    const [loadingPromisedBy, setLoadingPromisedBy] = useState(false)
+    const [loadingPromisedFor, setLoadingPromisedFor] = useState(false)
 
     useEffect(() => {
-        dispatch(getQuotes({ field: 'by' }, GET_QUOTES_BY))
-            .then(() => setLoadingQuotesBy(true))
+        dispatch(getPromises({ field: 'by' }, GET_PROMISED_BY))
+            .then(() => setLoadingPromisedBy(true))
             .catch(() => alert('Ошибка загрузки процитированных Вами статей'))
 
-        dispatch(getQuotes({ field: 'for' }, GET_QUOTES_FOR))
-            .then(() => setLoadingQuotesFor(true))
+        dispatch(getPromises({ field: 'for' }, GET_PROMISED_FOR))
+            .then(() => setLoadingPromisedFor(true))
             .catch(() => alert('Ошибка загрузки процитированных для вас статей'))
     }, [])
 
     return (
         <Flex justifyContent="space-around">
             <Flex width="45%">
-                {!loadingQuotesBy && <Skeleton lines={2} /> ||
-                    <Card title="Я" pagination={quotesBy?.length && quotesBy.length > 3}>
-                        {!quotesBy?.length &&
+                {!loadingPromisedBy && <Skeleton lines={2} /> ||
+                    <Card title="Я" pagination={promisedBy?.length && promisedBy.length > 3}>
+                        {!promisedBy?.length &&
                             <Flex>
-                                <Text styles={theme.text.styles.placeholder} >Вы еще не процитировали ни одной статьи</Text>
+                                <Text styles={theme.text.styles.placeholder} >Вы еще не обещали процитировать ни одной статьи</Text>
                             </Flex> ||
-                            quotesBy.map(item =>
+                            promisedBy.map(item =>
                                 <Flex key={item.articleID} flexDirection="column">
                                     <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { item.articleID }</Text>
                                     <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
@@ -52,13 +52,13 @@ export const Component: ComponentInterface<any> = () => {
                 }
             </Flex>
             <Flex width="45%">
-                {!loadingQuotesFor && <Skeleton lines={2} /> ||
-                    <Card title="Мне" pagination={quotesFor?.length && quotesFor.length > 3}>
-                        {!quotesFor?.length &&
+                {!loadingPromisedFor && <Skeleton lines={2} /> ||
+                    <Card title="Мне" pagination={promisedFor?.length && promisedFor.length > 3}>
+                        {!promisedFor?.length &&
                             <Flex>
-                                <Text styles={theme.text.styles.placeholder} >Вам еще не процитировали ни одной статьи</Text>
+                                <Text styles={theme.text.styles.placeholder} >Вам еще не обещали процитировать ни одной статьи</Text>
                             </Flex> ||
-                            quotesFor.map(item =>
+                            promisedFor.map(item =>
                                 <Flex key={item.articleID} flexDirection="column">
                                     <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { item.articleID }</Text>
                                     <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
