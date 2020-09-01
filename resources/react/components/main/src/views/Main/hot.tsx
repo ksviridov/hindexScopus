@@ -3,69 +3,53 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { Flex } from 'reflexbox'
-import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
+import Card from '../../components/card'
+import { Container, Text, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
 
 import { getHotPublications } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
-
-import { item as itemStyles, itemCount as itemCountStyle } from './styles/hot'
+import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
-    const hotList = useSelector(state => state.hot)
+    const hotList = useSelector((state: Store) => state.main.hot)
 
     const [isInitialized, setIsInitialized] = useState(false)
-    const [pageCount] = useState(3)
-    const [currentPage, setCurrentPage] = useState(0)
 
     const sortingHotList = useMemo(() =>
         (!hotList || !hotList.length) && [] || hotList.sort((item1, item2) => item1.citesNeeded - item2.citesNeeded)
     , [hotList])
 
-    const HotListForCurrentPage=  useMemo(() =>
-        sortingHotList.slice(currentPage * pageCount, (currentPage + 1) * pageCount)
-    , [sortingHotList, currentPage])
-
-    const maxPages = useMemo(() => (!hotList || !hotList.length) ? 0 : Math.ceil(hotList.length / pageCount), [hotList, pageCount])
-
     useEffect(() => {
         dispatch(getHotPublications())
             .then(() => setIsInitialized(true))
-            .catch(console.error)
+            .catch(() => alert('Ошибка загрузки горячего списка. Повторите попытку позже'))
     })
 
     const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
 
     return (
         <Flex width="100%">
-            {!isInitialized &&  <Skeleton /> || 
-            <Container sx={{ width: '100%' }}>
-                <Container.Header justifyContent="space-between">
-                    <Text styles={theme.text.styles.header}>Горячий список</Text>
+            {!isInitialized &&  <Skeleton /> ||
+            <Card title="Горячий список" pagination={hotList?.length && hotList.length > 3}>
+                {!hotList?.length &&
                     <Flex>
-                        <Button background={theme.mixin.icons.dark.back} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0} sx={{ mr: '1rem' }} />
-                        <Button background={theme.mixin.icons.dark.next} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1} />
-                    </Flex>
-                </Container.Header>
-                <Container.Content>
-                    {!hotList?.length &&
-                        <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text> ||
-                        HotListForCurrentPage.map(item =>
-                            <Item key={item.articleID} onClick={() => selectActiveArticle(item)}>
-                                <Flex justifyContent="space-between" width="100%" mb=".5rem">
-                                    <Text styles={theme.text.styles.label}>{ item.name }</Text>
-                                    <ItemCount className="hot-item__cites-needed">
-                                        { item.citesNeeded }
-                                    </ItemCount>
-                                </Flex>
-                                <Text styles={theme.text.styles.placeholder}>{ item.title }</Text>
-                            </Item>    
-                        )
-                    }
-                </Container.Content>
-            </Container>}
+                        <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text>
+                    </Flex> ||
+                    sortingHotList.map(item =>
+                        <Flex key={item.articleID} onClick={() => selectActiveArticle(item)}>
+                            <Flex justifyContent="space-between" width="100%" mb=".5rem">
+                                <Text styles={theme.text.styles.label}>{ item.name }</Text>
+                                <ItemCount className="hot-item__cites-needed">
+                                    { item.citesNeeded }
+                                </ItemCount>
+                            </Flex>
+                            <Text styles={theme.text.styles.placeholder}>{ item.title }</Text> 
+                        </Flex>  
+                    )}
+            </Card>}
         </Flex>
     )
 }
@@ -83,7 +67,15 @@ export const Skeleton = () => (
     </Container>
 )
 
-export const Item = styled(Flex)`${() => itemStyles}`
-export const ItemCount = styled(Text)`${() => itemCountStyle}`
+export const ItemCount = styled(Text)`
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 3rem;
+    justify-content: center;
+    align-items: center;
+
+    ${props => props.theme.mixin.transition}
+`
 
 export default Component

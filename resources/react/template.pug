@@ -1,20 +1,27 @@
-head
-    if htmlWebpackPlugin.options.hot
+html(lang="en")
+    head
+        if !htmlWebpackPlugin.options.hot
+            | @yield('title')
+
+        meta(name="csrf-token" content="{{csrf_token()}}")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
 
+        if !htmlWebpackPlugin.options.hot
+            script(crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js")
+            script(crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js")
+
         link(href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet")
-    else
-        script(crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js")
-        script(crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous")
 
-    style !{ htmlWebpackPlugin.options.normalizeCss }
+        style.
+            textarea, body {
+                font-family: 'Lato', sans-serif;
+            }
+    body
+        #app
 
-    style.
-        textarea, body {
-            font-family: 'Lato', sans-serif;
-        }
+        if !htmlWebpackPlugin.options.hot
+            script.
+                window.BASE_URL = 'http://hindex.sfedu.ru/'
 
-#app
-
-if !htmlWebpackPlugin.options.hot
-    script(src=htmlWebpackPlugin.options.app)
+            | <script src="{{ mix('/js/!{htmlWebpackPlugin.options.app}') }}"></script>

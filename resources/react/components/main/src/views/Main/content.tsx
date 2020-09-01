@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Flex,Box } from 'reflexbox'
 import _debounce from 'lodash/debounce'
+import { toast } from 'react-toastify'
 
 import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface, useDebounce } from 'utils'
@@ -10,11 +11,13 @@ import theme from 'theme'
 
 import { searchArticled, quoteArticle } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
+import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
-    const article = useSelector(state => state.active)
-    const quotes = useSelector(state => state.quotes)
+    const article = useSelector((state: Store) => state.main.active)
+    const quotes = useSelector((state: Store) => state.quote.by)
+    const promises = useSelector((state: Store) => state.promised.by)
 
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')
@@ -32,7 +35,7 @@ export const Component: ComponentInterface<any> = () => {
             setSearchProgress(true),
             dispatch(searchArticled({ field: searchField, value: debounceSearching }))
                 .then(({ data }) => setSearchResult(data))
-                .catch(console.error)
+                .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
                 .finally(() => setSearchProgress(false))
         )
     }, [debounceSearching, searchField])
@@ -49,13 +52,17 @@ export const Component: ComponentInterface<any> = () => {
     const clearSelectArticle = () => dispatch({ type: SET_ACTIVE_ARTICLE, payload: undefined })
 
     const activeArticleIsQuote = useMemo(() =>
-        article && quotes.length && quotes.some(item => item == article.articleID)
-    , [article, quotes])
+        article && (
+            quotes?.length && quotes.some(item => item == article.articleID) ||
+            promises?.length && promises.some(item => item == article.articleID)
+        )
+    , [article, quotes, promises])
 
     const quote = articleId => (
         setProgressQuoteArticle(true),
         dispatch(quoteArticle({ articleID: articleId }))
-            .catch(console.error)
+            .then(() => toast.success('Статья помечена как "Обещано к цитированию"'))
+            .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
             .finally(() => setProgressQuoteArticle(false))
     )
 

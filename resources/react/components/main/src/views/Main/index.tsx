@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 
 import { Flex } from 'reflexbox'
 
-import { debouncedImport } from 'utils'
+import { debouncedImport, ComponentInterface } from 'utils'
 
 const HotList = lazy(() => debouncedImport(() => import('./hot')))
 const Content = lazy(() => debouncedImport(() => import('./content')))
@@ -10,7 +10,7 @@ const Content = lazy(() => debouncedImport(() => import('./content')))
 import { Skeleton as HotListSkeleton } from './hot'
 import { Skeleton as ContentSkeleton } from './content'
 
-export const Component = () => {
+export const Component: ComponentInterface<any> = () => {
     return (
         <Flex justifyContent="space-around">
             <Flex width="40%">

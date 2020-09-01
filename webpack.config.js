@@ -47,9 +47,8 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
     {
         inject: false,
         template: `pug-loader!${react_path}/template.pug`,
-        normalizeCss: fs.readFileSync(path.resolve(__dirname, 'node_modules/normalize.css/normalize.css')),
         hot,
-        app: `./${bundle_file}`,
+        app: `${bundle_file}`,
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
         }
@@ -123,6 +122,10 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     },
