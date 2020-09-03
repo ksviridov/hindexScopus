@@ -20,8 +20,9 @@ html(lang="en")
     body
         #app
 
-        if !htmlWebpackPlugin.options.hot
-            script.
-                window.BASE_URL = 'http://hindex.sfedu.ru/'
+        script.
+            window.BASE_URL = '!{ htmlWebpackPlugin.options.baseUrl }'
 
+        if !htmlWebpackPlugin.options.hot
             | <script src="{{ mix('/js/!{htmlWebpackPlugin.options.app}') }}"></script>
+        else

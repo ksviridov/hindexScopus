@@ -51,7 +51,8 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
         app: `${app_name || app}.js`,
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
-        }
+        },
+        baseUrl: !hot ? 'http://hindex.sfedu.ru/': ''
     }, hot ?
     {
         inject: true

@@ -7,7 +7,7 @@ import { Container, Skeleton as UISkeleton, Button } from 'ui'
 export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps) => {
     const [progress, setProgress] = useState([])
 
-    const navigateToMain = () => props.history.push({ pathname: '/home' })
+    const navigateToMain = () => props.history.push({ pathname: '/' })
     const navigateToQuoted = () => props.history.push({ pathname: '/quote' })
     const navigateToPromised = () => props.history.push({ pathname: '/promised' })
 

@@ -34,8 +34,6 @@ export const App = () => {
         !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100vh' }}>
             <BrowserRouter basename={window.BASE_URL ? new URL(window.BASE_URL).pathname : '/'}>
                 <Route path="" render={({ location }) =>
-                    location.pathname === '/' &&
-					<Redirect exact from="/" to="/home" /> ||
 					<Box width="100%">
                         <Header />
                         <ToastContainer
@@ -44,13 +42,6 @@ export const App = () => {
                             limit={5}
                         />
 						<Switch location={location}>
-							<Route path="/home">
-								<Box>
-									<Suspense fallback={<></>}>
-										<Main />
-									</Suspense>
-								</Box>
-							</Route>
                             <Route path="/quote">
 								<Box>
 									<Suspense fallback={<></>}>
@@ -62,6 +53,13 @@ export const App = () => {
 								<Box>
 									<Suspense fallback={<></>}>
 										<Promised />
+									</Suspense>
+								</Box>
+							</Route>
+                            <Route path="/">
+								<Box>
+									<Suspense fallback={<></>}>
+										<Main />
 									</Suspense>
 								</Box>
 							</Route>
