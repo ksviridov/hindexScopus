@@ -8,16 +8,18 @@ import {
 
 export interface Store {
     hot: Article[],
+    all: Article[],
     active: Article | undefined
 }
 
 export const initialState: Store = {
     hot: [],
+    all: [],
     active: undefined,
 }
 
 export const reducers = {
-    [GET_HOT_PUBLICATIONS]: (payload: Payload) => ({ hot: { $set: payload } }),
+    [GET_HOT_PUBLICATIONS]: (payload: Payload) => ({ hot: { $set: payload || [] } }),
     [SET_ACTIVE_ARTICLE]: (payload: Payload) => ({ active: { $set: payload } }),
 }
 

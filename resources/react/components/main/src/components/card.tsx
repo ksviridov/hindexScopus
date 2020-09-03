@@ -37,11 +37,13 @@ export const Component: ComponentInterface<CardInterface> = props => {
                             <Button background={theme.mixin.icons.dark.back} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0} sx={{ mr: '1rem' }} />
                             <Button background={theme.mixin.icons.dark.next} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1} />
                         </Flex>
-                    }
+                    || null}
                 </Container.Header>
                 <Container.Content>
-                        {itemsForCurrentPage && React.Children.map(itemsForCurrentPage, option =>
-                            <CardItem {...option.props} />
+                        {itemsForCurrentPage && React.Children.map(itemsForCurrentPage, (option, index) =>
+                            <Flex key={option.props?.key ?? index} width="100%">
+                                <CardItem {...option.props} />
+                            </Flex>
                         )}
                 </Container.Content>
         </Container>

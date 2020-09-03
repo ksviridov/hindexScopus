@@ -9,6 +9,8 @@ html(lang="en")
         if !htmlWebpackPlugin.options.hot
             script(crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js")
             script(crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js")
+        else
+            script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
 
         link(href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet")
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous")

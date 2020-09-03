@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Flex } from 'reflexbox'
 import Card from '../../components/card'
-import { Container, Text, Skeleton as UISkeleton } from 'ui'
+import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
 
@@ -26,7 +26,7 @@ export const Component: ComponentInterface<any> = () => {
         dispatch(getHotPublications())
             .then(() => setIsInitialized(true))
             .catch(() => alert('Ошибка загрузки горячего списка. Повторите попытку позже'))
-    })
+    }, [])
 
     const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
 
@@ -35,11 +35,11 @@ export const Component: ComponentInterface<any> = () => {
             {!isInitialized &&  <Skeleton /> ||
             <Card title="Горячий список" pagination={hotList?.length && hotList.length > 3}>
                 {!hotList?.length &&
-                    <Flex>
+                    <Flex flex="1">
                         <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text>
                     </Flex> ||
                     sortingHotList.map(item =>
-                        <Flex key={item.articleID} onClick={() => selectActiveArticle(item)}>
+                        <Flex flex="1" key={item.articleID} onClick={() => selectActiveArticle(item)}>
                             <Flex justifyContent="space-between" width="100%" mb=".5rem">
                                 <Text styles={theme.text.styles.label}>{ item.name }</Text>
                                 <ItemCount className="hot-item__cites-needed">

@@ -21,6 +21,7 @@ export interface Store {
 export const initialState: Store = {
     api: {
         hot: undefined,
+        all: undefined,
         promise: undefined,
         search: undefined
     },
