@@ -14,9 +14,9 @@ use App\Http\Middleware\TrustProxies;
 |
 */
 
-//Route::get('/{url?}', function () {
-//    return view('welcome');
-//})->where('', 'list');
+Route::get('/{url?}', function () {
+    return view('welcome');
+});
 
 //Route::get('/reload',)
 //Route::get('/', 'ArticleController@main');
