@@ -48,7 +48,7 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
         inject: false,
         template: `pug-loader!${react_path}/template.pug`,
         hot,
-        app: `${app_name || app}.js`,
+        app: `/view/${app_name || app}/bundle.js`,
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
         },
