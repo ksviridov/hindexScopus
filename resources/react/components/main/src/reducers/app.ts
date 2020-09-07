@@ -28,7 +28,7 @@ export const initialState: Store = {
 }
 
 export const reducers = {
-    [GET_STATE]: (payload: Payload) => ({ $merge: payload }),
+    [GET_STATE]: (payload: Payload) => ({ api: { $set: payload } }),
 }
 
 export default (state = initialState, action: Action) =>
