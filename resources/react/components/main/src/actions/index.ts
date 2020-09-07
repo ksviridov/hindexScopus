@@ -17,6 +17,9 @@ export const getState = (actionType = GET_STATE) =>
 export const getHotPublications = (actionType = GET_HOT_PUBLICATIONS) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.hot, actionType, dispatch })
 
+export const getAllPublications = (actionType = GET_HOT_PUBLICATIONS) =>
+    (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.all, actionType, dispatch })
+
 export const searchArticled = (payload, actionType = SEARCH_ARTICLES) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.search, actionType, payload })
 

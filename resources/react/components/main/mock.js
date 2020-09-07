@@ -1,10 +1,6 @@
 const uuid = require('uuid')
 
 const api = {
-    /*hot: '/api/hot',
-    search: '/api/search',
-    promise: '/api/promise',
-    quote: '/api/quote'*/
     all: '/api/all',
     hot: '/api/hot',
     promise: '/api/promise',
@@ -13,8 +9,8 @@ const api = {
 
 module.exports = {
     get: {
-        '/api': req => ({
-            api
+        '/api/info': req => ({
+            ...api
         }),
         [api.hot]: req => ([
             {
