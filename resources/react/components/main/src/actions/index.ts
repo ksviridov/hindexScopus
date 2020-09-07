@@ -12,7 +12,7 @@ import {
 export type State = () => Store
 
 export const getState = (actionType = GET_STATE) =>
-    (dispatch: DispatchFn) => new API().read({ url: '/api', actionType, dispatch })
+    (dispatch: DispatchFn) => new API().read({ url: '/api/info', actionType, dispatch })
 
 export const getHotPublications = (actionType = GET_HOT_PUBLICATIONS) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.hot, actionType, dispatch })
