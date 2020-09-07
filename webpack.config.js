@@ -36,11 +36,17 @@ const entry = app_name ?
         .map(app => (fs.existsSync(`${apps_path}/${app}/src/index.js`) && { [app]: `${apps_path}/${app}/src/index.js`}))
 )
 
+const bundleFile = 'bundle.js'
+
 const output = {
     path: `${outpug_path_js}`,
-    filename: `${app_name || '[name]'}/bundle.js`,
+    filename: `${app_name || '[name]'}/${bundleFile}`,
     publicPath: '/',
     chunkFilename: 'chunks/[id].[chunkhash].js'
+}
+
+const appTitles = {
+    main: 'HindexScopus'
 }
 
 const HtmlWebpackPluginOptionsFactory = app => Object.assign(
@@ -48,11 +54,12 @@ const HtmlWebpackPluginOptionsFactory = app => Object.assign(
         inject: false,
         template: `pug-loader!${react_path}/template.pug`,
         hot,
-        app: `/view/${app_name || app}/bundle.js`,
+        app: bundleFile,
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
         },
-        baseUrl: !hot ? 'http://hindex.sfedu.ru/': ''
+        baseUrl: !hot ? 'http://hindex.sfedu.ru/': '',
+        title: appTitles[app] || 'HindexScopus'
     }, hot ?
     {
         inject: true
