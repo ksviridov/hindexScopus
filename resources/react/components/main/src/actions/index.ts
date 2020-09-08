@@ -20,7 +20,7 @@ export const getAllPublications = (actionType = GET_HOT_PUBLICATIONS) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.all, actionType, dispatch })
 
 export const quoteArticle = (payload, actionType = QUOTE_ARTICLE) =>
-    (dispatch: DispatchFn, getState: State) => new API().update({ url: getState().app.api.quote, payload, actionType, dispatch })
+    (dispatch: DispatchFn, getState: State) => new API().update({ url: `${getState().app.api.citation}/${payload.articleId}`, payload, actionType, dispatch })
 
 export const getQuotes = (searchCriteria, actionType = GET_QUOTES_BY) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.quote, searchCriteria, dispatch, actionType })

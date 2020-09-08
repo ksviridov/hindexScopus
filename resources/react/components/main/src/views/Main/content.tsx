@@ -10,7 +10,7 @@ import { ComponentInterface, useDebounce } from 'utils'
 import theme from 'theme'
 
 import { quoteArticle } from '../../actions'
-import { SET_ACTIVE_ARTICLE } from '../../actions/types'
+import { SET_ACTIVE_ARTICLE, UPDATE_HOT_PUBLICATION } from '../../actions/types'
 import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
@@ -52,17 +52,26 @@ export const Component: ComponentInterface<any> = () => {
 
     const activeArticleIsQuote = useMemo(() =>
         article && (
-            quotes?.length && quotes.some(item => item == article.articleID) ||
-            promises?.length && promises.some(item => item == article.articleID)
+            quotes?.length && quotes.some(item => item.articleID == article.articleID) ||
+            promises?.length && promises.some(item => item.articleID == article.articleID)
         )
     , [article, quotes, promises])
 
     const quote = articleId => (
         setProgressQuoteArticle(true),
-        dispatch(quoteArticle({ articleID: articleId }))
-            .then(() => toast.success('Статья помечена как "Обещано к цитированию"'))
-            .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
-            .finally(() => setProgressQuoteArticle(false))
+        (index => ~index && hot[index].citesNeeded && (
+            dispatch(quoteArticle(hot[index]))
+                .then(() => (
+                    toast.success('Статья помечена как "Обещано к цитированию"'),
+                    dispatch({ type: UPDATE_HOT_PUBLICATION, payload: { articleID: articleId, citesNeeded: hot[index].citesNeeded - 1 } })
+                ))
+                .catch(error => (
+                    console.error(error),
+                    toast.error('Ошибка запроса. Повторите попытку позже')
+                ))
+                .finally(() => setProgressQuoteArticle(false))
+            || setProgressQuoteArticle(false)
+        ))(hot.findIndex(article => article.articleID == articleId))
     )
 
     return (
@@ -84,8 +93,8 @@ export const Component: ComponentInterface<any> = () => {
                             <Select.Option value="name">Поиск по фамилии</Select.Option>
                             <Select.Option value="title">Поиск по заголовку</Select.Option>
                             <Select.Option value="publicationName">Поиск по названию</Select.Option>
-                            <Select.Option value="keyWords">Поиск по ключевым словам</Select.Option>
                             <Select.Option value="description">Поиск по описанию</Select.Option>
+                            <Select.Option value="keyWords">Поиск по ключевым словам</Select.Option>
                         </Select>
                     </Box>
                 </Container.Header>

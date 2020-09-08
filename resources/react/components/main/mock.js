@@ -4,7 +4,8 @@ const api = {
     all: '/api/all',
     hot: '/api/hot',
     promise: '/api/promise',
-    quote: '/api/quote'
+    quote: '/api/quote',
+    citation: '/api/citation'
 }
 
 module.exports = {
@@ -123,7 +124,8 @@ module.exports = {
     },
     post: {},
     put: {
-        [api.quote]: req => req.body.articleID
+        [api.quote]: req => req.body.articleID,
+        [`${api.citation}/:id`]: req => ({}),
     },
     delete: {}
 }
