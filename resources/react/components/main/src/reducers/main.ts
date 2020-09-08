@@ -8,13 +8,11 @@ import {
 
 export interface Store {
     hot: Article[],
-    all: Article[],
     active: Article | undefined
 }
 
 export const initialState: Store = {
     hot: [],
-    all: [],
     active: undefined,
 }
 

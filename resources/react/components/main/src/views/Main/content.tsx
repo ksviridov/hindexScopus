@@ -9,12 +9,13 @@ import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 
 import { ComponentInterface, useDebounce } from 'utils'
 import theme from 'theme'
 
-import { searchArticled, quoteArticle } from '../../actions'
+import { quoteArticle } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
 import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
+    const hot = useSelector((state: Store) => state.main.hot)
     const article = useSelector((state: Store) => state.main.active)
     const quotes = useSelector((state: Store) => state.quote.by)
     const promises = useSelector((state: Store) => state.promised.by)
@@ -22,7 +23,6 @@ export const Component: ComponentInterface<any> = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')
     const [searchResult, setSearchResult] = useState()
-    const [searchProgress, setSearchProgress] = useState(false)
     const [progressQuoteArticle, setProgressQuoteArticle] = useState(false)
 
     const debounceSearching = useDebounce(searchQuery, 300)
@@ -32,17 +32,16 @@ export const Component: ComponentInterface<any> = () => {
 
         debounceSearching &&
         debounceSearching.length > 2 && (
-            setSearchProgress(true),
-            dispatch(searchArticled({ field: searchField, value: debounceSearching }))
-                .then(({ data }) => setSearchResult(data))
-                .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
-                .finally(() => setSearchProgress(false))
+            setSearchResult(search(searchField, debounceSearching))
         )
     }, [debounceSearching, searchField])
 
     useEffect(() => {
         !searchQuery && setSearchResult(null)
     }, [searchQuery])
+
+    const search = (field: string, value: string) =>
+        hot?.length ? hot.filter(article => article[field].toLowerCase().includes(value.toLowerCase()))  : []
 
     const activeArticle = article => (
         setSearchResult(null),
@@ -71,21 +70,22 @@ export const Component: ComponentInterface<any> = () => {
             <Container sx={{ width: '100%' }}>
                 <Container.Header sx={{ justifyContent: 'space-between' }}>
                     <Box width="70%">
-                        <Search isProcessing={searchProgress} onInputChange={setSearchQuery} label="Найти статью..." sx={{ mr: '3rem' }}>
+                        <Search onInputChange={setSearchQuery} label="Найти статью..." sx={{ mr: '3rem' }}>
                             {searchResult && searchResult.length && searchResult.map(item =>
                                 <Search.Option key={item.articleID} sx={{ maxWidth: '35rem' }} onClick={() => activeArticle(item)}>
                                     <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
                                     <Text styles={theme.text.styles.placeholder} sx={{ textAlign: 'left' }}>{ item.title }</Text>
                                 </Search.Option>  
-                            )}
+                            ) || null}
                         </Search>
                     </Box>
                     <Box width="25%">
                         <Select selected={searchField} onSelect={setSearchField} placeholder="Поиск по..." sx={{ maxWidth: '100%' }}>
-                            <Select.Option value="surname">Поиск по фамилии</Select.Option>
-                            <Select.Option value="name">Поиск по названию</Select.Option>
-                            <Select.Option value="annotation">Поиск по аннтоации</Select.Option>
-                            <Select.Option value="keywords">Поиск по ключевым словам</Select.Option>
+                            <Select.Option value="name">Поиск по фамилии</Select.Option>
+                            <Select.Option value="title">Поиск по заголовку</Select.Option>
+                            <Select.Option value="publicationName">Поиск по названию</Select.Option>
+                            <Select.Option value="keyWords">Поиск по ключевым словам</Select.Option>
+                            <Select.Option value="description">Поиск по описанию</Select.Option>
                         </Select>
                     </Box>
                 </Container.Header>
