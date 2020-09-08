@@ -103,21 +103,14 @@ export const Component: ComponentInterface<any> = () => {
                                     }
                                 </Flex>
                             </Flex>
-                            <Box mb=".5rem">
+                            <Box>
                                 <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { article.articleID }</Text>
                             </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Автор:</Text>
-                                <Text>{ article.name }</Text>
-                            </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Описание:</Text>
-                                <Text>{ article.title }</Text>
-                            </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Публикация:</Text>
-                                <Text>{ article.publicationName }</Text>
-                            </Box>
+                            {article.name ? <Text sx={{ mb: '.5rem' }}>{ article.name }</Text> : null}
+                            {article.title ? <Text sx={{ mb: '.5rem' }}>{ article.title }</Text> : null}
+                            {article.keyWords ? <Text sx={{ mb: '.5rem' }} styles={theme.text.styles.label}>{ article.keyWords }</Text> : null}
+                            {article.publicationName ? <Text sx={{ mb: '.5rem' }}>{ article.publicationName }</Text> : null}
+                            {article.description ? <Text sx={{ mb: '2rem' }}>{ article.description }</Text> : null}
                         </Flex>
                     }
                 </Container.Content>
