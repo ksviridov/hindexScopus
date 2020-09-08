@@ -9,12 +9,13 @@ import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 
 import { ComponentInterface, useDebounce } from 'utils'
 import theme from 'theme'
 
-import { searchArticled, quoteArticle } from '../../actions'
-import { SET_ACTIVE_ARTICLE } from '../../actions/types'
+import { quoteArticle } from '../../actions'
+import { SET_ACTIVE_ARTICLE, UPDATE_HOT_PUBLICATION } from '../../actions/types'
 import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
+    const hot = useSelector((state: Store) => state.main.hot)
     const article = useSelector((state: Store) => state.main.active)
     const quotes = useSelector((state: Store) => state.quote.by)
     const promises = useSelector((state: Store) => state.promised.by)
@@ -22,7 +23,6 @@ export const Component: ComponentInterface<any> = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchField, setSearchField] = useState('name')
     const [searchResult, setSearchResult] = useState()
-    const [searchProgress, setSearchProgress] = useState(false)
     const [progressQuoteArticle, setProgressQuoteArticle] = useState(false)
 
     const debounceSearching = useDebounce(searchQuery, 300)
@@ -32,17 +32,16 @@ export const Component: ComponentInterface<any> = () => {
 
         debounceSearching &&
         debounceSearching.length > 2 && (
-            setSearchProgress(true),
-            dispatch(searchArticled({ field: searchField, value: debounceSearching }))
-                .then(({ data }) => setSearchResult(data))
-                .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
-                .finally(() => setSearchProgress(false))
+            setSearchResult(search(searchField, debounceSearching))
         )
     }, [debounceSearching, searchField])
 
     useEffect(() => {
         !searchQuery && setSearchResult(null)
     }, [searchQuery])
+
+    const search = (field: string, value: string) =>
+        hot?.length ? hot.filter(article => article[field].toLowerCase().includes(value.toLowerCase()))  : []
 
     const activeArticle = article => (
         setSearchResult(null),
@@ -53,17 +52,26 @@ export const Component: ComponentInterface<any> = () => {
 
     const activeArticleIsQuote = useMemo(() =>
         article && (
-            quotes?.length && quotes.some(item => item == article.articleID) ||
-            promises?.length && promises.some(item => item == article.articleID)
+            quotes?.length && quotes.some(item => item.articleID == article.articleID) ||
+            promises?.length && promises.some(item => item.articleID == article.articleID)
         )
     , [article, quotes, promises])
 
     const quote = articleId => (
         setProgressQuoteArticle(true),
-        dispatch(quoteArticle({ articleID: articleId }))
-            .then(() => toast.success('Статья помечена как "Обещано к цитированию"'))
-            .catch(() => toast.error('Ошибка запроса. Повторите попытку позже'))
-            .finally(() => setProgressQuoteArticle(false))
+        (index => ~index && hot[index].citesNeeded && (
+            dispatch(quoteArticle(hot[index]))
+                .then(() => (
+                    toast.success('Статья помечена как "Обещано к цитированию"'),
+                    dispatch({ type: UPDATE_HOT_PUBLICATION, payload: { articleID: articleId, citesNeeded: hot[index].citesNeeded - 1 } })
+                ))
+                .catch(error => (
+                    console.error(error),
+                    toast.error('Ошибка запроса. Повторите попытку позже')
+                ))
+                .finally(() => setProgressQuoteArticle(false))
+            || setProgressQuoteArticle(false)
+        ))(hot.findIndex(article => article.articleID == articleId))
     )
 
     return (
@@ -71,21 +79,22 @@ export const Component: ComponentInterface<any> = () => {
             <Container sx={{ width: '100%' }}>
                 <Container.Header sx={{ justifyContent: 'space-between' }}>
                     <Box width="70%">
-                        <Search isProcessing={searchProgress} onInputChange={setSearchQuery} label="Найти статью..." sx={{ mr: '3rem' }}>
+                        <Search onInputChange={setSearchQuery} label="Найти статью..." sx={{ mr: '3rem' }}>
                             {searchResult && searchResult.length && searchResult.map(item =>
                                 <Search.Option key={item.articleID} sx={{ maxWidth: '35rem' }} onClick={() => activeArticle(item)}>
                                     <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
                                     <Text styles={theme.text.styles.placeholder} sx={{ textAlign: 'left' }}>{ item.title }</Text>
                                 </Search.Option>  
-                            )}
+                            ) || null}
                         </Search>
                     </Box>
                     <Box width="25%">
                         <Select selected={searchField} onSelect={setSearchField} placeholder="Поиск по..." sx={{ maxWidth: '100%' }}>
-                            <Select.Option value="surname">Поиск по фамилии</Select.Option>
-                            <Select.Option value="name">Поиск по названию</Select.Option>
-                            <Select.Option value="annotation">Поиск по аннтоации</Select.Option>
-                            <Select.Option value="keywords">Поиск по ключевым словам</Select.Option>
+                            <Select.Option value="name">Поиск по фамилии</Select.Option>
+                            <Select.Option value="title">Поиск по заголовку</Select.Option>
+                            <Select.Option value="publicationName">Поиск по названию</Select.Option>
+                            <Select.Option value="description">Поиск по описанию</Select.Option>
+                            <Select.Option value="keyWords">Поиск по ключевым словам</Select.Option>
                         </Select>
                     </Box>
                 </Container.Header>
@@ -103,21 +112,14 @@ export const Component: ComponentInterface<any> = () => {
                                     }
                                 </Flex>
                             </Flex>
-                            <Box mb=".5rem">
+                            <Box>
                                 <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { article.articleID }</Text>
                             </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Автор:</Text>
-                                <Text>{ article.name }</Text>
-                            </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Описание:</Text>
-                                <Text>{ article.title }</Text>
-                            </Box>
-                            <Box mb="2rem">
-                                <Text styles={theme.text.styles.header} sx={{ mb: '1rem' }}>Публикация:</Text>
-                                <Text>{ article.publicationName }</Text>
-                            </Box>
+                            {article.name ? <Text sx={{ mb: '.5rem' }}>{ article.name }</Text> : null}
+                            {article.title ? <Text sx={{ mb: '.5rem' }}>{ article.title }</Text> : null}
+                            {article.keyWords ? <Text sx={{ mb: '.5rem' }} styles={theme.text.styles.label}>{ article.keyWords }</Text> : null}
+                            {article.publicationName ? <Text sx={{ mb: '.5rem' }}>{ article.publicationName }</Text> : null}
+                            {article.description ? <Text sx={{ mb: '2rem' }}>{ article.description }</Text> : null}
                         </Flex>
                     }
                 </Container.Content>

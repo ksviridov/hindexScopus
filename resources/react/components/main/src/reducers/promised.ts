@@ -18,7 +18,7 @@ export const initialState: Store = {
 }
 
 export const reducers = {
-    [QUOTE_ARTICLE]: (payload: Payload) => ({ by: { $push: [payload] } }),
+    [QUOTE_ARTICLE]: (payload: Payload, state, requestPayload) => ({ by: { $push: [requestPayload] } }),
     [GET_PROMISED_BY]: (payload: Payload) => ({ by: { $set: payload } }),
     [GET_PROMISED_FOR]: (payload: Payload) => ({ for: { $set: payload } }),
 }

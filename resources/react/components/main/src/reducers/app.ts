@@ -23,7 +23,7 @@ export const initialState: Store = {
         hot: undefined,
         all: undefined,
         promise: undefined,
-        search: undefined
+        citation: undefined
     },
 }
 

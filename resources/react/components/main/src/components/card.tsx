@@ -5,14 +5,23 @@ import { Flex } from 'reflexbox'
 import _castArray from 'lodash/castArray'
 
 import { ComponentInterface } from 'utils'
-import { Container, Button, Text } from 'ui'
+import { Container, Button, Text, Skeleton as UISkeleton } from 'ui'
 import theme from 'theme'
+
+export type Filter = {
+    label: string,
+    value: any
+}
 
 export interface CardInterface {
     pagination?: boolean,
     title: string,
     children?: Element | Element[] | React.ReactNode | React.ReactNode[],
-    max?: number
+    max?: number,
+    filters?: Filter[],
+    onFilterChange?: (Filter) => void,
+    process?: boolean,
+    filter?: Filter
 }
 
 export const Component: ComponentInterface<CardInterface> = props => {
@@ -28,6 +37,11 @@ export const Component: ComponentInterface<CardInterface> = props => {
 
     const maxPages = useMemo(() => (!options || !options.length) ? 0 : Math.ceil(options.length / pageCount), [options, pageCount])
 
+    const onFilterChange = (filter: Filter) => {
+        setCurrentPage(0)
+        props.onFilterChange && props.onFilterChange(filter)
+    }
+
     return (
         <Container sx={{ width: '100%' }}>
             <Container.Header justifyContent="space-between">
@@ -40,21 +54,35 @@ export const Component: ComponentInterface<CardInterface> = props => {
                     || null}
                 </Container.Header>
                 <Container.Content>
-                        {itemsForCurrentPage && React.Children.map(itemsForCurrentPage, (option, index) =>
-                            <Flex key={option.props?.key ?? index} width="100%">
-                                <CardItem {...option.props} />
-                            </Flex>
-                        )}
+                    <Flex mb="1rem">
+                        {props.filters?.length && props.filters.map((filter, index) =>
+                            <Button sx={{ mr: '1rem' }} key={index} onClick={() => onFilterChange(filter)} disabled={props.filter == filter}>{ filter.label }</Button>
+                        ) || null}
+                    </Flex>
+                    {props.process && <Skeleton /> || itemsForCurrentPage && React.Children.map(itemsForCurrentPage, (option, index) =>
+                        <Flex key={option.props?.key ?? index} width="100%">
+                            <Article {...option.props} />
+                        </Flex>
+                    ) || null}
                 </Container.Content>
         </Container>
     )
 }
 
+export const Skeleton = () => (
+    <>
+        <UISkeleton width="90%" height="3rem" mb="1.5rem" />
+        <UISkeleton width="90%" height="3rem" mb="1.5rem" />
+        <UISkeleton width="90%" height="3rem" />
+    </>
+)
+
 Component.defaultProps = {
-    max: 3
+    max: 3,
+    filters: []
 }
 
-export const CardItem = styled(Flex)`
+export const Article = styled(Flex)`
     box-shadow: 0 0 10px #ddd;
     border-radius: 5px;
     margin-bottom: 1.5rem;
@@ -72,5 +100,7 @@ export const CardItem = styled(Flex)`
         }
     }
 `
+
+Component.Skeleton = Skeleton
 
 export default Component

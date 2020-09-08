@@ -1,20 +1,17 @@
 const uuid = require('uuid')
 
 const api = {
-    /*hot: '/api/hot',
-    search: '/api/search',
-    promise: '/api/promise',
-    quote: '/api/quote'*/
     all: '/api/all',
     hot: '/api/hot',
     promise: '/api/promise',
-    quote: '/api/quote'
+    quote: '/api/quote',
+    citation: '/api/citation'
 }
 
 module.exports = {
     get: {
-        '/api': req => ({
-            api
+        '/api/info': req => ({
+            ...api
         }),
         [api.hot]: req => ([
             {
@@ -127,7 +124,8 @@ module.exports = {
     },
     post: {},
     put: {
-        [api.quote]: req => req.body.articleID
+        [api.quote]: req => req.body.articleID,
+        [`${api.citation}/:id`]: req => ({}),
     },
     delete: {}
 }

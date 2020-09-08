@@ -17,7 +17,7 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
 
     return (
         <Container sx={{ mb: '5rem' }}>
-            <Container.Header>
+            <Container.Header style={{ borderRadius: '0' }}>
                 <UISkeleton height="3rem" width="3rem" mr="5rem" style={{ borderRadius: '50%' }} />
                 <Button sx={{ mr: '5rem' }} onClick={navigateToMain}>Цитировать</Button>
                 <Button sx={{ mr: '5rem' }} onClick={navigateToQuoted}>Процитировано</Button>
@@ -29,7 +29,7 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
 
 Component.Skeleton = () => (
     <Container sx={{ mb: '3rem', width: '100%' }}>
-        <Container.Header>
+        <Container.Header style={{ borderRadius: '0' }}>
             <UISkeleton height="3rem" width="3rem" mr="5rem" style={{ borderRadius: '50%' }} />
             <UISkeleton height="3rem" width="8rem" mr="5rem" />
             <UISkeleton height="3rem" width="8rem" mr="5rem" />

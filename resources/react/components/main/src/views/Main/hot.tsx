@@ -8,7 +8,7 @@ import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
 
-import { getHotPublications } from '../../actions'
+import { getHotPublications, getAllPublications } from '../../actions'
 import { SET_ACTIVE_ARTICLE } from '../../actions/types'
 import { Store } from '../../reducers'
 
@@ -17,23 +17,28 @@ export const Component: ComponentInterface<any> = () => {
     const hotList = useSelector((state: Store) => state.main.hot)
 
     const [isInitialized, setIsInitialized] = useState(false)
+    const [filters] = useState([
+        { label: '1 цитирование', value: 'hot', action: getHotPublications },
+        { label: 'Все', value: 'all', action: getAllPublications },
+    ])
+    const [filter, setFilter] = useState(filters[0])
 
     const sortingHotList = useMemo(() =>
         (!hotList || !hotList.length) && [] || hotList.sort((item1, item2) => item1.citesNeeded - item2.citesNeeded)
     , [hotList])
 
     useEffect(() => {
-        dispatch(getHotPublications())
+        setIsInitialized(false)
+        dispatch(filter.action())
             .then(() => setIsInitialized(true))
             .catch(() => alert('Ошибка загрузки горячего списка. Повторите попытку позже'))
-    }, [])
+    }, [filter])
 
     const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
 
     return (
         <Flex width="100%">
-            {!isInitialized &&  <Skeleton /> ||
-            <Card title="Горячий список" pagination={hotList?.length && hotList.length > 3}>
+            <Card process={!isInitialized} title="Горячий список" pagination={hotList?.length && hotList.length > 3} filters={filters} filter={filter} onFilterChange={filter => setFilter(filter)}>
                 {!hotList?.length &&
                     <Flex flex="1">
                         <Text styles={theme.text.styles.placeholder}>Список горячих авторов пуст</Text>
@@ -49,7 +54,7 @@ export const Component: ComponentInterface<any> = () => {
                             <Text styles={theme.text.styles.placeholder}>{ item.title }</Text> 
                         </Flex>  
                     )}
-            </Card>}
+            </Card>
         </Flex>
     )
 }
@@ -60,9 +65,7 @@ export const Skeleton = () => (
             <UISkeleton width="5rem" />
         </Container.Header>
         <Container.Content>
-            <UISkeleton width="90%" height="3rem" mb="1.5rem" />
-            <UISkeleton width="90%" height="3rem" mb="1.5rem" />
-            <UISkeleton width="90%" height="3rem" />
+            <Card.Skeleton />
         </Container.Content>
     </Container>
 )
