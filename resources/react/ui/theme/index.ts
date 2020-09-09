@@ -9,6 +9,7 @@ import {
     Icon,
     Search,
     Select,
+    Popup,
     Colors,
     Mixin,
     Theme
@@ -23,6 +24,7 @@ export const dropdown = require<ModuleStruct<Dropdown>>('./dropdown')
 export const icon = require<ModuleStruct<Icon>>('./icon')
 export const search = require<ModuleStruct<Search>>('./search')
 export const select = require<ModuleStruct<Select>>('./select')
+export const popup = require<ModuleStruct<Popup>>('./popup')
 
 export const mixin = require<Mixin>('./mixin')
 export const colors = require<{ default: Colors }>('./colors').default
@@ -37,6 +39,7 @@ export const theme: Theme = {
     icon,
     search,
     select,
+    popup,
     mixin,
     colors
 }

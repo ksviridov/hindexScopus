@@ -5,7 +5,8 @@ import { Flex,Box } from 'reflexbox'
 import _debounce from 'lodash/debounce'
 import { toast } from 'react-toastify'
 
-import { Container, Text, Search, Select, Button, Skeleton as UISkeleton } from 'ui'
+import { Container, Text, Search, Select, Button, Transition, Skeleton as UISkeleton } from 'ui'
+import Bibliography from '../../components/bibliography'
 import { ComponentInterface, useDebounce } from 'utils'
 import theme from 'theme'
 
@@ -24,6 +25,7 @@ export const Component: ComponentInterface<any> = () => {
     const [searchField, setSearchField] = useState('name')
     const [searchResult, setSearchResult] = useState()
     const [progressQuoteArticle, setProgressQuoteArticle] = useState(false)
+    const [showBibliograpty, setShowBibliography] = useState(false)
 
     const debounceSearching = useDebounce(searchQuery, 300)
 
@@ -108,7 +110,7 @@ export const Component: ComponentInterface<any> = () => {
                                     <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>Необходимо цитирований: { article.citesNeeded }</Text>
                                     {!activeArticleIsQuote &&
                                         <Button isProcessing={progressQuoteArticle} disabled={progressQuoteArticle} onClick={() => quote(article.articleID)}>Цитировать</Button> ||
-                                        <Button styles={theme.button.styles.accent}>Процитировано</Button>
+                                        <Button styles={theme.button.styles.accent} onClick={() => setShowBibliography(true)}>Процитировано</Button>
                                     }
                                 </Flex>
                             </Flex>
@@ -124,6 +126,9 @@ export const Component: ComponentInterface<any> = () => {
                     }
                 </Container.Content>
             </Container>
+            <Transition in={showBibliograpty} delayed={!showBibliograpty}>
+                <Bibliography article={article} onExit={() => setShowBibliography(false)} />
+            </Transition>
         </Flex>
     )
 }
