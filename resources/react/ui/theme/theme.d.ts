@@ -76,6 +76,15 @@ export type Select = {
     dropdown: Style
 }
 
+export type Popup = {
+    overlay: Style,
+    container: Style,
+    header: Style,
+    label: Style,
+    content: Style,
+    footer: Style
+}
+
 export type Colors = {
     fg: TextField,
     bg: TextField
@@ -104,6 +113,7 @@ export type Theme = {
     icon: ModuleStruct<Icon>,
     search: ModuleStruct<Search>,
     select: ModuleStruct<Select>,
+    popup: ModuleStruct<Popup>,
     colors: Colors,
     mixin: Mixin
 }
