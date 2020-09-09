@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 import { Flex } from 'reflexbox'
-import { Popup, Button } from 'ui'
+import { Popup, Button, Text } from 'ui'
 
 import { ComponentInterface } from 'utils'
 import { Article } from '../reducers/types'
@@ -15,8 +15,15 @@ interface BibliograptyInterface {
 const getText = (article: Article) =>
     `text`
 
-const getBibTex = (article: Article) =>
-    `bibtex`
+const getBibTex = (article: Article) => {
+    const articleName = `${article.name.match(/\S+/)[0]}${article.title.match(/\S+/)[0]}`.toLowerCase()
+    const BibtexField = (field, value) => value ? ` ${field} = ${+value ? `{${value}}` : `"${value}"`},\n` : ''
+
+    return `@article{${articleName}\n` +
+        BibtexField('author', article.name) +
+        BibtexField('title', article.title) +
+        '}'
+}
 
 export const Component: ComponentInterface<BibliograptyInterface> = props => {
     const [formats] = useState([
@@ -50,7 +57,13 @@ export const Component: ComponentInterface<BibliograptyInterface> = props => {
                         <Button key={index} sx={{ mr: '1rem' }} disabled={actionFormat == format} onClick={() => setActionFormat(format)}>{ format.label }</Button>
                     )}
                 </Flex>
-                { text }
+                <Text as="p">
+                    {actionFormat.field == 'bibtex' &&
+                        <pre>
+                            { text }
+                        </pre>
+                    || text}
+                </Text>
             </Popup.Content>
         </Popup>
     )
