@@ -11,6 +11,7 @@ import {
     Select,
     Popup,
     Colors,
+    Size,
     Mixin,
     Theme
 } from './theme'
@@ -28,6 +29,7 @@ export const popup = require<ModuleStruct<Popup>>('./popup')
 
 export const mixin = require<Mixin>('./mixin')
 export const colors = require<{ default: Colors }>('./colors').default
+export const size = require<{ default: Size }>('./size').default
 
 export const theme: Theme = {
     button,
@@ -41,7 +43,8 @@ export const theme: Theme = {
     select,
     popup,
     mixin,
-    colors
+    colors,
+    size
 }
 
 export default theme

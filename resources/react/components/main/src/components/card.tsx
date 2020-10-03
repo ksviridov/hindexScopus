@@ -7,6 +7,7 @@ import _castArray from 'lodash/castArray'
 import { ComponentInterface } from 'utils'
 import { Container, Button, Text, Skeleton as UISkeleton } from 'ui'
 import theme from 'theme'
+import { Content } from 'ui/container'
 
 export type Filter = {
     label: string,
@@ -46,12 +47,6 @@ export const Component: ComponentInterface<CardInterface> = props => {
         <Container sx={{ width: '100%' }}>
             <Container.Header justifyContent="space-between">
                     <Text styles={theme.text.styles.header}>{ props.title }</Text>
-                    {props.pagination &&
-                        <Flex>
-                            <Button background={theme.mixin.icons.dark.back} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0} sx={{ mr: '1rem' }} />
-                            <Button background={theme.mixin.icons.dark.next} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1} />
-                        </Flex>
-                    || null}
                 </Container.Header>
                 <Container.Content>
                     <Flex mb="1rem">
@@ -65,6 +60,14 @@ export const Component: ComponentInterface<CardInterface> = props => {
                         </Flex>
                     ) || null}
                 </Container.Content>
+                <Container.Footer>
+                {props.pagination &&
+                        <Flex justifyContent="space-between" sx={{ width: '100%' }}>
+                            <Button styles={theme.button.styles.unaccent} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0}>Назад</Button>
+                            <Button styles={theme.button.styles.unaccent} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1}>Вперед</Button>
+                        </Flex>
+                    || null}
+                </Container.Footer>
         </Container>
     )
 }

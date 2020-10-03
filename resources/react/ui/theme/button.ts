@@ -8,10 +8,11 @@ export const container = css`
     font-size: 1.1rem;
     font-weight: 400;
     text-transform: uppercase;
+    min-width: min-content;
 `
 
 export const button = css`
-    font-size: 1.1rem;
+    font-size: .6rem;
     font-weight: 400;
     position: relative;
     width: 100%;
@@ -22,7 +23,8 @@ export const button = css`
     cursor: pointer;
     background: ${(props: Props) => props.theme.colors.bg.common};
     text-transform: uppercase;
-    padding: .8rem 2.2rem;
+    padding: .8rem 1rem;
+    box-sizing: border-box;
 
     ${(props: Props) => props.theme.mixin.transition}
 
@@ -44,7 +46,16 @@ export const button = css`
 		padding: .75rem .75rem;
 		border-radius: 0;
 		background: url(${props.background}) 0 0 / 100% no-repeat;
-	`}
+    `}
+
+    @media ${(props: Props) => props.theme.mixin.device.tablet} {
+        font-size: .8rem;
+    }
+    
+    @media ${(props: Props) => props.theme.mixin.device.laptop} {
+        font-size: 1.05rem;
+        padding: .8rem 1.2rem;
+    }
 `
 
 export const processingIcon = css`

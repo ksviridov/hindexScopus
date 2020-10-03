@@ -30,7 +30,7 @@ export const Component: UIElement<DropdownProps> = props => {
 		<OutsideClickHandler onOutsideClick={(event: React.MouseEvent) => toggle(event, false)}>
 			<Container sx={props.sx}>
 				{
-					props.toggle && <Flex onClick={toggle}>{props.toggle}</Flex> ||
+					props.toggle && <Flex onClick={toggle} sx={{ cursor: 'pointer' }}>{props.toggle}</Flex> ||
 					<Toggle onClick={toggle} {...props}>{props.label}</Toggle>
 				}
 				<Transition in={toggled} delayed={200} classNames="fade">

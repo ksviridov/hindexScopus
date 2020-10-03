@@ -90,6 +90,23 @@ export type Colors = {
     bg: TextField
 }
 
+export type Size = {
+    window: {
+        mobileS: string;
+        mobileM: string;
+        mobileL: string;
+        tablet: string;
+        laptop: string;
+        laptopL: string;
+        desktop: string;
+    };
+    size: {
+        small: string;
+        middle: string;
+        large: string;
+    };
+}
+
 export interface MixinIcons {
     [propName: string]: {
         [propName: string]: string
@@ -100,7 +117,8 @@ export type Mixin = {
     transition: Style,
     fade: Style,
     icons: MixinIcons,
-    rotateZ: Style
+    rotateZ: Style,
+    device: Size['window']
 }
 
 export type Theme = {
@@ -115,5 +133,6 @@ export type Theme = {
     select: ModuleStruct<Select>,
     popup: ModuleStruct<Popup>,
     colors: Colors,
+    size: Size,
     mixin: Mixin
 }

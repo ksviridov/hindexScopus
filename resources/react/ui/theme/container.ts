@@ -5,7 +5,7 @@ import { StructTheme, Container, StyledProps } from './theme'
 interface Props extends StyledProps {}
 
 export const header = css`
-    padding: 2rem 4rem;
+    padding: 1rem 4rem;
     background: #fff;
     z-index: 1;
     box-shadow: 0 0 10px #ddd;
@@ -17,14 +17,18 @@ export const header = css`
 export const content = css`
     position: relative;
     flex-direction: column;
-    padding: 4rem;
+    padding: 3rem;
     background: #fff;
     box-shadow: 0 0 10px #ddd;
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
 `
 
 export const footer = css`
+    position: relative;
+    padding: 1rem 4rem;
+    background: #fff;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    box-shadow: 0 0 10px #ddd;
 `
 
 export const tile = css`
