@@ -1,0 +1,24 @@
+@import 'normalize.css';
+@import '_media';
+
+@light_text: #999;
+@blue: #2889f1;
+@text: #222;
+
+.logo {
+    max-width: 30%;
+    max-width: 100px;
+}
+
+.register-form {
+    &__preview::after {
+        content: '';
+        display: block;
+        width: 96%;
+        margin-top: 10px;
+        margin-left: 2%;
+        height: 2px;
+        background-color: #999;
+        border-radius: 2px;
+    }
+}

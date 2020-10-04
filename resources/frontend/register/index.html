@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="./glob/libs/noty/noty.css">
+    <link rel="stylesheet" href="./glob/libs/noty/theme_relax.css">
+    <link rel="stylesheet" href="./glob/styles/main.css">
+    <link rel="stylesheet" href="./glob/styles/form.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <script async src="./glob/libs/noty/noty.min.js"></script>
+    <script async src="./glob/libs/axios/axios.min.js"></script>
+</head>
+<body id="body">
+    <div class="wrapper wrapper_center">
+        <div class="form register-form">
+            <div class="form__preview register-form__preview">
+                <img src="./glob/images/sfedu.png" alt="sfedu logo" class="logo">
+            </div>
+            <div class="form__body">
+                <div class="form__header">
+                    <p class="form__title">Регистрация</p>
+                    <p class="form__subtitle">Пожалуйса, заполните все обязательные поля</p>
+                </div>
+                <div class="form__item form__item_require">
+                    <input type="text" name="email" id="email" data-name="Почта" class="form__item-field js-register-form__item-field js-form-require">
+                    <label class="form__item-title form__item-title_left" for="email">Почта</label>
+                </div>
+                <div class="form__item form__item_require">
+                    <input type="text" name="name" id="name" data-name="Имя" class="form__item-field js-register-form__item-field js-form-require">
+                    <label class="form__item-title form__item-title_left" for="email">Имя</label>
+                </div>
+                <div class="form__item form__item_require">
+                    <input type="text" name="scopus_id" id="scopus_id" data-name="Scopus ID" class="form__item-field js-register-form__item-field js-form-require">
+                    <label class="form__item-title form__item-title_left" for="email">Scopus ID</label>
+                </div>
+                <div class="form__item form__item_require">
+                    <input type="password" name="password" id="password" data-name="Пароль" class="form__item-field js-register-form__item-field js-form-require">
+                    <label class="form__item-title form__item-title_left" for="email">Пароль</label>
+                </div>
+                <div class="form__item form__item_require">
+                    <input type="password" name="password_confirm" id="password_confirm" class="form__item-field js-register-form__item-field">
+                    <label class="form__item-title form__item-title_left" for="email">Повторите пароль</label>
+                </div>
+                <div class="column_center">
+                    <button class="form-submit js-register-form__submit">Регистрация</button>
+                    <a href="/login" class="link">Уже есть учетная запись?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+</html>

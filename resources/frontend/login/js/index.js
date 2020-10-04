@@ -18,7 +18,7 @@
         if (!Object.values(data).every(Boolean)) {
             error('Не все поля заполнены!')
         } else {
-            axios.post('/login', data)
+            axios.post('/api/login', data)
                 .then()
                 .catch(() => error('Ошибка авторизации'))
         }

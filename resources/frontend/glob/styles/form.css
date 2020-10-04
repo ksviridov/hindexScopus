@@ -1,0 +1,122 @@
+.form {
+    background-color: #fff;
+    box-shadow: 0 0 10px #a0a3a3;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 540px;
+}
+
+.form__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.form__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px 20px 10px 10px;
+}
+
+.form__header {
+    margin-bottom: 20px;
+}
+
+.form__title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.form__subtitle {
+    text-align: center;
+    color: var(--color-light-text);
+    font-size: .9rem;   
+}
+
+.form__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form__footer .login-form__subtitle {
+    margin: 0;
+    line-height: 1.5rem;
+}
+
+@media only screen and (min-width: 992px) {
+    .form.form_with-preview {
+        display: flex;
+        flex-direction: row-reverse;
+        max-width: 800px;
+    }
+
+    .form.form_with-preview .form__body {
+        padding-top: 50px;
+        width: 55%;
+    }
+}
+
+.form__item {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.form__item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #eee;
+    transition: .5s;
+}
+
+.form__item:hover::after {
+    background-color: var(--color-blue);
+}
+
+.form__item-title {
+    font-weight: 400;
+    color: var(--color-text);
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+    transition: .5s;
+    text-align: center;
+}
+
+.form__item-title_left {
+    text-align: left;
+}
+
+.form__item-field {
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+}
+
+.form__item_require .form__item-title::after {
+    content: '*';
+    color: #a22;
+    margin-left: .5rem;
+}
+
+.form__item-field:focus + .form__item-title,
+.form__item:hover .form__item-title {
+    transform: translateY(-5px);
+    color: var(--color-light-text);
+}

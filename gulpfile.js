@@ -15,6 +15,7 @@ const path = require('path')
 const fs = require('fs')
 
 const apps_path = path.resolve('./resources/frontend')
+const glob_path = `${apps_path}/glob`
 const app_name = yargs.app
 
 if(app_name && !fs.existsSync(`${apps_path}/${app_name}`))
@@ -38,14 +39,21 @@ gulp.task('livereload', () => {
     });
 });
 
+gulp.task('glob', () => {
+    const data = gulp.src(`${glob_path}/**/*.*`)
+
+    !app_name ?
+        data
+            .pipe(gulp.dest(`${output}/login/glob`))
+            .pipe(gulp.dest(`${output}/register/glob`)) :
+        data.pipe(gulp.dest(`${output}/glob`))
+
+    return data
+})
+
 gulp.task('html', () => {
     return gulp.src(`${input}/index.html`)
         .pipe(gulp.dest(output))
-})
-
-gulp.task('libs', () => {
-    return gulp.src(`${input}/libs/**/*.*`)
-        .pipe(gulp.dest(!app_name ? output : `${output}/libs`))
 })
 
 gulp.task('images', () => {
@@ -93,9 +101,10 @@ gulp.task('watch', () => {
     watch(`${input}/styles/**/*.less`, gulp.series('stylesLint', 'styles'));
     watch(`${input}/*.html`, gulp.series('html'));
     watch(`${input}/js/**/*.js`, gulp.series('js'));
+    watch(`${glob_path}/**/*.*`, gulp.series('glob'));
 });
 
-const tasks = ['html', 'stylesLint', 'images', 'libs', 'styles', 'js']
+const tasks = ['glob', 'html', 'stylesLint', 'images',  'styles', 'js']
 app_name && IsDevelopment && tasks.push(gulp.parallel('watch', 'livereload'))
 
 exports.default = gulp.series(...tasks)

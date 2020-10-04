@@ -3,39 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link rel="stylesheet" href="./libs/noty/noty.css">
-    <link rel="stylesheet" href="./libs/noty/theme_relax.css">
+    <link rel="stylesheet" href="./glob/libs/noty/noty.css">
+    <link rel="stylesheet" href="./glob/libs/noty/theme_relax.css">
+    <link rel="stylesheet" href="./glob/styles/main.css">
+    <link rel="stylesheet" href="./glob/styles/form.css">
     <link rel="stylesheet" href="./styles/index.css">
-    <script async src="./libs/noty/noty.min.js"></script>
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <script async src="./glob/libs/noty/noty.min.js"></script>
+    <script async src="./glob/libs/axios/axios.min.js"></script>
 </head>
 <body id="body">
     <div class="wrapper wrapper_center">
-        <div class="login-form">
-            <div class="login-form__preview">
-                <img src="./images/sfedu.png" alt="sfedu logo" class="logo">
+        <div class="form form_with-preview login-form">
+            <div class="form__preview login-form__preview">
+                <img src="./glob/images/sfedu.png" alt="sfedu logo" class="logo">
             </div>
-            <div class="login-form__body">
-                <div class="login-form__header">
-                    <p class="login-form__title">Авторизация</p>
-                    <p class="login-form__subtitle">Войдите в свою учетнуб запись sfedu</p>
+            <div class="form__body">
+                <div class="form__header">
+                    <p class="form__title">Авторизация</p>
+                    <p class="form__subtitle">Войдите в свою учетнуб запись</p>
                 </div>
-                <div class="login-form__item">
-                    <input type="text" name="email" id="email" class="login-form__item-field js-login-form__item-field">
-                    <label class="login-form__item-title" for="email">Почта sfedu</label>
+                <div class="form__item">
+                    <input type="text" name="email" id="email" class="form__item-field js-login-form__item-field">
+                    <label class="form__item-title" for="email">Почта</label>
                 </div>
-                <div class="login-form__item">
-                    <input type="text" name="password" id="password" class="login-form__item-field js-login-form__item-field">
-                    <label class="login-form__item-title" for="password">Пароль</label>
+                <div class="form__item">
+                    <input type="text" name="password" id="password" class="form__item-field js-login-form__item-field">
+                    <label class="form__item-title" for="password">Пароль</label>
                 </div>
-                <div class="center">
-                    <button class="login-form__submit js-login-form__submit">Войти</button>
+                <div class="column_center">
+                    <button class="form-submit js-login-form__submit">Войти</button>
+                    <a href="/register" class="link">Регистрация</a>
                 </div>
-                <div class="login-form__footer">
-                    <p class="login-form__subtitle">IT-лаборатория мехмата ЮФУ &copy; 2014 — 2020</p>
-                    <p class="login-form__subtitle">Связаться со службой поддержки:</p>
+                <div class="form__footer">
+                    <p class="form__subtitle">IT-лаборатория мехмата ЮФУ &copy; 2014 — 2020</p>
+                    <p class="form__subtitle">Связаться со службой поддержки:</p>
                     <a href="mailto:" class="contact">test@mail.ru</a>
                     <a href="tel:+79999999999" class="contact">+7&nbsp;999&nbsp;999&nbsp;99&nbsp;99</a>
                 </div>
