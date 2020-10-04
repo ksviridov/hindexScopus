@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
+import { useWindowWidth } from '@react-hook/window-size'
 
 import { Flex } from 'reflexbox'
 import Card from '../../components/card'
-import { Container, Text, Button, Skeleton as UISkeleton } from 'ui'
+import { Container, Text, Skeleton as UISkeleton } from 'ui'
 import { ComponentInterface } from 'utils'
 import theme from 'theme'
 
@@ -15,6 +15,7 @@ import { Store } from '../../reducers'
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
     const hotList = useSelector((state: Store) => state.main.hot)
+    const weight = useWindowWidth()
 
     const [isInitialized, setIsInitialized] = useState(false)
     const [filters] = useState([
@@ -23,8 +24,10 @@ export const Component: ComponentInterface<any> = () => {
     ])
     const [filter, setFilter] = useState(filters[0])
 
+    const isMobile = React.useMemo(() => weight <= parseInt(theme.size.window.laptopL) , [weight]);
+
     const sortingHotList = useMemo(() =>
-        (!hotList || !hotList.length) && [] || hotList.sort((item1, item2) => item1.citesNeeded - item2.citesNeeded)
+        (!hotList || !hotList.length) && [] || hotList.filter(item => item.citesNeeded).sort((item1, item2) => item1.citesNeeded - item2.citesNeeded)
     , [hotList])
 
     useEffect(() => {
@@ -34,7 +37,9 @@ export const Component: ComponentInterface<any> = () => {
             .catch(() => alert('Ошибка загрузки горячего списка. Повторите попытку позже'))
     }, [filter])
 
-    const selectActiveArticle = article => dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
+    const selectActiveArticle = article => (
+        dispatch({ type: SET_ACTIVE_ARTICLE, payload: article })
+    )
 
     return (
         <Flex width="100%">
@@ -45,11 +50,11 @@ export const Component: ComponentInterface<any> = () => {
                     </Flex> ||
                     sortingHotList.map(item =>
                         <Flex flex="1" key={item.articleID} onClick={() => selectActiveArticle(item)}>
-                            <Flex justifyContent="space-between" width="100%" mb=".5rem">
-                                <Text styles={theme.text.styles.label}>{ item.name }</Text>
-                                <ItemCount className="hot-item__cites-needed">
-                                    { item.citesNeeded }
-                                </ItemCount>
+                            <Flex justifyContent="space-between" width="100%" mb=".5rem" flexDirection={isMobile && 'column' || 'initial'}>
+                                <Text styles={theme.text.styles.label} sx={isMobile && { lineHeight: '2.5rem' }}>{ item.name }</Text>
+                                <Text styles={theme.text.styles.box}>
+                                    Нужно цитирований: { item.citesNeeded }
+                                </Text>
                             </Flex>
                             <Text styles={theme.text.styles.placeholder}>{ item.title }</Text> 
                         </Flex>  
@@ -69,16 +74,5 @@ export const Skeleton = () => (
         </Container.Content>
     </Container>
 )
-
-export const ItemCount = styled(Text)`
-    display: flex;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 3rem;
-    justify-content: center;
-    align-items: center;
-
-    ${props => props.theme.mixin.transition}
-`
 
 export default Component

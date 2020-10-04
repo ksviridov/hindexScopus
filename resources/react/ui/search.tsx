@@ -23,7 +23,8 @@ interface SearchProps extends Props<SearchType, HTMLDivElement> {
     width?: string,
     children?: React.ReactNode | React.ReactNode[] | Element | Element[],
     positionSign?: 'left' | 'right',
-    isProcessing?: boolean
+    isProcessing?: boolean,
+    placeholder?: string
 }
 
 const context: Context<SearchType> = { styles: undefined }
@@ -64,7 +65,7 @@ export const Component: UIElement<SearchProps> = props => {
             <Flex width="100%" sx={props.sx} data-testid={props['data-testid']}>
                 <Container sx={{ mt: "0.5rem" }} width={props.width} query={searchQuery}>
                     {props.label && <Label risen={!searchQuery}>{props.label}</Label>}
-                    <Input ref={inputRef} value={searchQuery} onChange={triggerSearch} disabled={isInputDisabled} />
+                    <Input ref={inputRef} value={searchQuery} onChange={triggerSearch} disabled={isInputDisabled} placeholder={props.placeholder} />
                     <Transition in={Boolean(isExpanded)} delayed={Boolean(!isExpanded)} classNames="fade">
                         <Dropdown>
                             {props.children}

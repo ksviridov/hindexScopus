@@ -6,7 +6,8 @@ import { Icon as IconType } from 'theme/types'
 import { Props, UIElement } from './types'
 
 interface IconProps extends Props<IconType, HTMLButtonElement> {
-    background: string
+    background: string,
+    size?: string
 }
 
 export const Component: UIElement<IconProps> = props =>

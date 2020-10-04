@@ -9,13 +9,17 @@ interface Props extends StyledProps {
 }
 
 export const common = css`
-    font-size: ${(props: Props) => props.fontSize || '1.1rem'};
+    font-size: ${(props: Props) => props.fontSize || '.8rem'};
     color: ${(props: Props) => props.color || props.theme.colors.fg.main};
 
     ${(props: Props) => props.overflow && css`
         overflow:hidden;
         text-overflow: ${props.overflow};
     `}
+
+    @media ${(props: Props) => props.theme.mixin.device.tablet} {
+        font-size: ${(props: Props) => props.fontSize || '1.1rem'};
+    }
 `
 
 export const styles: Text = {
@@ -80,11 +84,17 @@ export const styles: Text = {
         border: 1px solid #ccc;
         color: ${(props: Props) => props.theme.colors.fg.light};
         border-radius: 3px;
-        font-size: 1.2rem;
-        line-height: 2.2rem;
+        font-size: .9rem;
+        line-height: 1rem;
         padding: .5em;
-        width: 100%;
         margin: 0;
+
+        ${(props: Props) => props.theme.mixin.transition}
+
+        &:hover {
+            color: ${(props: Props) => props.theme.colors.bg.common};
+            border-color: ${(props: Props) => props.theme.colors.bg.common};
+        }
     `
 }
 

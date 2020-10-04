@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useWindowWidth } from '@react-hook/window-size'
 
 import { Flex,Box } from 'reflexbox'
 import _debounce from 'lodash/debounce'
@@ -16,6 +17,7 @@ import { Store } from '../../reducers'
 
 export const Component: ComponentInterface<any> = () => {
     const dispatch = useDispatch()
+    const weight = useWindowWidth()
     const hot = useSelector((state: Store) => state.main.hot)
     const article = useSelector((state: Store) => state.main.active)
     const quotes = useSelector((state: Store) => state.quote.by)
@@ -28,6 +30,8 @@ export const Component: ComponentInterface<any> = () => {
     const [showBibliograpty, setShowBibliography] = useState(false)
 
     const debounceSearching = useDebounce(searchQuery, 300)
+
+    const isMobile = React.useMemo(() => weight <= parseInt(theme.size.window.tablet) , [weight]);
 
     useEffect(() => {
         setSearchResult(null)
@@ -42,8 +46,12 @@ export const Component: ComponentInterface<any> = () => {
         !searchQuery && setSearchResult(null)
     }, [searchQuery])
 
+    useEffect(() => {
+        article && document.querySelector('.scopus__content')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }, [article])
+
     const search = (field: string, value: string) =>
-        hot?.length ? hot.filter(article => article[field].toLowerCase().includes(value.toLowerCase()))  : []
+        hot?.length ? hot.filter(article => article[field]?.toLowerCase().includes(value.toLowerCase()))  : []
 
     const activeArticle = article => (
         setSearchResult(null),
@@ -79,9 +87,9 @@ export const Component: ComponentInterface<any> = () => {
     return (
         <Flex width="100%">
             <Container sx={{ width: '100%' }}>
-                <Container.Header sx={{ justifyContent: 'space-between' }}>
-                    <Box width="70%">
-                        <Search onInputChange={setSearchQuery} label="Найти статью..." sx={{ mr: '3rem' }}>
+                <Container.Header sx={!isMobile ? { justifyContent: 'space-between' } : { flexDirection: 'column-reverse' }}>
+                    <Box width={isMobile ? '100%' : '70%'}>
+                        <Search onInputChange={setSearchQuery} placeholder="Поиск" sx={{ mr: '3rem' }}>
                             {searchResult && searchResult.length && searchResult.map(item =>
                                 <Search.Option key={item.articleID} sx={{ maxWidth: '35rem' }} onClick={() => activeArticle(item)}>
                                     <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }}>{ item.name }</Text>
@@ -90,32 +98,32 @@ export const Component: ComponentInterface<any> = () => {
                             ) || null}
                         </Search>
                     </Box>
-                    <Box width="25%">
+                    <Box width={isMobile ? '100%' : '25%'} mb={isMobile && '2rem'}>
                         <Select selected={searchField} onSelect={setSearchField} placeholder="Поиск по..." sx={{ maxWidth: '100%' }}>
-                            <Select.Option value="name">Поиск по фамилии</Select.Option>
-                            <Select.Option value="title">Поиск по заголовку</Select.Option>
-                            <Select.Option value="publicationName">Поиск по названию</Select.Option>
-                            <Select.Option value="description">Поиск по описанию</Select.Option>
+                            <Select.Option value="name">Поиск по авторам</Select.Option>
+                            <Select.Option value="title">Поиск по аннотации</Select.Option>
                             <Select.Option value="keyWords">Поиск по ключевым словам</Select.Option>
                         </Select>
                     </Box>
                 </Container.Header>
-                <Container.Content>
+                <Container.Content className="scopus__content">
                     {!article &&
                         <Text styles={theme.text.styles.placeholder}>Статья не выбрана</Text> ||
                         <Flex flexDirection="column">
-                            <Flex justifyContent="space-between" alignItems="flex-start">
-                                <Button styles={theme.button.styles.unaccent} onClick={clearSelectArticle}>Назад</Button>
-                                <Flex flexDirection="column" sx={{ placeItems: 'flex-end' }}>
+                            <Flex justifyContent="space-between" alignItems="flex-start" mb="1rem">
+                                <Flex flexDirection="column" sx={{ placeItems: 'flex-end', width: '100%' }}>
                                     <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>Необходимо цитирований: { article.citesNeeded }</Text>
-                                    {!activeArticleIsQuote &&
-                                        <Button isProcessing={progressQuoteArticle} disabled={progressQuoteArticle} onClick={() => quote(article.articleID)}>Цитировать</Button> ||
-                                        <Button styles={theme.button.styles.accent} onClick={() => setShowBibliography(true)}>Процитировано</Button>
-                                    }
+                                    <Flex justifyContent="end" sx={{ width: '100%' }}>
+                                        <Button styles={theme.button.styles.unaccent} onClick={clearSelectArticle} sx={{ mr: '2rem' }}>Очистить</Button>
+                                        {!activeArticleIsQuote &&
+                                            <Button isProcessing={progressQuoteArticle} disabled={progressQuoteArticle} onClick={() => quote(article.articleID)}>Цитировать</Button> ||
+                                            <Button styles={theme.button.styles.accent} onClick={() => setShowBibliography(true)}>Процитировано</Button>
+                                        }
+                                    </Flex>
                                 </Flex>
                             </Flex>
                             <Box>
-                                <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>ID: { article.articleID }</Text>
+                                <Text styles={theme.text.styles.placeholder} sx={{ mb: '1rem' }}>Article ID: { article.articleID }</Text>
                             </Box>
                             {article.name ? <Text sx={{ mb: '.5rem' }}>{ article.name }</Text> : null}
                             {article.title ? <Text sx={{ mb: '.5rem' }}>{ article.title }</Text> : null}
