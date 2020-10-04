@@ -14,6 +14,7 @@ class Scopus
     private $aRetrieval = 'author/author_id';
     private $scopusSearch = 'search/scopus?';
     private $scopusAbstractId = 'abstract/scopus_id/';
+    private $scopusCitations = 'abstract/citations';
 
     public function authorSearch($name)
     {
@@ -183,6 +184,33 @@ class Scopus
         return $authorArticles;
     }
 
+    public function getCitationInfo($articleID){
+        $options = [
+            'scopus_id' => $articleID,
+//            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
+            'apiKey' => $this->apiKey,
+//            'view' => 'full',
+            'httpAccept' => 'application/json',
+
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $this->URL . $this->scopusCitations . '?' . http_build_query($options));
+
+
+//        print_r($this->URL . $this->aRetrieval . '/' . $article_id . '?' . http_build_query($options));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($response, true);
+
+        dump($this->URL . $this->scopusCitations . '?' . http_build_query($options));
+
+        return $data;
+    }
+
 
 //    public function getArticleForCitingByAuthorID($id){
 //        $articles = $this->getAuthorArticles($id);
@@ -191,6 +219,32 @@ class Scopus
 //        return $articles;
 //
 //    }
+
+    public function authUser(){
+        $options = [
+            'apiKey' => $this->apiKey,
+//            'view' => 'full',
+            'httpAccept' => 'application/json',
+//            'choice' => 'id',
+            'platform' => 'scopus',
+
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_URL, 'https://api.elsevier.com/authenticate/' . '?' . http_build_query($options));
+
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        dump('https://api.elsevier.com/authenticate/' . '?' . http_build_query($options));
+
+        $data = json_decode($response, true);
+
+        dd($data);
+    }
 
 
 }
