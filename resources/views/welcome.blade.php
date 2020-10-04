@@ -17,7 +17,8 @@
 {{--@include(asset('view/main/index.html'))--}}
     <!doctype html>
 <html lang="en">
-<head>@yield('title')
+<head>
+    <title>Laravel</title>
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
@@ -32,7 +33,7 @@
 </head>
 <body>
 <div id="app"></div>
-<script>window.BASE_URL = 'http://hindex.sfedu.ru/'</script>
+{{--<script>window.BASE_URL = 'http://hindex.sfedu.ru/'</script>--}}
 <script src="{{ asset('view/main/bundle.js') }}"></script>
 </body>
 </html>

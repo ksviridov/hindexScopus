@@ -14,17 +14,21 @@ use App\Http\Middleware\TrustProxies;
 |
 */
 
-Route::get('/{url?}', function () {
-    return view('welcome');
-});
+//Route::get('/{url?}', function () {
+//    return view('welcome');
+//});
 
 //Route::get('/reload',)
 //Route::get('/', 'ArticleController@main');
 
-Route::get('/api', 'Controller@api');
+Route::get('/api/info', 'Controller@api');
+Route::get('/api/test', 'ArticleController@test');
 Route::get('/api/all', 'ArticleController@all');
 Route::get('/api/hot', 'ArticleController@hot');
 Route::get('/api/search', 'ArticleController@search');
+Route::get('/api/auth', 'ArticleController@authUser');
+
+
 
 //Route::get('/api/hot', 'ArticleController@main');
 //Route::get('/api/hot', 'ArticleController@main');
@@ -33,10 +37,10 @@ Route::get('/api/search', 'ArticleController@search');
 //Route::get('author/test/{authorId}', 'AuthorController@test');
 //
 //
-Route::get('author/article/{id}', 'ArticleController@test');
+//Route::get('author/article/{id}', 'ArticleController@test');
 //
 //
-Route::get('article/test/{authorId}', 'ArticleController@test');
+//Route::get('article/test/{authorId}', 'ArticleController@test');
 
 
 //Route::view('/{path?}', '');
