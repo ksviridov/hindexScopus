@@ -1,5 +1,5 @@
 ;(() => {
-    const fields = document.querySelectorAll('.js-login-form__item-field')
+    const fields = document.querySelectorAll('.js-register-form__item-field')
     const requiredFields = document.querySelectorAll('.js-form-require')
 
     const error = (message, configs) => {
@@ -12,9 +12,33 @@
     }
 
     const checkRequiredFields = () => {
+        let password = ''
+        let passwordError = false
         const emptyFields = []
 
         requiredFields.forEach(field => !field.value && emptyFields.push(field.dataset.name))
+
+        fields.forEach(field => {
+            if (field.name.includes('password')) {
+                if (!password) {
+                    password = field.value
+                } else {
+                    if (password != field.value) {
+                        passwordError = true
+                    }
+                }
+            }
+        })
+
+        if (!password) {
+            error('Введите пароль!');
+            return false
+        }
+
+        if (passwordError) {
+            error('Пароль указан неверно')
+            return false
+        }
 
         if(emptyFields.length) {
             error(`Обязательные поля: ${emptyFields.join(', ')} не заполнены!`, { timeout: 4000 });
