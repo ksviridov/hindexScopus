@@ -7,9 +7,13 @@ import { Flex, Box } from 'reflexbox'
 import { Container, Skeleton as UISkeleton, Button, Dropdown, Icon } from 'ui'
 import theme from 'theme'
 
+import { isAuthorization } from './helper'
+
 export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps) => {
     const weight = useWindowWidth()
     const [progress, setProgress] = useState([])
+
+    const authrization = isAuthorization()
 
     const isMobile = React.useMemo(() => weight <= parseInt(theme.size.window.tablet) , [weight]);
 
@@ -27,7 +31,9 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
                 {!isMobile && <Dropdown toggle={
                     <Icon background={theme.mixin.icons.light.user} size="3rem" sx={{ mr: '5rem' }}/>
                 }>
-                    <Dropdown.Button>Выйти</Dropdown.Button>
+                    {!authrization ? <Dropdown.Button onClick={() => props.history.push('/login')}>Войти</Dropdown.Button> : null}
+                    {authrization ? <Dropdown.Button>Выйти</Dropdown.Button> : null}
+                    <Dropdown.Button onClick={() => props.history.push('/register')}>Регистрация</Dropdown.Button>
                 </Dropdown> || null}
                 { isMobile && <Button background={theme.mixin.icons.light.burger} sx={{ width: '3rem', height: '3rem' }} onClick={() => setActiveMenu(!activeMenu)} /> }
                 {showMenu && <Flex alignItems="center" flexDirection={isMobile ? 'column': 'initial'} sx={isMobile && { width: '100%' }}>

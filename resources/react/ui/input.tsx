@@ -14,7 +14,7 @@ interface InputProps extends Props<InputType, HTMLButtonElement> {
     onBlur?: (value: Value) => void,
     onFocus?: (e: React.MouseEvent) => void,
     onClick?: (e: React.MouseEvent) => void,
-    type?: 'text' | 'number' | 'percentage' | 'monetary',
+    type?: 'text' | 'number' | 'percentage' | 'monetary' | 'password',
     min?: number,
     max?: number,
     precision?: number,
@@ -90,7 +90,7 @@ export const Component: UIElement<InputProps> = props => {
 
     return (
         <Container sx={props.sx} disabled={props.disabled} label={props.label}>
-            {props.label && <Label risen={Boolean(focused || value)}>{props.label}</Label>}
+            {props.label && <Label risen={Boolean(focused || value)} onClick={() => inputRef.current.focus()}>{props.label}</Label>}
             <Input
 				data-testid={props['data-testid']}
 				type={metaType}

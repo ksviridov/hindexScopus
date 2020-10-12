@@ -5,7 +5,9 @@ import {
     GET_HOT_PUBLICATIONS,
     QUOTE_ARTICLE,
     GET_QUOTES_BY,
-    GET_PROMISED_BY
+    GET_PROMISED_BY,
+    LOGIN,
+    REGISTER
 } from './types'
 
 export type State = () => Store
@@ -27,3 +29,9 @@ export const getQuotes = (searchCriteria, actionType = GET_QUOTES_BY) =>
 
 export const getPromises = (searchCriteria, actionType = GET_PROMISED_BY) =>
     (dispatch: DispatchFn, getState: State) => new API().read({ url: getState().app.api.promise, searchCriteria, dispatch, actionType })
+
+export const login = (payload, actionType = LOGIN) =>
+    (dispatch: DispatchFn) => new API().create({ url: '/api/login', payload })
+
+export const register = (payload, actionType = REGISTER) =>
+    (dispatch: DispatchFn) => new API().create({ url: '/api/register', payload })

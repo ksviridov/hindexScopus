@@ -69,17 +69,15 @@ export const processingIcon = css`
 
     ${(props: Props) => props.theme.mixin.rotateZ}
     ${(props: Props) => props.theme.mixin.fade}
+
+    background: url(${(props: Props) => props.theme.mixin.icons.white.spinner}) 0 0 / 100% no-repeat;
 `
 
 export const styles: StructTheme<Button> = {
     default: {
         container,
         button,
-        processingIcon: css`
-            ${processingIcon}
-
-            background: url(${(props: Props) => props.theme.mixin.icons.white.spinner}) 0 0 / 100% no-repeat;
-        `
+        processingIcon
     },
     accent: {
         container,
@@ -88,11 +86,7 @@ export const styles: StructTheme<Button> = {
 
             background: ${(props: Props) => props.theme.colors.bg.accent};
         `,
-        processingIcon: css`
-            ${processingIcon}
-
-            background: url(${(props: Props) => props.theme.mixin.icons.white.spinner}) 0 0 / 100% no-repeat;
-        `
+        processingIcon
     },
     unaccent: {
         container,
@@ -113,11 +107,27 @@ export const styles: StructTheme<Button> = {
                 }
             `}
         `,
-        processingIcon: css`
-            ${processingIcon}
+        processingIcon
+    },
+    link: {
+        container,
+        button: css`
+            ${button}
 
-            background: url(${(props: Props) => props.theme.mixin.icons.dark.spinner}) 0 0 / 100% no-repeat;
-        `
+            padding: .8rem 0;
+            background: transparent;
+            color: ${(props: Props) => props.theme.colors.fg.light};
+
+            &:hover, &:focus {
+                color: ${(props: Props) => props.theme.colors.bg.common};
+            }
+
+            @media ${(props: Props) => props.theme.mixin.device.laptop} {
+                font-size: 1.05rem;
+                padding: .8rem 0;
+            }
+        `,
+        processingIcon
     }
 }
 

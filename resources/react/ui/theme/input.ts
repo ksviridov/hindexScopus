@@ -11,9 +11,11 @@ interface Props extends StyledProps {
 export const label = css`
 	position: absolute;
 	font-size: 1.2rem;
-	bottom: .5em;
+    bottom: .5em;
+    left: .2em;
 	color: #999;
     z-index: 2;
+    cursor: text;
     
     ${(props: Props) => props.theme.mixin.transition}
     
@@ -24,7 +26,6 @@ export const label = css`
 `
 
 export const container = css`
-	border: 1px solid #ccc;
 	border-radius: 3px;
     position: relative;
     
@@ -42,7 +43,7 @@ export const input = css`
 	font-size: 1.1rem;
 	padding: .5em;
 	background: none;
-	border: none;
+	border: 1px solid #ccc;
 	outline: none;
 	background: #fff;
 	z-index: 1;
@@ -81,6 +82,7 @@ export const styles: StructTheme<Input> = {
 
             font-size: 1.5rem;
             padding: .5em;
+            border: none;
             border-bottom: 2px solid #f1f1f1;
             ${(props: Props) => props.theme.mixin.transition}
 
