@@ -9,7 +9,7 @@ export const useLogin = () => {
     const [isLogin, setIsLogin] = React.useState(false)
 
     React.useEffect(() => {
-        const Token = Cookies.get('token')
+        const Token = Cookies.get('XSRF-TOKEN')
 
         if(!Token) {
             if (!['/login', '/register'].includes(location.pathname)) {
@@ -27,14 +27,12 @@ export const useLogin = () => {
 export const useAuthorization = () => {
     const location = useLocation()
 
-    const Token = Cookies.get('token')
+    const Token = Cookies.get('XSRF-TOKEN')
 
     const [autorization, setAutorization] = React.useState(Token)
 
     React.useEffect(() => {
-        const Token = Cookies.get('token')
-
-        console.log('fgdklgjdklgjdfl')
+        const Token = Cookies.get('XSRF-TOKEN')
 
         setAutorization(Boolean(Token))
     }, [location])

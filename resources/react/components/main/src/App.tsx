@@ -40,7 +40,7 @@ export const App = () => {
             ))
             .catch(() => alert('Ошибка загрузки данных, попробуйте зайти позже'))
 
-        const token = Cookies.get('token')
+        const token = Cookies.get('XSRF-TOKEN')
         token && API.setToken(token);
     }, [])
 

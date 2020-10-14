@@ -49,14 +49,9 @@ export const Component: React.FC<any> = () => {
             password
         }))
             .then(({ data }) => {
-                if (data.message === 'success') {
-                    Cookies.set('token', data.token)
-                    API.setToken(data.token)
+                API.setToken(Cookies.get('XSRF-TOKEN'));
 
-                    handleToMain()
-                } else {
-                    toast.error(data.message)
-                }
+                handleToMain()
             })
             .catch((error) => {
                 console.error(error)
