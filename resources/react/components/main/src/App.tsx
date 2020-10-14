@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -10,11 +11,11 @@ import { Flex, Box } from 'reflexbox'
 import { getState } from './actions'
 
 import theme from 'theme'
-import { debouncedImport } from 'utils'
+import { debouncedImport, API } from 'utils'
 
 import Header from './header'
 
-import { uesLogin } from './helper'
+import { useLogin } from './helper'
 
 const Main = lazy(() => debouncedImport(() => import('./views/Main')))
 const Login = lazy(() => debouncedImport(() => import('./views/Login')))
@@ -30,7 +31,7 @@ export const App = () => {
 
     const [isInitialized, setIsInitialized] = useState(false)
 
-    const isLogin = uesLogin()
+    const isLogin = useLogin()
 
     useEffect(() => {
         dispatch(getState())
@@ -38,13 +39,16 @@ export const App = () => {
                 setIsInitialized(true)
             ))
             .catch(() => alert('Ошибка загрузки данных, попробуйте зайти позже'))
+
+        const token = Cookies.get('token')
+        token && API.setToken(token);
     }, [])
 
     return (
         !isInitialized && <Skeleton /> || <Flex width="100%" justifyContent="center" sx={{ background: '#f9f9f9', minHeight: '100vh' }}>
             <Route path="" render={({ location }) =>
                 <Box width="100%">
-                    {!['/login', '/register'].includes(location.pathname) ? <Header /> : null}
+                    {isLogin && !['/login', '/register'].includes(location.pathname) ? <Header /> : null}
                     <ToastContainer
                         position="top-right"
                         autoClose={3500}
@@ -81,7 +85,7 @@ export const App = () => {
                         </Route>
                         <Route path="/">
                             <Box>
-                                <Suspense fallback={<Skeleton />}>
+                                <Suspense fallback={<></>}>
                                     <Main />
                                 </Suspense>
                             </Box>

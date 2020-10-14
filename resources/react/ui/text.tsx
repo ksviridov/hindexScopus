@@ -9,6 +9,7 @@ import { Props, Context, UIElement } from './types'
 export type As = 'label' | 'p' | 'span'
 interface TextProps extends Props<TextType, HTMLDivElement> {
     as?: As,
+    required?: boolean
 }
 
 const context: Context<TextType> = { styles: undefined }

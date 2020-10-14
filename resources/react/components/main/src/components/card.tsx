@@ -60,14 +60,14 @@ export const Component: ComponentInterface<CardInterface> = props => {
                         </Flex>
                     ) || null}
                 </Container.Content>
-                <Container.Footer>
                 {props.pagination &&
+                    <Container.Footer>
                         <Flex justifyContent="space-between" sx={{ width: '100%' }}>
                             <Button styles={theme.button.styles.unaccent} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage == 0}>Назад</Button>
                             <Button styles={theme.button.styles.unaccent} onClick={() => setCurrentPage(currentPage + 1)} disabled={!maxPages || currentPage == maxPages - 1}>Вперед</Button>
                         </Flex>
-                    || null}
-                </Container.Footer>
+                    </Container.Footer>
+                || null}
         </Container>
     )
 }

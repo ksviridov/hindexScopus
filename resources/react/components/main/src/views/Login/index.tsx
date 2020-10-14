@@ -2,6 +2,7 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import { Flex, Box } from 'reflexbox'
 import { Container, Text, Input, Button, Skeleton as UISkeleton } from 'ui'
@@ -9,7 +10,8 @@ import { Container, Text, Input, Button, Skeleton as UISkeleton } from 'ui'
 import theme from 'theme'
 
 import { login } from '../../actions'
-import { isAuthorization } from '../../helper'
+import { useAuthorization } from '../../helper'
+import { API } from 'utils'
 
 export const Component: React.FC<any> = () => {
     const dispatch = useDispatch()
@@ -19,7 +21,7 @@ export const Component: React.FC<any> = () => {
     const [password, setPassword] = React.useState('')
     const [process, setProcess] = React.useState(false)
 
-    const autoriazation = isAuthorization()
+    const autoriazation = useAuthorization()
 
     const handleToMain = () => {
         history.push('/')
@@ -46,7 +48,16 @@ export const Component: React.FC<any> = () => {
             email,
             password
         }))
-            .then(console.log)
+            .then(({ data }) => {
+                if (data.message === 'success') {
+                    Cookies.set('token', data.token)
+                    API.setToken(data.token)
+
+                    handleToMain()
+                } else {
+                    toast.error(data.message)
+                }
+            })
             .catch((error) => {
                 console.error(error)
                 toast.error('Ошибка авторизации')

@@ -5,7 +5,8 @@ import { StructTheme, StyledProps, Text } from './theme'
 interface Props extends StyledProps {
     color: string,
     fontSize: string,
-    overflow: boolean
+    overflow: boolean,
+    required: boolean
 }
 
 export const common = css`
@@ -20,6 +21,19 @@ export const common = css`
     @media ${(props: Props) => props.theme.mixin.device.tablet} {
         font-size: ${(props: Props) => props.fontSize || '1.1rem'};
     }
+
+    ${(props: Props) => props.required && css`
+        position: relative;
+
+        &:after {
+            content: '*';
+            position: absolute;
+            font-size: 1.5em;
+            top: -.5em;
+            right: -.5em;
+            color: red;
+        }
+    `}
 `
 
 export const styles: Text = {

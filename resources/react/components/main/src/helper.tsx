@@ -2,18 +2,18 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-export const uesLogin = () => {
+export const useLogin = () => {
     const history = useHistory()
     const location = useLocation()
 
     const [isLogin, setIsLogin] = React.useState(false)
 
     React.useEffect(() => {
-        const refreshToken = Cookies.get('refresh_token')
-        const accessToken = Cookies.get('access_token')
+        const Token = Cookies.get('token')
 
-        if(!(refreshToken && accessToken)) {
+        if(!Token) {
             if (!['/login', '/register'].includes(location.pathname)) {
+                isLogin(false)
                 history.push('/login')
             }
         } else {
@@ -24,19 +24,19 @@ export const uesLogin = () => {
     return isLogin
 }
 
-export const isAuthorization = () => {
+export const useAuthorization = () => {
     const location = useLocation()
 
-    const refreshToken = Cookies.get('refresh_token')
-    const accessToken = Cookies.get('access_token')
+    const Token = Cookies.get('token')
 
-    const [autorization, setAutorization] = React.useState(refreshToken && accessToken)
+    const [autorization, setAutorization] = React.useState(Token)
 
     React.useEffect(() => {
-        const refreshToken = Cookies.get('refresh_token')
-        const accessToken = Cookies.get('access_token')
+        const Token = Cookies.get('token')
 
-        setAutorization(refreshToken && accessToken)
+        console.log('fgdklgjdklgjdfl')
+
+        setAutorization(Boolean(Token))
     }, [location])
 
     return autorization

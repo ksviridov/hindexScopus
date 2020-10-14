@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useWindowWidth } from '@react-hook/window-size'
+import Cookies from 'js-cookie'
 
 import { HistoryProps, ComponentInterface } from 'utils'
 import { Flex, Box } from 'reflexbox'
 import { Container, Skeleton as UISkeleton, Button, Dropdown, Icon } from 'ui'
 import theme from 'theme'
 
-import { isAuthorization } from './helper'
+import { useAuthorization } from './helper'
 
 export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps) => {
     const weight = useWindowWidth()
     const [progress, setProgress] = useState([])
 
-    const authrization = isAuthorization()
+    const authrization = useAuthorization()
 
     const isMobile = React.useMemo(() => weight <= parseInt(theme.size.window.tablet) , [weight]);
 
@@ -21,18 +22,23 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
 
     const showMenu = React.useMemo(() => !isMobile || activeMenu, [isMobile, activeMenu])
 
+    const handleLogout = () => {
+        Cookies.remove('token')
+        window.location.reload()
+    }
+
     useEffect(() => {
         //TODO: load user information
     }, [])
 
     return (
-        <Container sx={{ mb: '5rem' }}>
+        <Container sx={{ mb: '5rem', zIndex: '20', position: 'relative' }}>
             <Container.Header style={{ borderRadius: '0' }} flexDirection={isMobile ? 'column': 'initial'}>
                 {!isMobile && <Dropdown toggle={
                     <Icon background={theme.mixin.icons.light.user} size="3rem" sx={{ mr: '5rem' }}/>
                 }>
                     {!authrization ? <Dropdown.Button onClick={() => props.history.push('/login')}>Войти</Dropdown.Button> : null}
-                    {authrization ? <Dropdown.Button>Выйти</Dropdown.Button> : null}
+                    {authrization ? <Dropdown.Button onClick={handleLogout}>Выйти</Dropdown.Button> : null}
                     <Dropdown.Button onClick={() => props.history.push('/register')}>Регистрация</Dropdown.Button>
                 </Dropdown> || null}
                 { isMobile && <Button background={theme.mixin.icons.light.burger} sx={{ width: '3rem', height: '3rem' }} onClick={() => setActiveMenu(!activeMenu)} /> }

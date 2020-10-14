@@ -92,7 +92,7 @@ export class API implements CRUD<ApiProps> {
     }
 
     static setToken(token) {
-        axios.defaults.headers.common['Authorization'] = token
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     }
 
     static setTokenUpdateInterceptor(getTokenUrl) {

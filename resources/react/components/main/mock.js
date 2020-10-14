@@ -122,7 +122,16 @@ module.exports = {
             }
         ]),
     },
-    post: {},
+    post: {
+        '/api/register': req => ({
+            message: 'success',
+            token: 'testtokken'
+        }),
+        '/api/login': req => ({
+            message: 'success',
+            token: 'testtokken'
+        })
+    },
     put: {
         [api.quote]: req => req.body.articleID,
         [`${api.citation}/:id`]: req => ({}),
