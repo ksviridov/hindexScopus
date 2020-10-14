@@ -13,7 +13,7 @@ export const useLogin = () => {
 
         if(!Token) {
             if (!['/login', '/register'].includes(location.pathname)) {
-                isLogin(false)
+                setIsLogin(false)
                 history.push('/login')
             }
         } else {
