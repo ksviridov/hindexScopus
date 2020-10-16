@@ -35,7 +35,7 @@ export const login = (payload, actionType = LOGIN) =>
     (dispatch: DispatchFn) => new API().create({ url: '/api/login', payload })
 
 export const logout = (actionType = LOGOUT) =>
-    (dispatch: DispatchFn) => new API().create({ url: '/api/logout' })
+    (dispatch: DispatchFn) => new API().read({ url: '/api/logout' })
 
 export const register = (payload, actionType = REGISTER) =>
     (dispatch: DispatchFn) => new API().create({ url: '/api/register', payload })
