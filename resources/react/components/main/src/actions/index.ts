@@ -7,6 +7,7 @@ import {
     GET_QUOTES_BY,
     GET_PROMISED_BY,
     LOGIN,
+    LOGOUT,
     REGISTER
 } from './types'
 
@@ -32,6 +33,9 @@ export const getPromises = (searchCriteria, actionType = GET_PROMISED_BY) =>
 
 export const login = (payload, actionType = LOGIN) =>
     (dispatch: DispatchFn) => new API().create({ url: '/api/login', payload })
+
+export const logout = (actionType = LOGOUT) =>
+    (dispatch: DispatchFn) => new API().create({ url: '/api/logout' })
 
 export const register = (payload, actionType = REGISTER) =>
     (dispatch: DispatchFn) => new API().create({ url: '/api/register', payload })

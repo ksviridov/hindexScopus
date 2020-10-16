@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { useWindowWidth } from '@react-hook/window-size'
 import Cookies from 'js-cookie'
@@ -10,7 +11,10 @@ import theme from 'theme'
 
 import { useAuthorization } from './helper'
 
+import { logout } from './actions'
+
 export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps) => {
+    const dispatch = useDispatch()
     const weight = useWindowWidth()
     const [progress, setProgress] = useState([])
 
@@ -23,8 +27,10 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
     const showMenu = React.useMemo(() => !isMobile || activeMenu, [isMobile, activeMenu])
 
     const handleLogout = () => {
-        Cookies.remove('token')
-        window.location.reload()
+        Cookies.remove('XSRF-TOKEN')
+
+        dispatch(logout())
+            .finally(() => window.location.reload())
     }
 
     useEffect(() => {
