@@ -49,7 +49,8 @@ export const Component: React.FC<any> = () => {
             password
         }))
             .then(({ data }) => {
-                API.setToken(Cookies.get('XSRF-TOKEN'));
+                Cookies.set('token', data.token)
+                API.setToken(data.token);
 
                 handleToMain()
             })

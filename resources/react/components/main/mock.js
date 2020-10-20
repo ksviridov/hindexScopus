@@ -124,12 +124,20 @@ module.exports = {
     },
     post: {
         '/api/register': req => ({
-            message: 'success',
-            token: 'testtokken'
+            name: req.body.name || 'name',
+            email: req.body.email || 'email@test.com',
+            scopus_id: req.body.scopus_id || '123',
+            updated_at: '2020-10-19T10:47:12.000000Z',
+            created_at: '2020-10-19T10:47:12.000000Z',
+            id: uuid.v4()
         }),
         '/api/login': req => ({
             message: 'success',
-            token: 'testtokken'
+            token: uuid.v4(),
+            user: {
+                updated_at: '2020-10-19T10:47:12.000000Z',
+                created_at: '2020-10-19T10:47:12.000000Z',
+            }
         })
     },
     put: {

@@ -69,10 +69,16 @@ export const Component: React.FC<any> = () => {
         setProcess(true)
 
         dispatch(register(form))
-            .then(({ data }) => {
-                API.setToken(Cookies.get('XSRF-TOKEN'));
-
-                handleToMain()
+            .then(() => {
+                const timer = setTimeout(() => handleToLogin(), 3000)
+                toast.success('Регистрация прошла успешно. Через 2с вы будете перенаправлены на страницу для входа', {
+                    closeOnClick: true,
+                    delay: 2000,
+                    onClick: () => {
+                        clearInterval(timer)
+                        handleToLogin()
+                    }
+                })
             })
             .catch((error) => {
                 console.error(error)
@@ -90,7 +96,7 @@ export const Component: React.FC<any> = () => {
                     <Text styles={theme.text.styles.header}>Регистрация</Text>
                 </Container.Header>
                 <Container.Content sx={{ flexDirection: "column", px: '3rem' }}>
-                    {autoriazation ? <Flex>
+                    {autoriazation ? <Flex mb=".5rem">
                         <Button styles={theme.button.styles.link} onClick={handleToMain}>На главную</Button>
                     </Flex> : null}
                     {Object.values(fields).map((field: FormField) =>
@@ -99,16 +105,8 @@ export const Component: React.FC<any> = () => {
                             <Input type={field.type || 'text'} value={form[field.name]} onChange={value => handleUpdateForm(field.name, value)} />
                         </Box>
                     )}
-                    {/*<Box mb="2rem">
-                        <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }} required>Почта</Text>
-                        <Input value={form.email} onChange={value => } />
-                    </Box>
-                    <Box mb="2rem">
-                        <Text styles={theme.text.styles.label} sx={{ mb: '.5rem' }} required>Пароль</Text>
-                        <Input type="password" value={form.password} onChange={setPassword} />
-                    </Box>*/}
                     <Box>
-                        <Button onClick={handleEnter} disabled={process} isProcessing={process}>Войти</Button>
+                        <Button onClick={handleEnter} disabled={process} isProcessing={process}>Зарегистрироваться</Button>
                         <Flex justifyContent="center">
                             <Button styles={theme.button.styles.link} onClick={handleToLogin}>Уже есть аккаунт?</Button>
                         </Flex>
