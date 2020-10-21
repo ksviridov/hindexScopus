@@ -69,16 +69,15 @@ export const Component: React.FC<any> = () => {
         setProcess(true)
 
         dispatch(register(form))
-            .then(() => {
-                const timer = setTimeout(() => handleToLogin(), 3000)
-                toast.success('Регистрация прошла успешно. Через 2с вы будете перенаправлены на страницу для входа', {
-                    closeOnClick: true,
-                    delay: 2000,
-                    onClick: () => {
-                        clearInterval(timer)
-                        handleToLogin()
-                    }
-                })
+            .then(({ data }) => {
+                if (data.token) {
+                    Cookies.set('token', data.token)
+                    API.setToken(data.token);
+
+                    handleToMain()
+                } else {
+                    toast.error('Ошибка регистрации')
+                }
             })
             .catch((error) => {
                 console.error(error)
