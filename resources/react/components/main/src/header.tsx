@@ -27,7 +27,7 @@ export const Component: ComponentInterface<{}> = withRouter((props: HistoryProps
     const showMenu = React.useMemo(() => !isMobile || activeMenu, [isMobile, activeMenu])
 
     const handleLogout = () => {
-        Cookies.remove('XSRF-TOKEN')
+        Cookies.remove('token')
 
         dispatch(logout())
             .finally(() => window.location.reload())
