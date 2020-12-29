@@ -17,15 +17,28 @@ class ArticleController extends Controller
     {
         $scopus = new Scopus();
 //        dd($scopus->getAuthorArticles($authorID));
-        //57190492977
+        $authorId = 57190492977;
+//        $authorId = 56950079900;
 
-        $article_id = 'SCOPUS_ID:85084233956';
-        $article_id_1 = '85084233956';
+//        $article_id = 'SCOPUS_ID:85084233956';
+//        $article_id = 'SCOPUS_ID:85069438729';
+//        $article_id = '85069438729';
+//        $article_eid = '2-s2.0-85069438729';
+//        $doi = '10.1109/PDGC.2018.8745822';
+//        $article_id_1 = '85084233956';
 
-        dump($scopus->articleRetrieval($article_id));
+//        dd($scopus->articleCitationOverview($article_eid));
+        dd($scopus->getArticlesIds($authorId));
+//        dump($scopus->getCitationInfo($doi));
+//        dump($scopus->articleRetrieval($article_id));
 //        dump($scopus->articleRetrieval('SCOPUS_ID:85084189966'));
 //        dd($scopus->getAuthorArticles(57190492977));
-        dd($scopus->getCitationInfo($article_id_1));
+//        dd($scopus->authorRetrieval($authorId));
+//        dd($scopus->addAuthorInfo($authorId));
+//        dd(Author::addAuthorInfo($authorId,1));
+//        dd(Article::addAllAuthorArticles($authorId,1));
+//        dd(Author::addAuthorInfo($authorId));
+//        dd($scopus->getCitationInfo($article_id_1));
 //        $article = Article::create([
 //            'article_id' => 34,
 //            'title' => 'title',
@@ -36,6 +49,20 @@ class ArticleController extends Controller
 //        ]);
 //
 //        dd($article);
+
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_URL, 'http://checkip.amazonaws.com/');
+
+
+//        print_r($this->URL . $this->aRetrieval . '/' . $article_id . '?' . http_build_query($options));
+
+//        $response = curl_exec($ch);
+//        curl_close($ch);
+
+//        $data = json_decode($response, true);
+
+//        return $data;
     }
 
     public function all()
@@ -59,6 +86,7 @@ class ArticleController extends Controller
 //            ]);
 
             array_push($data, [
+                'id' => $articleInfo['article']->id,
                 'name' => $author->name,
                 'title' => $articleInfo['article']->title,
                 'publicationName' => $articleInfo['article']->publication_name,
@@ -87,6 +115,7 @@ class ArticleController extends Controller
 
             if ($articleInfo['citesNeeded'] == 1) {
                 array_push($data, [
+                    'id' => $articleInfo['article']->id,
                     'name' => $author->name,
                     'title' => $articleInfo['article']->title,
                     'publicationName' => $articleInfo['article']->publication_name,

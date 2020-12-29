@@ -127,6 +127,8 @@ class Scopus
 
         $data = json_decode($response, true);
 
+        dd($data);
+
         $keyWords = [];
         $description = '';
 
@@ -169,6 +171,43 @@ class Scopus
 
     }
 
+    public function articleCitationOverview($article_id)
+    {
+//        $article_id = implode(array_slice(str_split($article_id), 10));
+//        $options = [
+////            'scopus_id' => $article_id,
+//            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
+//            'apiKey' => $this->apiKey,
+//            'httpAccept' => 'application/json',
+//
+//        ];
+        $options = [
+            'query' => 'refeid(' . $article_id . ')',
+//            'scopus_id' => $article_id,
+//            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
+            'apiKey' => $this->apiKey,
+//            'view' => 'full',
+            'httpAccept' => 'application/json',
+
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $this->URL . $this->scopusSearch . http_build_query($options));
+
+
+
+//        print_r($this->URL . $this->aRetrieval . '/' . $article_id . '?' . http_build_query($options));
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($response, true);
+
+//        dd($data);
+        return $data;
+    }
+
     public function getAuthorArticles($authorID)
     {
         $articlesIds = $this->getArticlesIds($authorID);
@@ -185,12 +224,15 @@ class Scopus
     }
 
     public function getCitationInfo($articleID){
+
         $options = [
-            'scopus_id' => $articleID,
+//            'scopus_id' => $articleID,
+            'doi' => $articleID,
 //            'field' => 'authors,title,publicationName,volume,issueIdentifier,prism:pageRange,coverDate,article-number,doi,citedby-count,prism:aggregationType',
             'apiKey' => $this->apiKey,
 //            'view' => 'full',
             'httpAccept' => 'application/json',
+//            'view' => 'standard',
 
         ];
 

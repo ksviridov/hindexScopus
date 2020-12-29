@@ -15,9 +15,10 @@ class CreateAuthorsTable extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('author_id');
+            $table->bigInteger('author_id')->unique();
             $table->string('name');
             $table->integer('hindex');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

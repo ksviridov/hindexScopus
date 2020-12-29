@@ -16,8 +16,18 @@ class Author extends Model
         return $this->hasMany(Article::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    public static function addAuthorInfo($authorID){
+
+    public function promises(){
+        return $this->hasMany(Promise::class);
+    }
+
+
+    public static function addAuthorInfo($authorID,$id){
         $scopus = new Scopus();
         $data = $scopus->authorRetrieval($authorID);
 
@@ -25,10 +35,20 @@ class Author extends Model
             'author_id' => $authorID,
             'name' => $data['author-retrieval-response']['0']['preferred-name']['surname'] . ' ' . $data['author-retrieval-response']['0']['preferred-name']['initials'],
             'hindex' => ($data['author-retrieval-response']['0']['h-index'])+0,
+            'user_id'=> $id,
         ]);
 
         return $author;
     }
 
+    public static function updateAuthorHindexByAuthor($author){
+        $scopus = new Scopus();
+        $data = $scopus->authorRetrieval($author->authorID);
+
+        $author->hindex = ($data['author-retrieval-response']['0']['h-index'])+0;
+
+
+        return $author->save();
+    }
 
 }

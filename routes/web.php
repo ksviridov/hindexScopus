@@ -26,7 +26,10 @@ Route::get('/api/test', 'ArticleController@test');
 Route::get('/api/all', 'ArticleController@all');
 Route::get('/api/hot', 'ArticleController@hot');
 Route::get('/api/search', 'ArticleController@search');
-Route::get('/api/auth', 'ArticleController@authUser');
+//Route::get('/api/auth', 'ArticleController@authUser');
+
+
+//Route::get('/login', 'AuthController@main');
 
 
 

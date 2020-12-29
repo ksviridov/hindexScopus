@@ -23,3 +23,8 @@ Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
 Route::get('user', 'AuthController@user')->middleware('auth:api');
+Route::get('logout', 'AuthController@logout')->middleware('auth:api');
+Route::get('make/{id}', 'PromiseController@make')->middleware('auth:api');
+Route::get('delete/{id}', 'PromiseController@delete')->middleware('auth:api');
+Route::get('cited/{id}', 'PromiseController@cited')->middleware('auth:api');
+Route::get('promised', 'PromiseController@promised')->middleware('auth:api');

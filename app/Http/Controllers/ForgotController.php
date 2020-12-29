@@ -8,4 +8,6 @@ use Illuminate\Http\Request;
 class ForgotController extends Controller
 {
     public function forgot(ForgotRequest $request){}
+
+    //TODO: Восстановление пароля
 }

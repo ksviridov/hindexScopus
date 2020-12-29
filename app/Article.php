@@ -18,6 +18,10 @@ class Article extends Model
         return $this->belongsTo(Author::class);
     }
 
+    public function promises(){
+        return $this->hasMany(Promise::class);
+    }
+
     public static function addAllAuthorArticles($authorID, $dbID)
     {
         $scopus = new Scopus();
